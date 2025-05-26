@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <link rel="icon" href="/static/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>MoC by CC</title>
+    <style>
+      html, body{
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        --element-margin: 12px;
+        font-size: 32px;
+        font-family: "Open Sans", sans-serif;
+        background-color: rgb(22, 22, 22);
+        color: whitesmoke;
+      }
+      button{
+        color: whitesmoke;
+        background-color: rgb(48, 48, 48);
+      }
+      textarea{
+        color: whitesmoke;
+        background-color: rgb(48, 48, 48);
+      }
+      input{
+        color: whitesmoke;
+        background-color: rgb(48, 48, 48);
+      }
+      .ui{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+      }
+      .section-header{
+        margin: var(--element-margin);
+        font-size: 1rem;
+        font-family: "Open Sans", sans-serif;
+      }
+      .sub-section-header{
+        margin-left: var(--element-margin);
+        margin-right: var(--element-margin);
+        font-size: 0.7rem;
+        font-family: "Open Sans", sans-serif;
+      }
+      .states{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 60%;
+        
+      }
+      #latest-roll{
+        margin: var(--element-margin);
+        flex-grow: 2;
+        font-size: 0.75rem;
+        font-family: "Open Sans", sans-serif;
+      }
+      #new-roll{
+        margin: var(--element-margin);
+        font-size: 0.7rem;
+        font-family: "Open Sans", sans-serif;
+      }
+      #roll-logs{
+        margin: var(--element-margin);
+        flex-grow: 1;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.5rem;
+      }
+      .roll-options{
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+        height: 100%;
+        width: 40%;
+        background-color: rgb(56, 56, 56);
+        overflow: scroll;
+      }
+      .options-header{
+        display: block;
+        margin: var(--element-margin);
+        font-family: "Open Sans", sans-serif;
+        font-size: 1.2rem;
+        text-align: center;
+      }
+      .options-form{
+        flex-direction: row;
+        display: flex;
+        align-items: stretch;
+        margin: var(--element-margin);
+      }
+      .options-inputs{
+        display: flex;
+        flex-grow: 3;
+        flex-direction: column;
+        margin-right: var(--element-margin);
+      }
+      .seed-form-element{
+        display: flex;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.6rem;
+        flex-direction: row;
+      }
+      .seed-label{
+        width: 20%;
+      }
+      .seed-form-spacer{
+        height: 10px;
+      }
+      #options-seed{
+        display: block;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.6rem;
+        flex-grow: 1;
+      }
+      #options-rolls{
+        display: block;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.6rem;
+        flex-grow: 1;
+      }
+      #options-generate{
+        display: block;
+        align-items: stretch;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.7rem;
+      }
+      .format-input{
+        margin: var(--element-margin);
+        flex-grow: 1;
+        min-height: 150px;
+      }
+      .options-format-reverse{
+        display: flex;
+        margin: var(--element-margin);
+        flex-direction: row;
+        align-items: center;
+      }
+      .options-format-checkbox{
+        height: 0.6rem;
+        width: 0.6rem;
+        margin-right: var(--element-margin);
+      }
+      .options-format-reverse-label{
+        display: block;
+        font-size: 0.6rem;
+        font-family: "Open Sans", sans-serif;
+      }
+      #options-reset-button{
+        margin: var(--element-margin);
+        margin-top: 50px;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.6rem;
+      }
+      #options-download-button{
+        margin: var(--element-margin);
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.6rem;
+      }
+      .options-upload{
+        margin: var(--element-margin);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      #options-upload-file{
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.6rem;
+        margin-right: var(--element-margin);
+        max-width: 75%;
+      }
+      #options-upload-button{
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.6rem;
+      }
+      #loading{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: black;
+        text-align: center;
+        align-content: center;
+        font-size: 3REM;
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ui">
+      <div class="states">
+        <div class="section-header" id="steps">CURRENT STEPS: 0</div>
+        <div class="section-header">LATEST ROLL</div>
+        <textarea id="latest-roll"></textarea>
+        <button id="new-roll">ROLL</button>
+        <div class="section-header">ALL ROLLS</div>
+        <textarea id="roll-logs"></textarea>
+      </div>
+      <div class="roll-options">
+        <div class="options-header">OPTIONS</div>
+        <div class="section-header">SAVE</div>
+        <button id="options-download-button">DOWNLOAD</button>
+        <div class="options-upload">
+          <input type="file" id="options-upload-file">
+          <button id="options-upload-button">UPLOAD</button>
+        </div>
+        <div class="sub-section-header">Manual Configuration</div>
+        <div class="options-form">
+          <div class="options-inputs">
+            <div class="seed-form-element">
+              <div class="seed-label">SEED:</div>
+              <input type="number" id="options-seed">
+            </div>
+            <div class="seed-form-spacer"></div>
+            <div class="seed-form-element">
+              <div class="seed-label">ROLLS:</div>
+              <input type="number" id="options-rolls">
+            </div>
+          </div>
+          <button id="options-generate">LOAD</buttons>
+        </div>
+        <div class="section-header">FORMAT</div>
+        <div class="sub-section-header">SUCCESS</div>
+        <textarea class="format-input" id="options-format-success" placeholder="Available Variables: {{name}}, {{cost}}, {{description}}, {{times_recieved}}">{{name}} #{{times_recieved}}
+{{cost}}
+
+{{description}}</textarea>
+        <div class="sub-section-header">FAIL</div>
+        <textarea class="format-input" id="options-format-fail" placeholder="Available Variables: {{name}}, {{cost}}, {{description}}, {{times_recieved}}, {{reason}}">Unable to buy: {{name}} ({{reason}})</textarea>
+        <div class="sub-section-header">BETWEEN PERKS</div>
+        <div class="options-format-reverse">
+          <input type="checkbox" class="options-format-checkbox" id="options-format-reverse-check-perks">
+          <div class="options-format-reverse-label">Reverse Group Direction (Shallowest Perk First)</div>
+        </div>
+        <textarea class="format-input" id="options-format-between-perks" placeholder="Make sure to highlight, whitespaces are hard to read! If you can see this, there will be nothing between each perk">
+
+
+</textarea>
+        <div class="sub-section-header">BETWEEN ROLLS</div>
+        <div class="options-format-reverse">
+          <input type="checkbox" class="options-format-checkbox" id="options-format-reverse-check-rolls">
+          <div class="options-format-reverse-label">Reverse Log Direction (Most Recent Roll First)</div>
+        </div>
+        <textarea class="format-input" id="options-format-between-rolls" placeholder="Make sure to highlight, whitespaces are hard to read! If you can see this, there will be nothing between each perk">
+
+---------------------
+
+</textarea>
+        <div style="margin: 10px;font-size: 0.5rem;margin-top: 50px;text-align: center;">The perks available in this version of the March of Civilization are all original works, and are available for any purpose under the Creative Commons CC-BY license.</div>
+        <a href="https://creativecommons.org/licenses/by/4.0/" style="justify-self: center;width:200px;justify-content:center;display:flex;margin: auto;"><img decoding="async" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" width="118" height="41" ></a>
+
+        <button id="options-reset-button">RESET</button>
+      </div>
+    </div>
+    <div id="loading">LOADING</div>
+
+    <script async type="text/javascript" src="MoC_Base.js"></script>
+    <script async type="text/javascript" src="MoC.js"></script>
+  </body>
+</html>
