@@ -26,7 +26,7 @@ typedef struct PRIZE_RESOLVER
     bool dependency_success;
 } PRIZE_RESOLVER;
 
-static const uint16_t core_prizes = 313;
+static const uint16_t core_prizes = 317;
 static const uint16_t ext_prizes = 0;
 
 uint16_t max_prizes;
@@ -308,17 +308,25 @@ EMSCRIPTEN_KEEPALIVE void Increment_Prize_By_Id(uint16_t index){
 //     strcpy(response_handle->message, prize->desc);
 // }
 
+EMSCRIPTEN_KEEPALIVE void test_print(char* string, uint16_t len){
+    printf("%d\n", len);
+    for (uint16_t i = 0; i < len; i++)
+    {
+        printf("%c", string[i]);
+    }
+    printf("\n");
+    printf("%lu\n", strlen(string));
+}
+
+void Recursive_Resolver(PRIZE* prize){
+    if(prize->dependency != NULL){
+        Recursive_Resolver(prize->dependency);
+    }
+    printf("Name: %s\nCost: %"PRId16"\n\nDescription:\n%s\n", prize->name, prize->cost, prize->desc);
+}
+
 EMSCRIPTEN_KEEPALIVE void Resolve_Specific_Perk(uint16_t id){
-    uint32_t temp_points = response_handle->points;
-
-    response_handle->points = 100000;
-
-    printf("%"PRIu16" with 100000\n", id);
-    response_handle->points = 100000;
-    PRIZE_RESOLVER *response = Resolve_Dependency(table_resolver(id), 100000);
-    printf("%s\n", response->message);
-    free(response);
-    response_handle->points = temp_points;
+    Recursive_Resolver(table_resolver(id));
 }
 
 EMSCRIPTEN_KEEPALIVE uint64_t Read_Current_Response_String(char *dest)
@@ -636,7 +644,7 @@ int main(int argc, char const *argv[])
     Add_Prize(400, "Me and me and me and me", "You can work as four people. Quite literally, you can separate yourself into four identical bodies with a shared mind, allowing you to tackle bigger projects.", 1, NULL);
     Add_Prize(500, "Something to remember you by", "Sometimes you meet an exceptional individual, a fundamental facet of reality. Should you form a bond with those entangled with faith, you can call upon a morsel of their power. Perhaps not the full strength of their power but something iconic nonetheless.", 1, NULL);
     Add_Prize(0, "Breathing Room", "When you win a Prize, the world seems to slow to a halt for a few moments, letting you consider the impact of your decisions. You might be unable to move but for a few minutes, you are safe to focus your full attention to your new acquisition.", 1, NULL);
-    Add_Prize(750, "Supplies", "For any material you could have infinite access to, you now simply do. You gain a supply of every material that you have access to that grows in quantity as though you were constantly working to grow it through your various powers", 1, NULL);
+    Add_Prize(1000, "Supplies", "For any material you could have infinite access to, you now simply do. You gain a supply of every material that you have access to that grows in quantity as though you were constantly working to grow it through your various powers", 1, NULL);
     Add_Prize(300, "Batch Job", "The tedium of making a single part over and over again is often something that crafters need to get used to. But not you. You can choose to have four extra instances of the same item be created when making one", 1, NULL);
     Add_Prize(500, "Production Run", "Sometimes you just need more than one of something. In this case, you may choose to produce 12 additional instances of the same item when making one", 1, NULL);
     Add_Prize(1000, "Mass Production", "Outfitting an army is a challenge of logistics and time. While this won't help with the logistics, you can choose to have an additional 99 instances of an item you create be produced when you create one.", 1, NULL);
@@ -675,6 +683,13 @@ int main(int argc, char const *argv[])
     Add_Prize(200, "Familiar", "You know how to form a magical and spiritual link with a creature, granting it a portion of your power while allowing it to act as a focus for the rest of yours. You can even facilitate this process for others, though it always must be accepted by both parties.", 1, NULL);
     Add_Prize(500, "Inner World", "You have the designs for an artificial demiplane, a limited volume of space that acts as though it was its own universe. The exact design is somewhat random, but is themed based on various workspaces and environments.", 255, NULL);
     Add_Prize(200, "Subtle Instruments", "There is a time for grandstanding, and there is a time for subtlety. From multi-stage poisons to subtle suveilance devices, you know how to create tools that enables covert action of all kinds.", 1, table_resolver(181));
+    Add_Prize(100, "Engineer", "You know the limits of the physical world, and are able to leverage them in such a way as to handle the forces and stresses needed to complete a job. Indeed, your only limitations are the resources you have available to you.", 1, NULL);
+    Add_Prize(100, "Chemist", "Be it electrolytes or solvents, adheisives or sealants, it takes a great deal of skill to work with the chemical properties of substances of all kinds. You are bestowed with a deep understanding of how to produce and leverage complex chemical compounds and coctails for all sorts of applications.", 1, NULL);
+    Add_Prize(100, "Materials Science", "You know how to engineer substances with distinct physical properties ", 1, table_resolver(314));
+    Add_Prize(100, "Hyper Capacitors", "You know how to make systems capable of storing up large amounts of energy and releasing it at practically any rate demanded of them.", 1, table_resolver(315));
+    Add_Prize(100, "Power Vault", "You know how to create systems capable of storing vast amounts of energy for long periods of time. These systems scale incredbly well and can handle extended power draw, providing a steady supply of power for almost any purpose.", 1, table_resolver(315));
+
+    // Core Perks start at 373
 
     return 0;
 }

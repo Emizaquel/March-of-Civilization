@@ -69,6 +69,16 @@ function Generate_Perk_Display() {
 
 var waiting = false
 
+function Send_String_To_Wasm(message){
+    var array = new Uint8Array(wasmMemory.buffer, 0, message.length+1);
+    const encoder = new TextEncoder();
+    const encoded = encoder.encode(message+'\0');
+    for (let index = 0; index < encoded.length; index++) {
+        array.set(encoded);
+    }
+    _test_print(array.byteOffset, message.length);
+}
+
 async function Get_Wasm_Reponse_String() {
     if (waiting) {
         console.log("still rolling");
