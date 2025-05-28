@@ -69,17 +69,29 @@ function Generate_Perk_Display() {
 
 var waiting = false
 
-function Send_String_To_Wasm(message){
-    var array = new Uint8Array(wasmMemory.buffer, 0, message.length+1);
+function Get_Perk_Id_For_Name(name){
+    var array = new Uint8Array(wasmMemory.buffer, 0, name.length+1);
     const encoder = new TextEncoder();
-    const encoded = encoder.encode(message+'\0');
+    const encoded = encoder.encode(name+'\0');
     for (let index = 0; index < encoded.length; index++) {
         array.set(encoded);
     }
-    _test_print(array.byteOffset, message.length);
+    return _Get_Prize_Id_By_Name(array.byteOffset, name.length);
 }
 
-async function Get_Wasm_Reponse_String() {
+function Get_Perk_For_Name(name){
+    id = Get_Perk_Id_For_Name(name);
+    console.log(id);
+    console.log(_Print_Perk_Details(id));
+}
+
+function Get_Current_Response_String(len){
+    const array = new Uint8Array(wasmMemory.buffer, 0, Number(len));
+    _Read_Current_Response_String(array.byteOffset);
+    return new TextDecoder('utf8').decode(array);
+}
+
+async function Roll_Random_Perk() {
     if (waiting) {
         console.log("still rolling");
         return true
@@ -87,12 +99,10 @@ async function Get_Wasm_Reponse_String() {
 
     waiting = true
     len = _Roll_Random_PRIZE()
-    const array = new Uint8Array(wasmMemory.buffer, 0, Number(len));
-    steps = _Read_Current_Response_String(array.byteOffset);
-
-    resp = new TextDecoder('utf8').decode(array);
-    resp_trim = resp.slice(0, resp.length - 2);
+    resp = Get_Current_Response_String(len)
+    
     try {
+        resp_trim = resp.slice(0, resp.length - 2);
         resp_data = JSON.parse("[" + resp_trim + "]");
     } catch (error) {
         console.log(error);
@@ -105,6 +115,7 @@ async function Get_Wasm_Reponse_String() {
     document.getElementById("options-rolls").value = Number(document.getElementById("options-rolls").value) + 1;
 
     dep_flag = false
+    points = _Get_Current_Points();
 
     resp_data.forEach((perk) => {
         if (perk.success) {
@@ -266,7 +277,7 @@ function Load_Seed() {
     _Set_Rand_Seed(BigInt(document.getElementById("options-seed").value), BigInt(0), 0);
     for (let index = 0; index < num_rolls; index++) {
         // console.log("roll")
-        Get_Wasm_Reponse_String()
+        Roll_Random_Perk()
     }
 }
 
@@ -288,7 +299,7 @@ function Init_Page(){
 }
 
 function Setup_Env() {
-    document.getElementById("new-roll").addEventListener("click", () => {Get_Wasm_Reponse_String()});
+    document.getElementById("new-roll").addEventListener("click", () => {Roll_Random_Perk()});
     document.getElementById("options-format-reverse-check-perks").addEventListener("click", Generate_Perk_Display);
     document.getElementById("options-format-reverse-check-rolls").addEventListener("click", Generate_Perk_Display);
     document.getElementById("options-format-success").addEventListener("keyup", Generate_Perk_Display);
@@ -325,7 +336,7 @@ async function Call_N_Times(n) {
     if ((n % 100) == 0) {
         console.log("calling ", n, " more times")
     }
-    if (await Get_Wasm_Reponse_String()) {
+    if (await Roll_Random_Perk()) {
         setTimeout(Call_N_Times, 50, n);
     } else if (n > 0) {
         setTimeout(Call_N_Times, 50, n - 1);

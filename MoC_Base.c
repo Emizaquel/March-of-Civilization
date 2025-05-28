@@ -26,14 +26,26 @@ typedef struct PRIZE_RESOLVER
     bool dependency_success;
 } PRIZE_RESOLVER;
 
-static const uint16_t core_prizes = 317;
+static const uint16_t core_prizes = 321;
 static const uint16_t ext_prizes = 0;
 
-uint16_t max_prizes;
+uint16_t max_prizes = 0;
 uint16_t num_prizes = 0;
 uint16_t num_extend = 0;
 PRIZE ***core_start = NULL;
 PRIZE ***ext_start = NULL;
+
+PRIZE default_prize = {
+    .id = UINT16_MAX,
+    .cost = 0,
+    .name_len = 8,
+    .desc_len = 8,
+    .times_received = 0,
+    .repeatable = 0,
+    .name = "default",
+    .desc = "default",
+    .dependency = NULL,
+    .extended = false};
 
 PRIZE_RESOLVER *response_handle = NULL;
 
@@ -41,19 +53,24 @@ static const uint64_t mt_const = 6364136223846793005;
 uint64_t mt_current = 0;
 uint64_t mt_position = 0;
 
-EMSCRIPTEN_KEEPALIVE PRIZE* table_resolver(uint16_t index){
-
-    if(index < core_prizes){
-        uint16_t i_0 = index/256;
-        uint16_t i_1 = index - (i_0*256);
+PRIZE *Table_Resolver(uint16_t index)
+{
+    if (index < core_prizes)
+    {
+        uint16_t i_0 = index / 256;
+        uint16_t i_1 = index - (i_0 * 256);
         return core_start[i_0][i_1];
-    }else{
-        index = index - core_prizes;
-        
-        uint16_t i_0 = index/256;
-        uint16_t i_1 = index - (i_0*256);
+    }
+
+    index = index - core_prizes;
+    if (index < ext_prizes)
+    {
+        uint16_t i_0 = index / 256;
+        uint16_t i_1 = index - (i_0 * 256);
         return ext_start[i_0][i_1];
     }
+    printf("Prize ID invalid\n");
+    return &default_prize;
 }
 
 uint64_t Advance_Mersenne_Sequence()
@@ -65,9 +82,10 @@ uint64_t Advance_Mersenne_Sequence()
     return mt_next;
 }
 
-void Add_Prize(uint16_t cost, const char *name, const char *desc, uint8_t repeatable, PRIZE *depenecies)
+void Add_Prize(uint16_t cost, const char *name, const char *desc, uint8_t repeatable, PRIZE *dependencies)
 {
-    if(num_prizes > core_prizes){
+    if (num_prizes > core_prizes)
+    {
         printf("ERROR: Total Core Prizes Exeeded, update number of core prizes\n");
         return;
     }
@@ -75,24 +93,25 @@ void Add_Prize(uint16_t cost, const char *name, const char *desc, uint8_t repeat
     (*rval).id = num_prizes;
     (*rval).cost = cost;
     (*rval).name_len = strlen(name);
-    (*rval).name = (char*) calloc(sizeof(char), (*rval).name_len+1);
-    strcpy((*rval).name, (void*) name);
+    (*rval).name = (char *)calloc(sizeof(char), (*rval).name_len + 1);
+    strcpy((*rval).name, (void *)name);
     (*rval).desc_len = strlen(desc);
-    (*rval).desc = (char*) calloc(sizeof(char), (*rval).desc_len+1);
-    strcpy((*rval).desc, (void*) desc);
+    (*rval).desc = (char *)calloc(sizeof(char), (*rval).desc_len + 1);
+    strcpy((*rval).desc, (void *)desc);
     (*rval).times_received = 0;
     (*rval).repeatable = repeatable;
-    (*rval).dependency = depenecies;
+    (*rval).dependency = dependencies;
     (*rval).extended = false;
-    uint16_t i_0 = num_prizes/256;
-    uint16_t i_1 = num_prizes - (i_0*256);
+    uint16_t i_0 = num_prizes / 256;
+    uint16_t i_1 = num_prizes - (i_0 * 256);
     core_start[i_0][i_1] = rval;
     num_prizes++;
 }
 
-void Add_Prize_Extended(uint16_t cost, const char *name, const char *desc, uint8_t repeatable, PRIZE *depenecies)
+void Add_Prize_Extended(uint16_t cost, const char *name, const char *desc, uint8_t repeatable, PRIZE *dependencies)
 {
-    if(num_extend > ext_prizes){
+    if (num_extend > ext_prizes)
+    {
         printf("ERROR: Total Extended Prizes Exeeded, update number of extended prizes\n");
         return;
     }
@@ -100,29 +119,29 @@ void Add_Prize_Extended(uint16_t cost, const char *name, const char *desc, uint8
     (*rval).id = num_extend + core_prizes;
     (*rval).cost = cost;
     (*rval).name_len = strlen(name);
-    (*rval).name = (char*) calloc(sizeof(char), (*rval).name_len+1);
-    strcpy((*rval).name, (void*) name);
+    (*rval).name = (char *)calloc(sizeof(char), (*rval).name_len + 1);
+    strcpy((*rval).name, (void *)name);
     (*rval).desc_len = strlen(desc);
-    (*rval).desc = (char*) calloc(sizeof(char), (*rval).desc_len+1);
-    strcpy((*rval).desc, (void*) desc);
+    (*rval).desc = (char *)calloc(sizeof(char), (*rval).desc_len + 1);
+    strcpy((*rval).desc, (void *)desc);
     (*rval).times_received = 0;
     (*rval).repeatable = repeatable;
-    (*rval).dependency = depenecies;
+    (*rval).dependency = dependencies;
     (*rval).extended = true;
-    uint16_t i_0 = num_extend/256;
-    uint16_t i_1 = num_extend - (i_0*256);
+    uint16_t i_0 = num_extend / 256;
+    uint16_t i_1 = num_extend - (i_0 * 256);
     ext_start[i_0][i_1] = rval;
     num_extend++;
 }
 
-EMSCRIPTEN_KEEPALIVE void Reset_Recieve_Amounts(){
+EMSCRIPTEN_KEEPALIVE void Reset_Recieve_Amounts()
+{
     response_handle->points = 0;
     for (uint16_t i = 0; i < max_prizes; i++)
     {
         // printf("%"PRIu32"\n", i);
-        table_resolver(i)->times_received=0;
+        Table_Resolver(i)->times_received = 0;
     }
-    
 }
 
 EMSCRIPTEN_KEEPALIVE void Set_Rand_Seed(uint64_t seed, uint64_t steps, uint32_t points)
@@ -137,7 +156,6 @@ EMSCRIPTEN_KEEPALIVE void Set_Rand_Seed(uint64_t seed, uint64_t steps, uint32_t 
     {
         Advance_Mersenne_Sequence();
     }
-    
 }
 
 uint64_t BigInt_64_String_Length(uint64_t val)
@@ -173,15 +191,15 @@ uint64_t BigInt_8_String_Length(uint8_t val)
     return costlen;
 }
 
-const char *prize_success = "%s{\n\"id\":%"PRId16",\n\"name\":\"%s\",\n\"cost\":%" PRIu16 ",\n\"description\":\"%s\",\n\"times_recieved\":%"PRIu8",\n\"success\":true,\n\"extended\":%d\n},\n";
-const char *prize_fail = "%s{\n\"id\":%"PRId16",\n\"name\":\"%s\",\n\"cost\":%" PRIu16 ",\n\"description\":\"%s\",\n\"times_recieved\":%"PRIu8",\n\"success\":false,\n\"extended\":%d\n},\n";
+const char *prize_success = "%s{\n\"id\":%" PRId16 ",\n\"name\":\"%s\",\n\"cost\":%" PRIu16 ",\n\"description\":\"%s\",\n\"times_recieved\":%" PRIu8 ",\n\"success\":true,\n\"extended\":%d\n},\n";
+const char *prize_fail = "%s{\n\"id\":%" PRId16 ",\n\"name\":\"%s\",\n\"cost\":%" PRIu16 ",\n\"description\":\"%s\",\n\"times_recieved\":%" PRIu8 ",\n\"success\":false,\n\"extended\":%d\n},\n";
 
 PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
 {
     uint64_t len = 0;
     PRIZE_RESOLVER *dep = NULL;
     char *prev_msg = NULL;
-    
+
     PRIZE_RESOLVER *result = (PRIZE_RESOLVER *)malloc(sizeof(PRIZE_RESOLVER));
     result->dependency_success = true;
     if (prize->cost <= points)
@@ -189,11 +207,12 @@ PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
         if (prize->dependency != NULL)
         {
             dep = Resolve_Dependency(prize->dependency, points);
-            len += dep->len-1;
+            len += dep->len - 1;
             points = dep->points;
             prev_msg = dep->message;
-            
-            if(!dep->dependency_success){
+
+            if (!dep->dependency_success)
+            {
                 result->dependency_success = false;
             }
 
@@ -211,7 +230,8 @@ PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
             result->len = len + 100 + BigInt_16_String_Length(prize->id) + prize->name_len + BigInt_64_String_Length(prize->cost) + prize->desc_len + BigInt_8_String_Length(prize->times_received);
             prize->times_received = prize->times_received + 1;
             // printf("%"PRIu64" = %"PRIu64" +  86 + %"PRIu64" + %"PRId16" + %"PRId64" + %"PRId16" + %"PRId64" \n", result->len, len, BigInt_16_String_Length(prize->id), prize->name_len, BigInt_64_String_Length(prize->cost), prize->desc_len, BigInt_8_String_Length(prize->times_received));
-            if(strlen(prize->desc) != prize->desc_len){
+            if (strlen(prize->desc) != prize->desc_len)
+            {
                 printf("%s\n", prize->desc);
             }
             result->message = (char *)calloc(1, result->len);
@@ -234,7 +254,8 @@ PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
     result->dependency_success = false;
     result->len = len + 101 + BigInt_16_String_Length(prize->id) + prize->name_len + BigInt_64_String_Length(prize->cost) + prize->desc_len + BigInt_8_String_Length(prize->times_received);
     // printf("%"PRIu64" = %"PRIu64" +  86 + %"PRIu64" + %"PRId16" + %"PRId64" + %"PRId16" + %"PRId64" \n", result->len, len, BigInt_16_String_Length(prize->id), prize->name_len, BigInt_64_String_Length(prize->cost), prize->desc_len, BigInt_8_String_Length(prize->times_received));
-    if(strlen(prize->desc) != prize->desc_len){
+    if (strlen(prize->desc) != prize->desc_len)
+    {
         printf("%s\n", prize->desc);
     }
     result->message = (char *)calloc(1, result->len);
@@ -264,15 +285,16 @@ EMSCRIPTEN_KEEPALIVE uint64_t Roll_Random_PRIZE()
         response_handle->message = NULL;
     }
     uint64_t index = Advance_Mersenne_Sequence() % max_prizes;
-    while (table_resolver(index)->times_received >= table_resolver(index)->repeatable)
+    while (Table_Resolver(index)->times_received >= Table_Resolver(index)->repeatable)
     {
         index = Advance_Mersenne_Sequence() % max_prizes;
     }
     // printf("%"PRIu64"\n", index);
-    PRIZE_RESOLVER *response = Resolve_Dependency(table_resolver(index), points);
+    PRIZE_RESOLVER *response = Resolve_Dependency(Table_Resolver(index), points);
     uint64_t len = response->len;
-    while(response->message[len-1] == '\0'){
-        len = len-1;
+    while (response->message[len - 1] == '\0')
+    {
+        len = len - 1;
     }
     response_handle->len = len;
     response_handle->message = response->message;
@@ -281,58 +303,106 @@ EMSCRIPTEN_KEEPALIVE uint64_t Roll_Random_PRIZE()
     return len;
 }
 
-EMSCRIPTEN_KEEPALIVE void Increment_Prize_By_Id(uint16_t index){
-    // printf("expect = %u: %d\n", index, table_resolver(index)->times_received+1);
-    table_resolver(index)->times_received = table_resolver(index)->times_received+1;
-    // printf("check = %u: %d\n", index, table_resolver(index)->times_received);
-
-}
-
-// PRIZE* Find_Prize(char* name){
-//     for (uint16_t i = 0; i < max_prizes; i++)
-//     {
-//         if(name[0] != table_resolver(i)->name[0]){
-//             continue;
-//         }
-//         if(strcmp(name, table_resolver(i)->name)){
-//             continue;
-//         }
-//         return table_resolver(i);
-//     }
-//     return 0;
-// }
-
-// EMSCRIPTEN_KEEPALIVE void Roll_Specific_PRIZE(char* name){
-//     PRIZE* prize = Find_Prize(name);
-//     response_handle->len = prize->desc_len;
-//     strcpy(response_handle->message, prize->desc);
-// }
-
-EMSCRIPTEN_KEEPALIVE void test_print(char* string, uint16_t len){
-    printf("%d\n", len);
-    for (uint16_t i = 0; i < len; i++)
+EMSCRIPTEN_KEEPALIVE uint64_t Roll_Prize_By_Id(uint16_t id)
+{
+    PRIZE *prize = Table_Resolver(id);
+    response_handle->points += 100;
+    uint32_t points = response_handle->points;
+    if (response_handle->message != NULL)
     {
-        printf("%c", string[i]);
+        free(response_handle->message);
+        response_handle->message = NULL;
     }
-    printf("\n");
-    printf("%lu\n", strlen(string));
+    if (prize->times_received >= prize->repeatable)
+    {
+        response_handle->len = 101 + BigInt_16_String_Length(prize->id) + prize->name_len + BigInt_64_String_Length(prize->cost) + prize->desc_len + BigInt_8_String_Length(prize->times_received);
+        response_handle->message = (char *)calloc(1, response_handle->len);
+        sprintf(response_handle->message, prize_fail, "", prize->id, prize->name, prize->cost, prize->desc, prize->times_received, prize->extended);
+        
+        while (response_handle->message[response_handle->len - 1] == '\0')
+        {
+            response_handle->len = response_handle->len - 1;
+        }
+        return response_handle->len;
+    }
+    else
+    {
+        PRIZE_RESOLVER *response = Resolve_Dependency(prize, points);
+        uint64_t len = response->len;
+        while (response->message[len - 1] == '\0')
+        {
+            len = len - 1;
+        }
+        response_handle->len = len;
+        response_handle->message = response->message;
+        response_handle->points = response->points;
+        free(response);
+        return len;
+    }
 }
 
-void Recursive_Resolver(PRIZE* prize){
-    if(prize->dependency != NULL){
+EMSCRIPTEN_KEEPALIVE void Increment_Prize_By_Id(uint16_t index)
+{
+    // printf("expect = %u: %d\n", index, Table_Resolver(index)->times_received+1);
+    Table_Resolver(index)->times_received = Table_Resolver(index)->times_received + 1;
+    // printf("check = %u: %d\n", index, Table_Resolver(index)->times_received);
+}
+
+// EMSCRIPTEN_KEEPALIVE void test_print(char *string, uint16_t len)
+// {
+//     printf("%d\n", len);
+//     for (uint16_t i = 0; i < len; i++)
+//     {
+//         printf("%c", string[i]);
+//     }
+//     printf("\n");
+//     printf("%lu\n", strlen(string));
+// }
+
+EMSCRIPTEN_KEEPALIVE uint16_t Get_Prize_Id_By_Name(char *name, uint16_t len)
+{
+    name[len] = '\0';
+    for (uint16_t i = 0; i < max_prizes; i++)
+    {
+        PRIZE *row = Table_Resolver(i);
+        if (strcmp(row->name, name))
+        {
+            continue;
+        }
+        return row->id;
+    }
+    return UINT16_MAX;
+}
+
+EMSCRIPTEN_KEEPALIVE void Print_Perk_Details(uint16_t id)
+{
+    PRIZE *prize = Table_Resolver(id);
+    if (prize->dependency != NULL)
+    {
+        printf("ID: %"PRIu16"\nName: %s\nCost: %" PRId16 "\n\nDescription:\n%s\n\nDependency: %s\n", prize->id, prize->name, prize->cost, prize->desc, prize->dependency->name);
+    }
+    else
+    {
+        printf("ID: %"PRIu16"\nName: %s\nCost: %" PRId16 "\n\nDescription:\n%s\n", prize->id, prize->name, prize->cost, prize->desc);
+    }
+}
+
+void Recursive_Resolver(PRIZE *prize)
+{
+    if (prize->dependency != NULL)
+    {
         Recursive_Resolver(prize->dependency);
     }
-    printf("Name: %s\nCost: %"PRId16"\n\nDescription:\n%s\n", prize->name, prize->cost, prize->desc);
+    printf("Name: %s\nCost: %" PRId16 "\n\nDescription:\n%s\n", prize->name, prize->cost, prize->desc);
 }
 
-EMSCRIPTEN_KEEPALIVE void Resolve_Specific_Perk(uint16_t id){
-    Recursive_Resolver(table_resolver(id));
+EMSCRIPTEN_KEEPALIVE void Resolve_Specific_Perk(uint16_t id)
+{
+    Recursive_Resolver(Table_Resolver(id));
 }
 
 EMSCRIPTEN_KEEPALIVE uint64_t Read_Current_Response_String(char *dest)
 {
-    // printf("%s\n", response_handle->message);
-    // printf("strlen: %lu\nvarlen: %"PRId64"\n", strlen(response_handle->message), response_handle->len);
     memcpy(dest, response_handle->message, sizeof(char) * (response_handle->len));
 
     return mt_position;
@@ -345,97 +415,99 @@ EMSCRIPTEN_KEEPALIVE uint32_t Get_Current_Points()
 
 int main(int argc, char const *argv[])
 {
-    if(core_prizes > 0){
-        uint16_t i_0 = (core_prizes/256)+1;
+    if (core_prizes > 0)
+    {
+        uint16_t i_0 = (core_prizes / 256) + 1;
         core_start = (PRIZE ***)calloc(i_0, sizeof(PRIZE **));
         for (uint16_t j = 0; j < i_0; j++)
         {
-            core_start[j] = (PRIZE**)calloc(256, sizeof(PRIZE**));
+            core_start[j] = (PRIZE **)calloc(256, sizeof(PRIZE **));
         }
     }
 
-    if(ext_prizes > 0){
-        uint16_t i_1 = (ext_prizes/256)+1;
+    if (ext_prizes > 0)
+    {
+        uint16_t i_1 = (ext_prizes / 256) + 1;
         ext_start = (PRIZE ***)calloc(i_1, sizeof(PRIZE **));
         for (uint16_t j = 0; j < i_1; j++)
         {
-            ext_start[j] = (PRIZE**)calloc(256, sizeof(PRIZE**));
+            ext_start[j] = (PRIZE **)calloc(256, sizeof(PRIZE **));
         }
     }
 
     max_prizes = core_prizes + ext_prizes;
-    
+
     response_handle = (PRIZE_RESOLVER *)malloc(sizeof(PRIZE_RESOLVER));
     response_handle->len = 0;
     response_handle->message = NULL;
     response_handle->points = 0;
 
     Add_Prize(0, "Spiritual Energy", "The stuff that makes up souls. That undefinable thing that still defines everything. Everything makes it all the time, though you perhaps make more than usual. You are now able to manipulate it to your own ends", 255, NULL);
-    Add_Prize(300, "The Root of Meaning", "There is meaning to this world. Yet, if you ground all of existence into its finest components and searched through it all, you would find none. It is this paradox that you now command, to be able to empower the very meaning that is born of form", 1, table_resolver(0));
-    Add_Prize(300, "Divine Insight", "Gods Exist. Or do they? Born of belief yet having always existed, it is difficult to say if people created gods or gods created people. The answer to that dichotomy is the core to divinity - the end result of Meaning enforced upon existence through collective action. And that is a secret you now hold in your heart of hearts", 1, table_resolver(0));
-    Add_Prize(300, "Sword Intent", "Or anything intent, really, you know how to imbue spiritual energy into items you craft giving them the beginnings of sentience. Though they will never develop any true sapience, they are born with 'instincts' regarding their proper use and will learn alongside their wielders. They can make their desires known to their operators and function better than they physically should, growing as their souls do.", 1, table_resolver(0));
-    Add_Prize(600, "Spirits", "Not quite souls, but perhaps something along the way. Spiritual constructs with a degree of agency capable of carrying out specific tasks and acting in a specific manner are far simpler to make and can ", 1, table_resolver(0));
-    Add_Prize(900, "Souls", "Souls are a complex thing. Yet, ultimately, quite simple to make. Even the complex souls of people are often created though complete accident. Indeed, a simple object well cared for will eventually gain an identity strong enough to form a soul. You now understand this principle that with sufficient study you can create souls of varying complexity from simple rocks to the intricate existences of people and possibly beyond.", 1, table_resolver(0));
-    Add_Prize(600, "Elementals", "Elementals are interesting things. In many ways, they are concepts, enforced onto the world souls that have no need for a form to interact with the world. Though, perhaps because of this, they tend to be... otherwise simple. Still, you understand how to reinforce spiritual structures so that they may influence the wider world without a supporting anchor.", 1, table_resolver(0));
-    Add_Prize(300, "Ichor", "Said to be the blood of gods, this material is effectively condensed spiritual energy, rendered into a mores table form. This has a number of uses, though that might require some experimentation for you to uncover", 1, table_resolver(0));
-    Add_Prize(300, "Altar", "These devices gather devotion, the deliberate act of sacrifice in order to venerate another, be that of time or something more material. When these acts are performed at an altar, it empowers the souls of the item in question.", 1, table_resolver(2));
-    Add_Prize(300, "Icon", "These devices gather faith, the deep-seated belief in the capabilities of something. This empowers that soul to act within the vicinity of the icon, dependent on the belief of the wielder.", 1, table_resolver(2));
-    Add_Prize(300, "Offering", "By preparing an object and ritually destroying it, you can grant strength to the items that you wish to empower. This imbues them with additional spiritual strength, which can be improved by preparing specific offering in line with the soul in question. This also improves the quality of the object to a supernatural degree.", 1, table_resolver(2));
-    Add_Prize(600, "Pact", "A sufficiently powerful soul may grant a portion of its power to another, bestowing them with a measure of their strength. In doing so however, the recipient is bound to the terms of the transfer.", 1, table_resolver(0));
-    Add_Prize(300, "Demesne", "A space claimed by a sufficiently powerful soul can, with time, be suffused with their strength, empowering allies and weakening foes. The strength of this depends of the age of the claim and the power of the soul in question", 1, table_resolver(0));
-    Add_Prize(750, "Cairn", "Souls normally travel through the natural paths to afterlives and through reincarnation upon the deaths of their mortal forms. However, you know how to create a new path, creating a shelter for souls that meet various criteria", 1, table_resolver(0));
-    Add_Prize(400, "Meridians", "These channels of Spiritual Energy enable a soul to more easily effect the physical world. These run through the physical counterpart of the soul, not only allowing the soul to manifest exotic effects, but also granting a measure of the strength and durability of the soul onto the body", 1, table_resolver(0));
-    Add_Prize(300, "Aura", "The properties of a soul made evident. Through various means, you may extend the spiritual presence of a soul such that other souls become aware of it. This may simply be limited to a 'vibe' for weaker souls, but more powerful ones will radiate their particular nature in a manner that is obvious to any witnesses", 1, table_resolver(0));
-    Add_Prize(500, "Realm", "A space claimed by a soul can begin to show the properties of the soul in question, should it be sufficiently powerful and have enough time to work. Though this may simply begin as a place's ownership being evident, the ream will take on traits that reflect the owner's soul", 1, table_resolver(0));
-    Add_Prize(600, "Totemic Spirit", "More a spirit of an idea than anything else, these constructs are effectively the souls of things like families, organizations or even causes. In addition to being able to eventually empower those aligned with it, the spirit can also act as a focus for empowerments to be spread across a broader concept", 1, table_resolver(0));
-    Add_Prize(400, "Koshchei's Box", "Physical distance means very little to a soul, at the end of the day, and sometimes it's best to keep a soul safe… elsewhere. You know how to create a container for a soul, allowing it to remain safe elsewhere while still retaining normal faction of its physical body.", 1, table_resolver(1));
-    Add_Prize(300, "Divine Regalia", "You know how to create tools that amplify aspects of a divine existence, allowing them to be more easily expressed unto the physical universe. As a side effect, even your mundane creations are of such quality that the gods themselves would fight over them.", 1, table_resolver(2));
-    Add_Prize(150, "Ghost Traps", "You can create devices that can contain spiritual presences. These traps activate under specific conditions and drag any spiritual presences not bound within a physical anchor into a holding chamber from which they can later be released", 1, table_resolver(0));
-    Add_Prize(500, "Unhallowed Ground", "You can prepare a space such that it is inimitable to spiritual presences, and are capable of optimising the effect for specific groups or individual examples for greater effect given sufficient knowledge of them. At a base level, this offers resistance to their influence but can scale to utterly barring them from being able to access the space.", 1, table_resolver(0));
+    Add_Prize(300, "The Root of Meaning", "There is meaning to this world. Yet, if you ground all of existence into its finest components and searched through it all, you would find none. It is this paradox that you now command, to be able to empower the very meaning that is born of form", 1, Table_Resolver(0));
+    Add_Prize(300, "Divine Insight", "Gods Exist. Or do they? Born of belief yet having always existed, it is difficult to say if people created gods or gods created people. The answer to that dichotomy is the core to divinity - the end result of Meaning enforced upon existence through collective action. And that is a secret you now hold in your heart of hearts", 1, Table_Resolver(0));
+    Add_Prize(300, "Sword Intent", "Or anything intent, really, you know how to imbue spiritual energy into items you craft giving them the beginnings of sentience. Though they will never develop any true sapience, they are born with 'instincts' regarding their proper use and will learn alongside their wielders. They can make their desires known to their operators and function better than they physically should, growing as their souls do.", 1, Table_Resolver(0));
+    Add_Prize(600, "Spirits", "Not quite souls, but perhaps something along the way. Spiritual constructs with a degree of agency capable of carrying out specific tasks and acting in a specific manner are far simpler to make and can ", 1, Table_Resolver(0));
+    Add_Prize(900, "Souls", "Souls are a complex thing. Yet, ultimately, quite simple to make. Even the complex souls of people are often created though complete accident. Indeed, a simple object well cared for will eventually gain an identity strong enough to form a soul. You now understand this principle that with sufficient study you can create souls of varying complexity from simple rocks to the intricate existences of people and possibly beyond.", 1, Table_Resolver(0));
+    Add_Prize(600, "Elementals", "Elementals are interesting things. In many ways, they are concepts, enforced onto the world souls that have no need for a form to interact with the world. Though, perhaps because of this, they tend to be... otherwise simple. Still, you understand how to reinforce spiritual structures so that they may influence the wider world without a supporting anchor.", 1, Table_Resolver(0));
+    Add_Prize(300, "Ichor", "Said to be the blood of gods, this material is effectively condensed spiritual energy, rendered into a mores table form. This has a number of uses, though that might require some experimentation for you to uncover", 1, Table_Resolver(0));
+    Add_Prize(300, "Altar", "These devices gather devotion, the deliberate act of sacrifice in order to venerate another, be that of time or something more material. When these acts are performed at an altar, it empowers the souls of the item in question.", 1, Table_Resolver(2));
+    Add_Prize(300, "Icon", "These devices gather faith, the deep-seated belief in the capabilities of something. This empowers that soul to act within the vicinity of the icon, dependent on the belief of the wielder.", 1, Table_Resolver(2));
+    Add_Prize(300, "Offering", "By preparing an object and ritually destroying it, you can grant strength to the items that you wish to empower. This imbues them with additional spiritual strength, which can be improved by preparing specific offering in line with the soul in question. This also improves the quality of the object to a supernatural degree.", 1, Table_Resolver(2));
+    Add_Prize(600, "Pact", "A sufficiently powerful soul may grant a portion of its power to another, bestowing them with a measure of their strength. In doing so however, the recipient is bound to the terms of the transfer.", 1, Table_Resolver(0));
+    Add_Prize(300, "Demesne", "A space claimed by a sufficiently powerful soul can, with time, be suffused with their strength, empowering allies and weakening foes. The strength of this depends of the age of the claim and the power of the soul in question", 1, Table_Resolver(0));
+    Add_Prize(750, "Cairn", "Souls normally travel through the natural paths to afterlives and through reincarnation upon the deaths of their mortal forms. However, you know how to create a new path, creating a shelter for souls that meet various criteria", 1, Table_Resolver(0));
+    Add_Prize(400, "Meridians", "These channels of Spiritual Energy enable a soul to more easily effect the physical world. These run through the physical counterpart of the soul, not only allowing the soul to manifest exotic effects, but also granting a measure of the strength and durability of the soul onto the body", 1, Table_Resolver(0));
+    Add_Prize(300, "Aura", "The properties of a soul made evident. Through various means, you may extend the spiritual presence of a soul such that other souls become aware of it. This may simply be limited to a 'vibe' for weaker souls, but more powerful ones will radiate their particular nature in a manner that is obvious to any witnesses", 1, Table_Resolver(0));
+    Add_Prize(500, "Realm", "A space claimed by a soul can begin to show the properties of the soul in question, should it be sufficiently powerful and have enough time to work. Though this may simply begin as a place's ownership being evident, the ream will take on traits that reflect the owner's soul", 1, Table_Resolver(0));
+    Add_Prize(600, "Totemic Spirit", "More a spirit of an idea than anything else, these constructs are effectively the souls of things like families, organizations or even causes. In addition to being able to eventually empower those aligned with it, the spirit can also act as a focus for empowerments to be spread across a broader concept", 1, Table_Resolver(0));
+    Add_Prize(400, "Koshchei's Box", "Physical distance means very little to a soul, at the end of the day, and sometimes it's best to keep a soul safe… elsewhere. You know how to create a container for a soul, allowing it to remain safe elsewhere while still retaining normal faction of its physical body.", 1, Table_Resolver(1));
+    Add_Prize(300, "Divine Regalia", "You know how to create tools that amplify aspects of a divine existence, allowing them to be more easily expressed unto the physical universe. As a side effect, even your mundane creations are of such quality that the gods themselves would fight over them.", 1, Table_Resolver(2));
+    Add_Prize(150, "Ghost Traps", "You can create devices that can contain spiritual presences. These traps activate under specific conditions and drag any spiritual presences not bound within a physical anchor into a holding chamber from which they can later be released", 1, Table_Resolver(0));
+    Add_Prize(500, "Unhallowed Ground", "You can prepare a space such that it is inimitable to spiritual presences, and are capable of optimising the effect for specific groups or individual examples for greater effect given sufficient knowledge of them. At a base level, this offers resistance to their influence but can scale to utterly barring them from being able to access the space.", 1, Table_Resolver(0));
     Add_Prize(0, "Psionics", "The true power of Mind over Matter. Though it is not limited to the realm of the material psionic energy is a manifestation of your inner self on the outside world. This grants basic psionic abilities, though nothing exceptional", 255, NULL);
-    Add_Prize(300, "WE/YOU/I ARE ONE", "Your mind is a part of a greater whole thoughts and beliefs flow in and out. The boundary of your existence if far more permeable than you would have thought and you know how to have your mind reach out, feel and manipulate", 1, table_resolver(22));
-    Add_Prize(300, "Where Do I End", "You are a part of the universe. A part that thinks. But where do you end? You have a command over your existence that most of it does not have, and with the right Will, you may enforce that command over more than thoughts", 1, table_resolver(22));
-    Add_Prize(500, "Technokinesis", "What is technology, but the dreams of people made manifest. Technology has a particular relationship with psionic energies, and you now have the aptitude necessary to directly interface with technology of all kinds with your psychic prowess.", 1, table_resolver(22));
-    Add_Prize(300, "Thermokinesis", "Though some might think of this as pyrokinesis, in truth, this is a broader discipline. Temperature is a fundamental part of reality, and one that you can now exercise some serious control over.", 1, table_resolver(22));
-    Add_Prize(300, "Photokinesis", "Though it may seem as though telekinesis creates energy, that is largely a side effect of the resultant movement. Truly creating energy from psionic power is actually fairly tricky. Still, you now have the aptitude and basic skills necessary to generate bursts of light and even manipulate existing photons through psionic might.", 1, table_resolver(22));
-    Add_Prize(300, "Electrokinesis", "Manipulating something as small and uncertain as electrons requires a delicate touch and a certain mentality that you now possess. Not only are you able to make electrons dance, but you can also generate magnetic fields through will alone.", 1, table_resolver(22));
-    Add_Prize(300, "Psionic Integration", "Psychoactive materials are quite difficult to make, but an integral part of any psionic technology that doesn't involve an ability for self-determination. You gain the fundamental knowledge necessary needed to build psionic devices, including the relevant structural and chemical theory", 1, table_resolver(22));
-    Add_Prize(300, "Telepathic Interface", "Controlling devices with your mind is an interesting prospect, though one that generally requires another mind to link with. With careful application however, you can create a system that operates almost as an extension of the user, receiving and sending telepathic signals that can allow for the use of complex systems", 1, table_resolver(29));
-    Add_Prize(300, "Telekinetic Arrays", "Ah, motive force. The fundamental interface between the now and will be. Producing this through artificial means is the core of creating psionic technology with an ability to impact the physical world.", 1, table_resolver(29));
-    Add_Prize(300, "Illusionary Systems", "Illusions are an interesting aspect of the psionic arts. Though some believe it could be considered an aspect of telepathy, the truth is that illusions are far more complex constructs, capable of programmed action independent of direct control. These psionic constructs can effectively be used as incredibly versatile components that can be altered as necessary", 1, table_resolver(29));
-    Add_Prize(500, "Mimetic Technology", "Ideas are the genetics of civilisation, from opinions to traditions, being able to create mental constructs that spread and persist is both easy and incredibly difficult. Simple earworms are but party tricks compared to what you are capable of.", 1, table_resolver(22));
-    Add_Prize(300, "Empathic Sensors", "Reaching into the subconscious is quite tricky, but necessary for a wide variety of purposes. Through various complex psionic processes, you can create sensors that pick-up emotion, desires, intent and all the other underlying currents of the mind", 1, table_resolver(29));
-    Add_Prize(200, "Mind Crystals", "While there are mundane materials that can interact with psionic energies, few things can compare to materialised psionic energy. Both in terms of its ability to interact with external psionic energy and fuel psionic creations through the controlled release of the stabilised power.", 1, table_resolver(22));
-    Add_Prize(200, "Thoughtforms", "Complex psionic constructs are interesting, in that they produce a sort of intelligence independent of any actual mind. Though this is often limited to a programmatic response to psionic stimuli, these creations are quite interesting", 1, table_resolver(22));
-    Add_Prize(200, "Mindscapes", "A mindscape is interesting, even the mundane exercises can yield useful results. However, a psionic adept can use this to extremely interesting effect allowing for better control over memory and various aspects of the mind", 1, table_resolver(22));
-    Add_Prize(200, "Mental Defences", "The existence of psionics is somewhat unsettling to some, and even psychics are only able to fight off attacks that they are aware of. As such, there comes a need to be able to create autonomous constructs that can protect the mind from unwanted intrusion", 1, table_resolver(22));
-    Add_Prize(300, "True Speech", "Communication in and of itself is an interesting phenomenon, a mind influencing others through the sharing of information. This has implications to a psionic individual, and with the right skills it becomes possible to understand and make yourself understood by dealing with the informational content of any message", 1, table_resolver(22));
-    Add_Prize(200, "A Memory", "What it seems like. A memory, one extracted from your mind or one being focused on by another. It takes the form of liquid lightning and can be passed on to others.", 1, table_resolver(22));
-    Add_Prize(200, "Mental Helm", "This physical object, when placed in proximity to the seat of consciousness imbues it's wearer with powerful psionic protections, allowing them to shrug off almost any mental intrusion. ", 1, table_resolver(29));
+    Add_Prize(300, "WE/YOU/I ARE ONE", "Your mind is a part of a greater whole thoughts and beliefs flow in and out. The boundary of your existence if far more permeable than you would have thought and you know how to have your mind reach out, feel and manipulate", 1, Table_Resolver(22));
+    Add_Prize(300, "Where Do I End", "You are a part of the universe. A part that thinks. But where do you end? You have a command over your existence that most of it does not have, and with the right Will, you may enforce that command over more than thoughts", 1, Table_Resolver(22));
+    Add_Prize(500, "Technokinesis", "What is technology, but the dreams of people made manifest. Technology has a particular relationship with psionic energies, and you now have the aptitude necessary to directly interface with technology of all kinds with your psychic prowess.", 1, Table_Resolver(22));
+    Add_Prize(300, "Thermokinesis", "Though some might think of this as pyrokinesis, in truth, this is a broader discipline. Temperature is a fundamental part of reality, and one that you can now exercise some serious control over.", 1, Table_Resolver(22));
+    Add_Prize(300, "Photokinesis", "Though it may seem as though telekinesis creates energy, that is largely a side effect of the resultant movement. Truly creating energy from psionic power is actually fairly tricky. Still, you now have the aptitude and basic skills necessary to generate bursts of light and even manipulate existing photons through psionic might.", 1, Table_Resolver(22));
+    Add_Prize(300, "Electrokinesis", "Manipulating something as small and uncertain as electrons requires a delicate touch and a certain mentality that you now possess. Not only are you able to make electrons dance, but you can also generate magnetic fields through will alone.", 1, Table_Resolver(22));
+    Add_Prize(300, "Psionic Integration", "Psychoactive materials are quite difficult to make, but an integral part of any psionic technology that doesn't involve an ability for self-determination. You gain the fundamental knowledge necessary needed to build psionic devices, including the relevant structural and chemical theory", 1, Table_Resolver(22));
+    Add_Prize(300, "Telepathic Interface", "Controlling devices with your mind is an interesting prospect, though one that generally requires another mind to link with. With careful application however, you can create a system that operates almost as an extension of the user, receiving and sending telepathic signals that can allow for the use of complex systems", 1, Table_Resolver(29));
+    Add_Prize(300, "Telekinetic Arrays", "Ah, motive force. The fundamental interface between the now and will be. Producing this through artificial means is the core of creating psionic technology with an ability to impact the physical world.", 1, Table_Resolver(29));
+    Add_Prize(300, "Illusionary Systems", "Illusions are an interesting aspect of the psionic arts. Though some believe it could be considered an aspect of telepathy, the truth is that illusions are far more complex constructs, capable of programmed action independent of direct control. These psionic constructs can effectively be used as incredibly versatile components that can be altered as necessary", 1, Table_Resolver(29));
+    Add_Prize(500, "Mimetic Technology", "Ideas are the genetics of civilisation, from opinions to traditions, being able to create mental constructs that spread and persist is both easy and incredibly difficult. Simple earworms are but party tricks compared to what you are capable of.", 1, Table_Resolver(22));
+    Add_Prize(300, "Empathic Sensors", "Reaching into the subconscious is quite tricky, but necessary for a wide variety of purposes. Through various complex psionic processes, you can create sensors that pick-up emotion, desires, intent and all the other underlying currents of the mind", 1, Table_Resolver(29));
+    Add_Prize(200, "Mind Crystals", "While there are mundane materials that can interact with psionic energies, few things can compare to materialised psionic energy. Both in terms of its ability to interact with external psionic energy and fuel psionic creations through the controlled release of the stabilised power.", 1, Table_Resolver(22));
+    Add_Prize(200, "Thoughtforms", "Complex psionic constructs are interesting, in that they produce a sort of intelligence independent of any actual mind. Though this is often limited to a programmatic response to psionic stimuli, these creations are quite interesting", 1, Table_Resolver(22));
+    Add_Prize(200, "Mindscapes", "A mindscape is interesting, even the mundane exercises can yield useful results. However, a psionic adept can use this to extremely interesting effect allowing for better control over memory and various aspects of the mind", 1, Table_Resolver(22));
+    Add_Prize(200, "Mental Defences", "The existence of psionics is somewhat unsettling to some, and even psychics are only able to fight off attacks that they are aware of. As such, there comes a need to be able to create autonomous constructs that can protect the mind from unwanted intrusion", 1, Table_Resolver(22));
+    Add_Prize(300, "True Speech", "Communication in and of itself is an interesting phenomenon, a mind influencing others through the sharing of information. This has implications to a psionic individual, and with the right skills it becomes possible to understand and make yourself understood by dealing with the informational content of any message", 1, Table_Resolver(22));
+    Add_Prize(200, "A Memory", "What it seems like. A memory, one extracted from your mind or one being focused on by another. It takes the form of liquid lightning and can be passed on to others.", 1, Table_Resolver(22));
+    Add_Prize(200, "Mental Helm", "This physical object, when placed in proximity to the seat of consciousness imbues it's wearer with powerful psionic protections, allowing them to shrug off almost any mental intrusion. ", 1, Table_Resolver(29));
     Add_Prize(0, "Ki", "A mystical energy associated with feats of physical and athletic prowess. This energy grows in response to physical exertion and tends produce results for physical training beyond what would be considered natural. This grants you capabilities equal to an average adept, nothing particularly special, but nothing to be concerned about either", 255, NULL);
-    Add_Prize(300, "Put Your Back Into It", "Ki is substance, it is existence. You know how to call upon this energy and put your whole self into everything you do. In addition to magnifying the effects of your actions, it allows you a control over the outcome of your actions beyond what is physically possible.", 1, table_resolver(42));
-    Add_Prize(300, "Martial Reinforcement", "You know how to flow your Ki into objects you wield making them more durable and effective. Your skill in this grows with time and power, but even initially, you can empower swords enough to cut through wooden posts without so much as dulling the blade.", 1, table_resolver(42));
-    Add_Prize(300, "Legendary Smith", "Your works are just better. Better than they have any right to me. Perhaps it is the ki adding more than strength to your blows, producing works that are orders of magnitude more capable than they really should be.", 1, table_resolver(42));
-    Add_Prize(300, "Beat it into Them", "Demonstrating, but the real way to learn how to fight is to fight. You can train people incredibly quickly through a combination of demonstration and sparring forcing proper form and technique into the minds of your students", 1, table_resolver(42));
-    Add_Prize(300, "Attuned Tools", "It normally takes years to get used to a tool, to know it as you know yourself. However, with sufficient skill a craftsman can create a tool designed for a single person, allowing them to wield it with such ease that it is better than anything else comparable would be in their hands and take to Ki augmentation particularly well", 1, table_resolver(42));
-    Add_Prize(300, "Prized Bloodline", "Certain fighters have specific talents, born of pure chance or breeding programs that might have gone on for generations. Not only can you identify the martial talents put in front of you, you can also isolate and replicate these factors in others", 1, table_resolver(42));
-    Add_Prize(300, "Strict Diet", "You are what you eat. Not only do you know what food is best for what purposes, but based on the resources you have available to you, you also know how to create the optimal possible diet for any given outcome, significantly accelerating progress. This also works for abnormal nutrition requirements like specific kinds of blood for vampires or alternative fuel sources for androids", 1, table_resolver(42));
+    Add_Prize(300, "Put Your Back Into It", "Ki is substance, it is existence. You know how to call upon this energy and put your whole self into everything you do. In addition to magnifying the effects of your actions, it allows you a control over the outcome of your actions beyond what is physically possible.", 1, Table_Resolver(42));
+    Add_Prize(300, "Martial Reinforcement", "You know how to flow your Ki into objects you wield making them more durable and effective. Your skill in this grows with time and power, but even initially, you can empower swords enough to cut through wooden posts without so much as dulling the blade.", 1, Table_Resolver(42));
+    Add_Prize(300, "Legendary Smith", "Your works are just better. Better than they have any right to me. Perhaps it is the ki adding more than strength to your blows, producing works that are orders of magnitude more capable than they really should be.", 1, Table_Resolver(42));
+    Add_Prize(300, "Beat it into Them", "Demonstrating, but the real way to learn how to fight is to fight. You can train people incredibly quickly through a combination of demonstration and sparring forcing proper form and technique into the minds of your students", 1, Table_Resolver(42));
+    Add_Prize(300, "Attuned Tools", "It normally takes years to get used to a tool, to know it as you know yourself. However, with sufficient skill a craftsman can create a tool designed for a single person, allowing them to wield it with such ease that it is better than anything else comparable would be in their hands and take to Ki augmentation particularly well", 1, Table_Resolver(42));
+    Add_Prize(300, "Prized Bloodline", "Certain fighters have specific talents, born of pure chance or breeding programs that might have gone on for generations. Not only can you identify the martial talents put in front of you, you can also isolate and replicate these factors in others", 1, Table_Resolver(42));
+    Add_Prize(300, "Strict Diet", "You are what you eat. Not only do you know what food is best for what purposes, but based on the resources you have available to you, you also know how to create the optimal possible diet for any given outcome, significantly accelerating progress. This also works for abnormal nutrition requirements like specific kinds of blood for vampires or alternative fuel sources for androids", 1, Table_Resolver(42));
     Add_Prize(300, "Technique Scrolls", "Getting the intricacies of martial technique to survive you is tricky. Martial arts are not often best described by words and pictures. But you can do it. In fact, you know exactly how to produce instructional materials of all kinds that are incredibly instructive items capable of perfectly pouring knowledge into even the poorest of pupils", 1, NULL);
-    Add_Prize(400, "Strange Concoctions", "These substances work far better than they should. Taking advantage of the supernatural qualities of Ki, these substances are able to perform feats that could be considered miraculous. They can cure mortal wounds, grant immense stamina or incredible strength or speed", 1, table_resolver(42));
-    Add_Prize(500, "Extreme Training", "Ki makes things that might seem impractical entirely possible. Be it carrying around massive rocks, or dodging arrows blindfolded, you know how to get extreme results from extreme effort, the more extreme the better", 1, table_resolver(42));
+    Add_Prize(400, "Strange Concoctions", "These substances work far better than they should. Taking advantage of the supernatural qualities of Ki, these substances are able to perform feats that could be considered miraculous. They can cure mortal wounds, grant immense stamina or incredible strength or speed", 1, Table_Resolver(42));
+    Add_Prize(500, "Extreme Training", "Ki makes things that might seem impractical entirely possible. Be it carrying around massive rocks, or dodging arrows blindfolded, you know how to get extreme results from extreme effort, the more extreme the better", 1, Table_Resolver(42));
     Add_Prize(400, "Training Grounds", "You know how to organize a space in such a way that it is perfect for particular uses, to a supernatural degree. Through the careful application of Ki and the flows of energy, you can create spaces that accelerate training or indeed any other specific activity", 1, NULL);
-    Add_Prize(500, "Animalistic Skill", "It is said that the old masters learned to fight by observing the movements of animals, producing various schools of martial arts. At their height these warriors were capable of nearly magical feats, replicating the inhuman capabilities of these creatures. With study and training, you can now also replicate some of the physical feats of these creatures.", 1, table_resolver(42));
-    Add_Prize(300, "Honor Vow", "There are ways to… concentrate your existence. To focus your presence. Even without supernatural influence dedication has its effects. With Ki, however, this effect is magnified, not only providing you a general bonus as you hold to the terms of your oath, but also significantly increasing your capabilities as you close in on the target of your Vow", 1, table_resolver(42));
+    Add_Prize(500, "Animalistic Skill", "It is said that the old masters learned to fight by observing the movements of animals, producing various schools of martial arts. At their height these warriors were capable of nearly magical feats, replicating the inhuman capabilities of these creatures. With study and training, you can now also replicate some of the physical feats of these creatures.", 1, Table_Resolver(42));
+    Add_Prize(300, "Honor Vow", "There are ways to… concentrate your existence. To focus your presence. Even without supernatural influence dedication has its effects. With Ki, however, this effect is magnified, not only providing you a general bonus as you hold to the terms of your oath, but also significantly increasing your capabilities as you close in on the target of your Vow", 1, Table_Resolver(42));
     Add_Prize(750, "Conservation of Ninjutsu", "The faceless, diffuse actions of a mass of efforts, often not entirely aligned means that only so much force can be brought against a single foe. You now have the stamina and strength to take advantage of those gaps in co-ordination. As the number of enemies grows the more of these gaps exist and the easier you find the fight.", 1, NULL);
-    Add_Prize(1000, "Berserker State", "Through careful training, the matter of Fight and Flight is answered. In various situations, you can call upon a deep reserve of power and durability able to act unfettered by any injury and disregard any pain you may be in.", 1, table_resolver(42));
+    Add_Prize(1000, "Berserker State", "Through careful training, the matter of Fight and Flight is answered. In various situations, you can call upon a deep reserve of power and durability able to act unfettered by any injury and disregard any pain you may be in.", 1, Table_Resolver(42));
     Add_Prize(500, "Vital Spirit", "There are limits to power, ends to your strength, but sometimes you need to push past it, regardless of the cost. There are limitations built into any mortal form. And there are ways to push past them. You can effectively 'cast from hit points' empowering your other abilities at the cost of damaging yourself.", 1, NULL);
-    Add_Prize(500, "Final Breath", "In one final gasp, in an exertion where you have nothing to lose, you can draw upon the last dregs of your strength with utter abandon, increasing your capabilities by orders of magnitude for a short period, though this does significantly damage your portal form. Even the greatest means of resurrection will have challenges undoing the harm done to yourself.", 1, table_resolver(42));
-    Add_Prize(400, "Accelerated Recovery", "You know how to call upon your Ki in such a way that it accelerates the process of healing while not only retaining but even improving the benefits of such exertion. Your body adapts to strain more quickly and without issue.", 1, table_resolver(42));
+    Add_Prize(500, "Final Breath", "In one final gasp, in an exertion where you have nothing to lose, you can draw upon the last dregs of your strength with utter abandon, increasing your capabilities by orders of magnitude for a short period, though this does significantly damage your portal form. Even the greatest means of resurrection will have challenges undoing the harm done to yourself.", 1, Table_Resolver(42));
+    Add_Prize(400, "Accelerated Recovery", "You know how to call upon your Ki in such a way that it accelerates the process of healing while not only retaining but even improving the benefits of such exertion. Your body adapts to strain more quickly and without issue.", 1, Table_Resolver(42));
     Add_Prize(200, "Mirror Moves", "An enemy can be the best teacher sometimes, and when it comes to you, that is most definitely true. You easily pick up moves, tricks and skills used against you, identifying them almost immediately and only needing another one or two examples to fully internalise it.", 1, NULL);
     Add_Prize(200, "C-C-C-Counter!", "The limitations of the physical form cannot be overcome through skill alone, and there are always compromises to be made. Compromises that you can easily identify. From even a single example, you know what you need to do in order to counter any specific move of means of attack, though leveraging that information is a matter of your own skills.", 1, NULL);
     Add_Prize(200, "Perfect Flow", "Skill in battle is not just about what you know, but how you put it into practice. You have a particular talent for efficiency, able to efficiently execute your intended movements without a single wasted calorie of effort. This carries over into the rest of your life, granting you a certain undeniable presence.", 1, NULL);
     Add_Prize(400, "Alchemic Symbols", "There are patterns, esoteric symbols that form the basis of alchemy. They require not particular affinity, merely knowledge of their function and the right training in order to enact simple instantaneous effects. You can receive this perk up to five times, the first granting your access to the core four (disintegration, cleansing, assembly and stasis), the next granting your effigies of the states of  matter and energy (solid, liquid, gas, plasma etc and heat, mass, light etc). The third grants you access to the four base conceptual elements (fire, water, earth, air) and the fourth grants you the Unreal Words (spirit, thought, motion, divinity, stories, ideas etc). The last, however, grants you every remaining word allowing you to describe anything in alchemical terms.", 5, NULL);
-    Add_Prize(300, "Transmutation Arrays", "These complex arrangements of alchemical symbols allow you to enact various alchemical processes in such a way that you can chain together a series of symbols representing various items in order to enact transmutations, alchemical processes that transform items. The first time you receive this perk your main focus is in altering the structure of items, retaining the same materials. The next allows you some control over their form, allowing you to transform items into other things so long as they are generally similar. The last stage grants you sufficient understanding to reduce objects their base materials and reconstruct them into entirely new forms.", 3, table_resolver(64));
+    Add_Prize(300, "Transmutation Arrays", "These complex arrangements of alchemical symbols allow you to enact various alchemical processes in such a way that you can chain together a series of symbols representing various items in order to enact transmutations, alchemical processes that transform items. The first time you receive this perk your main focus is in altering the structure of items, retaining the same materials. The next allows you some control over their form, allowing you to transform items into other things so long as they are generally similar. The last stage grants you sufficient understanding to reduce objects their base materials and reconstruct them into entirely new forms.", 3, Table_Resolver(64));
     Add_Prize(300, "Destruction", "This grants you a deep understanding of the fundamental concept of destruction, the ability to render something down to parts and components.", 1, NULL);
     Add_Prize(300, "Purification", "You gain an intuitive understanding of the process of purification, of how to remove impurities from any substance, returning it to a pure state.", 1, NULL);
     Add_Prize(300, "Construction", "You know how to combine various materials in order to create complex substances, allowing you to create new materials and mechanisms that allow you greater flexibility.", 1, NULL);
@@ -445,57 +517,57 @@ int main(int argc, char const *argv[])
     Add_Prize(750, "Philosopher Stone", "You know how to suspend the alchemical process, producing a stable energy that can act as a universal source for any alchemical process. This can even substitute for some of the ingredients of complex alchemical works.", 1, NULL);
     Add_Prize(1000, "The Great Work", "You know how to alter the very fundamentals of reality, refining objects in such a way as they are more perfect in some way, approaching the conceptual ideal of what it means to be that object. This allows them to act more effectively when used for their intended purposes.", 1, NULL);
     Add_Prize(500, "Atomic Synthesis", "You know how to bypass the usual material constraints of Alchemy, transforming the vary materials that compose physical items. By breaking things down to the subatomic level, you can reassemble the building blocks into new elements and substances.", 1, NULL);
-    Add_Prize(750, "Automated Alchemy", "Alchemy is normally a manual process, involving the direct intervention of the alchemist in question. However, you know how to account for every stage of the transmutation, allowing them to be operate entirely independently.", 1, table_resolver(65));
-    Add_Prize(400, "Chimeric Creations", "Given the complex nature of living systems, working with them in alchemical procedures is always a challenge. However, it is possible to treat living components as something of a black box, combining them to other systems through alchemical processes. Though this can be a little... crude in appearance.", 1, table_resolver(64));
-    Add_Prize(350, "Living Alchemy", "Life is extremely difficult to effect through alchemical processes. As a complex and chaotic environment, working any alchemy on a living thing is incredibly difficult, but you now understand how to account for these things, allowing you to heal and otherwise manipulate a body.", 1, table_resolver(64));
-    Add_Prize(500, "Homunculi", "Creating animate objects is considered one of the greater alchemical feats. And it is one that you are now capable of. Though this does not grant the knowledge required to produce minds with true intelligence, you can encode any form of logic you can understand.", 1, table_resolver(64));
-    Add_Prize(300, "Bloodline Transmutation", "You know how to embed alchemical understanding into the very essence of beings. This enables the being to more easily enact alchemical processes that involve this knowledge. However, the difficulty increases with the scope of the knowledge inserted. Most beings have trouble holding more than a single secret.", 1, table_resolver(64));
-    Add_Prize(500, "Simplified Transmutation", "You know how to reduce the usually complicated process associated with alchemy into much simpler forms. Indeed, some processes can be reduced to such a level that they can be held entirely in the mind, allowing a person to enact transmutations without external aid.", 1, table_resolver(65));
-    Add_Prize(300, "Complex Creations", "You know how to encode extremely complex structural information into your alchemical processes, allowing you to produce complex items such as machines with many moving and independent parts.", 1, table_resolver(64));
-    Add_Prize(1200, "Alchemic Reversion", "Though it may seem that alchemical  transmutations are perfect, you know how to pick at the seams of such things, allowing you to reverse various alchemical processes. Though, some are easier than others. The quality of the transmutation factors heavily into how perfectly something has been altered and thus the difficulty in reversing any such changes.", 1, table_resolver(64));
+    Add_Prize(750, "Automated Alchemy", "Alchemy is normally a manual process, involving the direct intervention of the alchemist in question. However, you know how to account for every stage of the transmutation, allowing them to be operate entirely independently.", 1, Table_Resolver(65));
+    Add_Prize(400, "Chimeric Creations", "Given the complex nature of living systems, working with them in alchemical procedures is always a challenge. However, it is possible to treat living components as something of a black box, combining them to other systems through alchemical processes. Though this can be a little... crude in appearance.", 1, Table_Resolver(64));
+    Add_Prize(350, "Living Alchemy", "Life is extremely difficult to effect through alchemical processes. As a complex and chaotic environment, working any alchemy on a living thing is incredibly difficult, but you now understand how to account for these things, allowing you to heal and otherwise manipulate a body.", 1, Table_Resolver(64));
+    Add_Prize(500, "Homunculi", "Creating animate objects is considered one of the greater alchemical feats. And it is one that you are now capable of. Though this does not grant the knowledge required to produce minds with true intelligence, you can encode any form of logic you can understand.", 1, Table_Resolver(64));
+    Add_Prize(300, "Bloodline Transmutation", "You know how to embed alchemical understanding into the very essence of beings. This enables the being to more easily enact alchemical processes that involve this knowledge. However, the difficulty increases with the scope of the knowledge inserted. Most beings have trouble holding more than a single secret.", 1, Table_Resolver(64));
+    Add_Prize(500, "Simplified Transmutation", "You know how to reduce the usually complicated process associated with alchemy into much simpler forms. Indeed, some processes can be reduced to such a level that they can be held entirely in the mind, allowing a person to enact transmutations without external aid.", 1, Table_Resolver(65));
+    Add_Prize(300, "Complex Creations", "You know how to encode extremely complex structural information into your alchemical processes, allowing you to produce complex items such as machines with many moving and independent parts.", 1, Table_Resolver(64));
+    Add_Prize(1200, "Alchemic Reversion", "Though it may seem that alchemical  transmutations are perfect, you know how to pick at the seams of such things, allowing you to reverse various alchemical processes. Though, some are easier than others. The quality of the transmutation factors heavily into how perfectly something has been altered and thus the difficulty in reversing any such changes.", 1, Table_Resolver(64));
     Add_Prize(0, "Magic", "The ultimate expression of mysticism, this grants you a supply of that arcane energy that is permits so many forms of supernatural capabilities. Though you are no archmage, your capabilities are not weak either. This grants you additional power equal to a mediocre mage, capable of learning most spells.", 255, NULL);
-    Add_Prize(300, "Wishes and Dreams", "Magic, ultimately is about belief. It is about effect following cause, even when the physical realities don't align. From the greatest rituals to the least cantrip, it is this foundation that persists, and one that you understand on a fundamental level", 1, table_resolver(83));
-    Add_Prize(600, "Enchanting", "Magic is effect. It is the result of arcane intention enforced unto reality. So often that means that it is transient, ephemeral. But you know how to bind it. Though thematic substrates will make it easier, you are able to bind a mystical effect to any item and engage the result repeatedly though perhaps with a cooldown depending on the scale of the effect.", 1, table_resolver(83));
-    Add_Prize(200, "Arcane Focus", "Manipulating magic takes imagination, focus, knowledge and power. While some things are dependent on the wielder you can make it easier to focus, at least. From augmenting a mage's focus directly or simply offloading some of the strain, you know how to make tools that ease the process of performing arcane acts.", 1, table_resolver(83));
-    Add_Prize(300, "Potioncraft", "Ah, those flasks of mysterious fluid all sitting pretty on the shelf. You know the intricacies of how ingredients interact and the subtle power that lies within a cauldron. You know what ingredients can be substituted for each other and how call the sparks of magic from what seems like mundane materials.", 1, table_resolver(83));
-    Add_Prize(600, "Rituals", "Grand desires often entail grand action. This is true in magic just as it is in other ventures. Through sacrifice both material and symbolic you know how to vastly increase the scale at which your magic can function.", 1, table_resolver(83));
-    Add_Prize(900, "Geomancy", "Ley Lines, Genus Loci, Places of Power... all of these have immense arcane might that you can turn to your ends. You can manipulate and even create these artefacts.", 1, table_resolver(88));
-    Add_Prize(550, "Divination", "To be a wizard, witch or even sorcerer is to be someone with wisdom or knowledge beyond common ken. And magic has many ways of gathering that information. You have a talent for various forms of divination - that inner eye that you can hone with sufficient practice", 1, table_resolver(83));
-    Add_Prize(400, "Grimoire", "Simply storing arcane lore is difficult, knowledge is power and powerful magic is often not particularly predictable. You however, know how to encode magical secrets in a manner that is safe and understandable, allowing you to ease the process of working complex acts. These methods also happen to be great at handling all kinds of exotic knowledge.", 1, table_resolver(83));
-    Add_Prize(300, "Portals", "Being able to access distant locales has always been a dream of mages, and is particularly useful when it comes to transporting large amounts of material or people. This ritual can be customised to produce a portal of any shape, size or duration to a destination you can adequately describe, though as those factors become greater, harder to describe or encounter various obstacles (even simple distance), the difficulty of the ritual and the quality of the required reagents increase.", 1, table_resolver(85));
-    Add_Prize(200, "Teleportation", "You are here, and now you are not. You now have knowledge of a spell that allows you to teleport yourself, and sufficient understanding to alter it to affect others and even groups, though that increases the cost and complexity.", 1, table_resolver(84));
-    Add_Prize(250, "Fated Blow Enchantment", "You know how to enchant projectile weapons such that they will always hit their target. From named bullets to spears that would weave around obstacles, this enchantment can be tweaked and optimised for a variety of expressions.", 1, table_resolver(85));
-    Add_Prize(100, "Elemental Enchantment", "You can enchant objects in such a way so as to have them generate effects aligned with various elements, and can fine tune the expression to take on various forms. From blades that can send out blades of razor-sharp wind to hammers that shatter the earth, this can take on a vast variety of forms.", 1, table_resolver(85));
-    Add_Prize(150, "Fey Food", "The line between exceptional cooking and a magical ritual is a blurry one, and you know how to push that boundary in a variety of ways. You can produce food that is not only supernaturally delicious, but can act as a medium for a variety of supernatural effects.", 1, table_resolver(87));
-    Add_Prize(500, "False Life", "You can create an emulation of life, an enchantment that animates objects and allows them to react to objects according to a fixed, preset personality. Though convincing, these creations are not truly sapient, and operate on a fixed capability.", 1, table_resolver(84));
-    Add_Prize(200, "Flight Enchantment", "Taking to the skies is a primal dream of almost every people, to shed the shackles of the earth. It is unsurprising that every magical tradition has some means of allowing flight.  You know a variety of spells and enchantments that allow you to enable things to fly.", 1, table_resolver(85));
-    Add_Prize(150, "Speed of The Wind", "You now have knowledge regarding a series of enchantments that allow you to grant objects and their users supernatural speed. While reaching the speed of sound is relatively simply, the complexity quickly grows beyond that point.", 1, table_resolver(85));
-    Add_Prize(100, "Invisibility", "The shadows are your friends. It is almost like you have spent a lifetime studying them, gleaning the arcane secrets of stealth from their depths. You have a deep understanding of a class of enchantments that enable stealth, and the foundation necessary to develop more complex and powerful versions of them.", 1, table_resolver(85));
-    Add_Prize(400, "Dark Forces", "Perhaps you delved too deep, or passed certain boundaries. You've stumbled across secrets that would be unsettling to most. But they are powerful, and maybe that is just what you need. There is power in shunning the shackles of the mundane, to consider options that most would not.", 1, table_resolver(83));
-    Add_Prize(1200, "Geass", "You can create an agreement between two or more people that they are forced to uphold. Barring escape clauses written into the agreement at the time of creation, there is no way to break these bonds.", 1, table_resolver(88));
-    Add_Prize(300, "Mystic Materials", "Magic can bring out all sorts of strange properties in otherwise mundane materials. While this is usually due to complex natural processes, you know how to precipitate magic in the structure of previously mundane materials resulting in permanent transformations as magic becomes a permanent part of their existence.", 1, table_resolver(84));
+    Add_Prize(300, "Wishes and Dreams", "Magic, ultimately is about belief. It is about effect following cause, even when the physical realities don't align. From the greatest rituals to the least cantrip, it is this foundation that persists, and one that you understand on a fundamental level", 1, Table_Resolver(83));
+    Add_Prize(600, "Enchanting", "Magic is effect. It is the result of arcane intention enforced unto reality. So often that means that it is transient, ephemeral. But you know how to bind it. Though thematic substrates will make it easier, you are able to bind a mystical effect to any item and engage the result repeatedly though perhaps with a cooldown depending on the scale of the effect.", 1, Table_Resolver(83));
+    Add_Prize(200, "Arcane Focus", "Manipulating magic takes imagination, focus, knowledge and power. While some things are dependent on the wielder you can make it easier to focus, at least. From augmenting a mage's focus directly or simply offloading some of the strain, you know how to make tools that ease the process of performing arcane acts.", 1, Table_Resolver(83));
+    Add_Prize(300, "Potioncraft", "Ah, those flasks of mysterious fluid all sitting pretty on the shelf. You know the intricacies of how ingredients interact and the subtle power that lies within a cauldron. You know what ingredients can be substituted for each other and how call the sparks of magic from what seems like mundane materials.", 1, Table_Resolver(83));
+    Add_Prize(600, "Rituals", "Grand desires often entail grand action. This is true in magic just as it is in other ventures. Through sacrifice both material and symbolic you know how to vastly increase the scale at which your magic can function.", 1, Table_Resolver(83));
+    Add_Prize(900, "Geomancy", "Ley Lines, Genus Loci, Places of Power... all of these have immense arcane might that you can turn to your ends. You can manipulate and even create these artefacts.", 1, Table_Resolver(88));
+    Add_Prize(550, "Divination", "To be a wizard, witch or even sorcerer is to be someone with wisdom or knowledge beyond common ken. And magic has many ways of gathering that information. You have a talent for various forms of divination - that inner eye that you can hone with sufficient practice", 1, Table_Resolver(83));
+    Add_Prize(400, "Grimoire", "Simply storing arcane lore is difficult, knowledge is power and powerful magic is often not particularly predictable. You however, know how to encode magical secrets in a manner that is safe and understandable, allowing you to ease the process of working complex acts. These methods also happen to be great at handling all kinds of exotic knowledge.", 1, Table_Resolver(83));
+    Add_Prize(300, "Portals", "Being able to access distant locales has always been a dream of mages, and is particularly useful when it comes to transporting large amounts of material or people. This ritual can be customised to produce a portal of any shape, size or duration to a destination you can adequately describe, though as those factors become greater, harder to describe or encounter various obstacles (even simple distance), the difficulty of the ritual and the quality of the required reagents increase.", 1, Table_Resolver(85));
+    Add_Prize(200, "Teleportation", "You are here, and now you are not. You now have knowledge of a spell that allows you to teleport yourself, and sufficient understanding to alter it to affect others and even groups, though that increases the cost and complexity.", 1, Table_Resolver(84));
+    Add_Prize(250, "Fated Blow Enchantment", "You know how to enchant projectile weapons such that they will always hit their target. From named bullets to spears that would weave around obstacles, this enchantment can be tweaked and optimised for a variety of expressions.", 1, Table_Resolver(85));
+    Add_Prize(100, "Elemental Enchantment", "You can enchant objects in such a way so as to have them generate effects aligned with various elements, and can fine tune the expression to take on various forms. From blades that can send out blades of razor-sharp wind to hammers that shatter the earth, this can take on a vast variety of forms.", 1, Table_Resolver(85));
+    Add_Prize(150, "Fey Food", "The line between exceptional cooking and a magical ritual is a blurry one, and you know how to push that boundary in a variety of ways. You can produce food that is not only supernaturally delicious, but can act as a medium for a variety of supernatural effects.", 1, Table_Resolver(87));
+    Add_Prize(500, "False Life", "You can create an emulation of life, an enchantment that animates objects and allows them to react to objects according to a fixed, preset personality. Though convincing, these creations are not truly sapient, and operate on a fixed capability.", 1, Table_Resolver(84));
+    Add_Prize(200, "Flight Enchantment", "Taking to the skies is a primal dream of almost every people, to shed the shackles of the earth. It is unsurprising that every magical tradition has some means of allowing flight.  You know a variety of spells and enchantments that allow you to enable things to fly.", 1, Table_Resolver(85));
+    Add_Prize(150, "Speed of The Wind", "You now have knowledge regarding a series of enchantments that allow you to grant objects and their users supernatural speed. While reaching the speed of sound is relatively simply, the complexity quickly grows beyond that point.", 1, Table_Resolver(85));
+    Add_Prize(100, "Invisibility", "The shadows are your friends. It is almost like you have spent a lifetime studying them, gleaning the arcane secrets of stealth from their depths. You have a deep understanding of a class of enchantments that enable stealth, and the foundation necessary to develop more complex and powerful versions of them.", 1, Table_Resolver(85));
+    Add_Prize(400, "Dark Forces", "Perhaps you delved too deep, or passed certain boundaries. You've stumbled across secrets that would be unsettling to most. But they are powerful, and maybe that is just what you need. There is power in shunning the shackles of the mundane, to consider options that most would not.", 1, Table_Resolver(83));
+    Add_Prize(1200, "Geass", "You can create an agreement between two or more people that they are forced to uphold. Barring escape clauses written into the agreement at the time of creation, there is no way to break these bonds.", 1, Table_Resolver(88));
+    Add_Prize(300, "Mystic Materials", "Magic can bring out all sorts of strange properties in otherwise mundane materials. While this is usually due to complex natural processes, you know how to precipitate magic in the structure of previously mundane materials resulting in permanent transformations as magic becomes a permanent part of their existence.", 1, Table_Resolver(84));
     Add_Prize(0, "Eldritch Mind", "Some people say that there are things that mortals were not meant to know. You disagree, sometimes it just takes a special mind. And you happen to have one such mind, capable of handling even the most unnatural of thoughts", 1, NULL);
     Add_Prize(600, "Equivalence", "It's all the same at the end of the day. Everything at the most base level is energy, and were all once part of a greater whole. You know how to reach back to that primordial state and convert one from of energy into another.", 1, NULL);
-    Add_Prize(750, "Though the Dreamer Wakes", "The world may be a dream, you are not... or are you? Perhaps you are simply a thought, some persistent whisper in the minds of the grand cosmic existence. Whatever it is, you can persist past the end of the universe, and await the birth of the next.", 1, table_resolver(104));
-    Add_Prize(500, "Strange Angles", "You know there is more to the world that others see, layers and angles to eternity. Strange Places where wrong is right, where shadows are cast over eternal light. Though they may seem as dreams you know what lays beyond the world's seams.", 1, table_resolver(104));
-    Add_Prize(500, "Nothing but a shadow", "We are but shadows of something great, a soul perhaps or some other state. There is more than up and down, left or right. There are things move beyond the night.", 1, table_resolver(104));
-    Add_Prize(500, "When the stars are right", "The universe extends into places unknown, with existence itself weighing it down. What waters lay at the bottom of gravity wells? A paradise perhaps or unknown hells. When the stars align, streams combine. Trickles gather into torrents and with eerie portents, mysterious machines enact strange schemes.", 1, table_resolver(114));
-    Add_Prize(250, "Strange Places", "There are strange places in the world, where doors do not lead where you expect and distances seem inconsistent. Where even trying to map them out can lead to madness. Some are natural, others are not and now you know how to create them.", 1, table_resolver(104));
-    Add_Prize(200, "Eldritch Tongues", "There are many languages that mere mortals cannot properly speak, or on some cases understand. Vocalisations beyond the capabilities of lesser beings. That limitation does not apply to you. Not only can you generate any noise that you wish but you can also decipher any language - spoken, written, signed or otherwise communicated - but you also learn them incredibly quickly. As a side effect you can also learn any mortal language with a few hours of exposure and mimic and voice or accent after a few minutes.", 1, table_resolver(104));
-    Add_Prize(350, "An extrusion", "The forms that cosmic forces take on in the mortal realm are not their true selves. Such things are too great to exist without destroying existence. Instead, they are extrusions, miniscule fragments of their power, like the end of a pair of tweezers poking at reality. You can now replicate this feat, retracting the majority of your existence into yourself and exposing only what you wish. Should you be strong and mentally powerful enough, you might even be able to summon multiple such extrusions.", 1, table_resolver(104));
-    Add_Prize(1200, "Laws", "You know how to create spaces with altered physical laws, through  the manipulation of the Aether, you can effectively create spaces where the natural laws are something other than the familiar physics of your universe.", 1, table_resolver(290));
+    Add_Prize(750, "Though the Dreamer Wakes", "The world may be a dream, you are not... or are you? Perhaps you are simply a thought, some persistent whisper in the minds of the grand cosmic existence. Whatever it is, you can persist past the end of the universe, and await the birth of the next.", 1, Table_Resolver(104));
+    Add_Prize(500, "Strange Angles", "You know there is more to the world that others see, layers and angles to eternity. Strange Places where wrong is right, where shadows are cast over eternal light. Though they may seem as dreams you know what lays beyond the world's seams.", 1, Table_Resolver(104));
+    Add_Prize(500, "Nothing but a shadow", "We are but shadows of something great, a soul perhaps or some other state. There is more than up and down, left or right. There are things move beyond the night.", 1, Table_Resolver(104));
+    Add_Prize(500, "When the stars are right", "The universe extends into places unknown, with existence itself weighing it down. What waters lay at the bottom of gravity wells? A paradise perhaps or unknown hells. When the stars align, streams combine. Trickles gather into torrents and with eerie portents, mysterious machines enact strange schemes.", 1, Table_Resolver(114));
+    Add_Prize(250, "Strange Places", "There are strange places in the world, where doors do not lead where you expect and distances seem inconsistent. Where even trying to map them out can lead to madness. Some are natural, others are not and now you know how to create them.", 1, Table_Resolver(104));
+    Add_Prize(200, "Eldritch Tongues", "There are many languages that mere mortals cannot properly speak, or on some cases understand. Vocalisations beyond the capabilities of lesser beings. That limitation does not apply to you. Not only can you generate any noise that you wish but you can also decipher any language - spoken, written, signed or otherwise communicated - but you also learn them incredibly quickly. As a side effect you can also learn any mortal language with a few hours of exposure and mimic and voice or accent after a few minutes.", 1, Table_Resolver(104));
+    Add_Prize(350, "An extrusion", "The forms that cosmic forces take on in the mortal realm are not their true selves. Such things are too great to exist without destroying existence. Instead, they are extrusions, miniscule fragments of their power, like the end of a pair of tweezers poking at reality. You can now replicate this feat, retracting the majority of your existence into yourself and exposing only what you wish. Should you be strong and mentally powerful enough, you might even be able to summon multiple such extrusions.", 1, Table_Resolver(104));
+    Add_Prize(1200, "Laws", "You know how to create spaces with altered physical laws, through  the manipulation of the Aether, you can effectively create spaces where the natural laws are something other than the familiar physics of your universe.", 1, Table_Resolver(290));
     Add_Prize(400, "Cosmic Wells", "Beneath all of existence, there exist infinities unseen. There are ways to pierce the limited illusion of existence, calling forth power from beyond what mere mortals are able to comprehend. This can be turned to a variety of ends, though the simplest would be in the form of light and heat.", 1, NULL);
     Add_Prize(350, "Servitors", "Sometimes greater forces cannot act on such miniscule levels, and thus have need of tools with a certain… delicacy. You understand how to replicate these processes, creating constructs with strange capabilities, some that may seem fantastical to your average mortal.", 1, NULL);
-    Add_Prize(200, "Altered Existence", "Such menial beings cannot withstand the presence of a greater power. And now that you know how to summon those forces, you can raise these pathetic mortals into something more worthwhile. These new creatures can be stronger, faster, more long lived through may be affected in other ways in a much less predictable manner.", 1, table_resolver(104));
-    Add_Prize(300, "A Calling", "Your name is special… No, not your common name. Your full name. You have gained a title, which forms the basis of an Invocation. To use this is to refer to you, and you are aware, to an extent of when it is used. However, when this title is used in conjunction with other ways to identify you (other titles or even your personal name) this becomes a true Calling. A means of granting you awareness of the situation in which you have been invoked.", 1, table_resolver(104));
-    Add_Prize(750, "Beneath Notice", "Mere mortals are to cosmic forces less than the least speck of dust is to them. While unsettling, this does have its advantages, and you can extend these advantages to other levels of existence, rendering yourself so utterly beneath notice that you are effectively undetectable.", 1, table_resolver(104));
+    Add_Prize(200, "Altered Existence", "Such menial beings cannot withstand the presence of a greater power. And now that you know how to summon those forces, you can raise these pathetic mortals into something more worthwhile. These new creatures can be stronger, faster, more long lived through may be affected in other ways in a much less predictable manner.", 1, Table_Resolver(104));
+    Add_Prize(300, "A Calling", "Your name is special… No, not your common name. Your full name. You have gained a title, which forms the basis of an Invocation. To use this is to refer to you, and you are aware, to an extent of when it is used. However, when this title is used in conjunction with other ways to identify you (other titles or even your personal name) this becomes a true Calling. A means of granting you awareness of the situation in which you have been invoked.", 1, Table_Resolver(104));
+    Add_Prize(750, "Beneath Notice", "Mere mortals are to cosmic forces less than the least speck of dust is to them. While unsettling, this does have its advantages, and you can extend these advantages to other levels of existence, rendering yourself so utterly beneath notice that you are effectively undetectable.", 1, Table_Resolver(104));
     Add_Prize(100, "Warding Glyph", "You can place a glyph, a simple two-dimensional shape that extends into higher dimensions. This produces an unpleasant sensation that can affect even Higher Beings, encouraging them to avoid the area. This is not a true defence, however, as it will crumble against any focused effort.", 1, NULL);
-    Add_Prize(250, "Walk Upon the Firmament", "You tread not upon the base earth, but upon the foundation of all existence. You can find footing anywhere, even upon the very vacuum of space and be as stable as you would be on solid ground.", 1, table_resolver(104));
-    Add_Prize(1200, "Cosmic Logic", "At a certain scale, laws once thought inviolable are revealed to be… malleable. Your existence is now great enough that your actions and reactions supersede normal reality allowing you enforce your own alien logic on the situation at hand. This is still extremely strenuous so can only be done in short bursts.", 1, table_resolver(104));
+    Add_Prize(250, "Walk Upon the Firmament", "You tread not upon the base earth, but upon the foundation of all existence. You can find footing anywhere, even upon the very vacuum of space and be as stable as you would be on solid ground.", 1, Table_Resolver(104));
+    Add_Prize(1200, "Cosmic Logic", "At a certain scale, laws once thought inviolable are revealed to be… malleable. Your existence is now great enough that your actions and reactions supersede normal reality allowing you enforce your own alien logic on the situation at hand. This is still extremely strenuous so can only be done in short bursts.", 1, Table_Resolver(104));
     Add_Prize(200, "Watchers from Beyond", "You gain a limited line of communication to a group of observers from… elsewhere. Though their perspectives are alien to you they are incredibly intelligent and learned, allowing them to comment on your plans and even peer-review your research and designs. They may also occasionally send you small trinkets of snippets of prophecy.", 255, NULL);
     Add_Prize(500, "Outside Influence", "There are signs. There are always signs. Even if you don't know what you are looking for, the simple fact that reality does not align itself with your predictions can only mean that there is something you don't know about. You have a particular talent for noticing such things, and are able to discern the existence of unknown or even hidden influences on a situation with sufficient study.", 1, NULL);
     Add_Prize(200, "Esoteric Affinity", "While you might not know exactly what something is, you can make observations and test theories. It is enough a toehold that with a little experimentation, you can develop technology to make use of any phenomena, regardless of how strange it might be.", 1, NULL);
-    Add_Prize(750, "Must Be Seen To Be Believed", "There's a certain… otherness to you. You don't quite fit in with reality. It takes a great deal of evidence for something to accept your existence. And while the human mind has other ways of sharing information, the mechanisms of the world have no such defence. All means of remote viewing and detection will fail, your presence being rejected from reality as it leaves your immediate field of influence.", 1, table_resolver(104));
+    Add_Prize(750, "Must Be Seen To Be Believed", "There's a certain… otherness to you. You don't quite fit in with reality. It takes a great deal of evidence for something to accept your existence. And while the human mind has other ways of sharing information, the mechanisms of the world have no such defence. All means of remote viewing and detection will fail, your presence being rejected from reality as it leaves your immediate field of influence.", 1, Table_Resolver(104));
     Add_Prize(200, "Sterner Stuff", "Sometimes it's simply too dangerous to go alone. Take this. You now are durable enough to survive the passive dangers of any natural environment", 255, NULL);
     Add_Prize(750, "Pocket Planes", "You know how to create limited infinities. Though this void contains nothing at all, it is, ultimately, boundless.", 1, NULL);
     Add_Prize(500, "Material Planes", "You know the mechanics that govern the branching paths of time itself. You understand what it would take in order to access these other worlds and how to navigate this intricate web", 1, NULL);
@@ -513,7 +585,7 @@ int main(int argc, char const *argv[])
     Add_Prize(500, "Phase Field", "A phase field is technically a byproduct of true planar technology, and is part of the systems that allow for transit between planes. By stabilising this normally intermediate state, you can control the interactions between an object and its surroundings, rendering them effectively intangible and only able to touch the things they desire to.", 1, NULL);
     Add_Prize(300, "Hidden Workings", "You know how to project the effects of your creations across planar boundaries, allowing things done in one plane to affect others. This can create seemingly mystical effects, or create devices that seem to be much smaller than they otherwise would have to be.", 1, NULL);
     Add_Prize(250, "Idyllic Retreat", "Due to a confluence of various factors, this plane is particularly interesting. While veritably paradisical due to the inability of anything within to cause serious harm to anything else, this world does have something of a drawback. Nothing can be permanently introduced and only memories can be brought back. Additionally, there is something of a stasis that exists, almost as if the world itself is happy the way it is.", 1, NULL);
-    Add_Prize(450, "Adaptive Existence", "You can refract yourself, in a way, into a form that better suits the plane you are currently occupying. And, assuming you have a means of calling upon the energies of those other planes, you can also take on these alternate forms elsewhere.", 1, table_resolver(126));
+    Add_Prize(450, "Adaptive Existence", "You can refract yourself, in a way, into a form that better suits the plane you are currently occupying. And, assuming you have a means of calling upon the energies of those other planes, you can also take on these alternate forms elsewhere.", 1, Table_Resolver(126));
     Add_Prize(200, "Foreign Associates", "When travelling to a new plane, you become aware of a local faction (should any exist) that would be amenable to trade and/or cultural exchange with a reasonable amount of effort. This knowledge is generally limited to their approximate location and a general sense of cultural taboos.", 1, NULL);
     Add_Prize(800, "Flow-gistics", "To work with fluids is to work with change. That is a fundamental truth you must come to terms with. Through exhaustive effort and constant analysis, you have come to understand exactly how systems will evolve. As long as you know the starting state of the system you can predict the outcome with only factors you were not aware of altering the outcome.", 1, NULL);
     Add_Prize(200, "Steam Powered", "The advent of steam transformed humanity, allowing them to surpass the limits of flesh and bone. This grants you a fundamental understanding of how steam can be manipulated an put to use. As long as you know what you want to do and it is possible to do so, you find yourself able to produce effective mechanisms. This also extends to broader pneumatic theory employing all manner of compressible fluids", 1, NULL);
@@ -682,14 +754,18 @@ int main(int argc, char const *argv[])
     Add_Prize(100, "Assistive Drone", "This autonomous platform has a surprisingly high-detail force-projection system and a reactionless drive highly optimised for its size. Paired with the on-board computing resources it makes the perfect helper-bot. By default, it comes with a simple verbal interface that can have it move and carry various objects though it isn't very smart.", 1, NULL);
     Add_Prize(200, "Familiar", "You know how to form a magical and spiritual link with a creature, granting it a portion of your power while allowing it to act as a focus for the rest of yours. You can even facilitate this process for others, though it always must be accepted by both parties.", 1, NULL);
     Add_Prize(500, "Inner World", "You have the designs for an artificial demiplane, a limited volume of space that acts as though it was its own universe. The exact design is somewhat random, but is themed based on various workspaces and environments.", 255, NULL);
-    Add_Prize(200, "Subtle Instruments", "There is a time for grandstanding, and there is a time for subtlety. From multi-stage poisons to subtle suveilance devices, you know how to create tools that enables covert action of all kinds.", 1, table_resolver(181));
+    Add_Prize(200, "Subtle Instruments", "There is a time for grandstanding, and there is a time for subtlety. From multi-stage poisons to subtle suveilance devices, you know how to create tools that enables covert action of all kinds.", 1, Table_Resolver(181));
     Add_Prize(100, "Engineer", "You know the limits of the physical world, and are able to leverage them in such a way as to handle the forces and stresses needed to complete a job. Indeed, your only limitations are the resources you have available to you.", 1, NULL);
     Add_Prize(100, "Chemist", "Be it electrolytes or solvents, adheisives or sealants, it takes a great deal of skill to work with the chemical properties of substances of all kinds. You are bestowed with a deep understanding of how to produce and leverage complex chemical compounds and coctails for all sorts of applications.", 1, NULL);
-    Add_Prize(100, "Materials Science", "You know how to engineer substances with distinct physical properties ", 1, table_resolver(314));
-    Add_Prize(100, "Hyper Capacitors", "You know how to make systems capable of storing up large amounts of energy and releasing it at practically any rate demanded of them.", 1, table_resolver(315));
-    Add_Prize(100, "Power Vault", "You know how to create systems capable of storing vast amounts of energy for long periods of time. These systems scale incredbly well and can handle extended power draw, providing a steady supply of power for almost any purpose.", 1, table_resolver(315));
+    Add_Prize(100, "Materials Science", "You know how to engineer substances with distinct physical properties ", 1, Table_Resolver(314));
+    Add_Prize(100, "Hyper Capacitors", "You know how to make systems capable of storing up large amounts of energy and releasing it at practically any rate demanded of them.", 1, Table_Resolver(315));
+    Add_Prize(100, "Power Vault", "You know how to create systems capable of storing vast amounts of energy for long periods of time. These systems scale incredbly well and can handle extended power draw, providing a steady supply of power for almost any purpose.", 1, Table_Resolver(315));
+    Add_Prize(250, "Emergency Defense", "Sometimes, you simply don't have a weapon on hand. Whether it is because you were captured or simply thought you were safe, there comes a time to use what you have available to you. Only that isn't a problem. You know how to use practically anything to its full effect in combat.", 1, NULL);
+    Add_Prize(400, "Circles and Cycles", "Cyclic motion, a core facet of how the very universe functions. Your understanding of this grants a great deal of insight into the generation and effects of oscillations and vibrations of all kinds", 1, NULL);
+    Add_Prize(300, "Waves", "It is odd, how many different phenomena propagate as waves, from light to sound to gravity itself. You have gained an insight into these phenomena that allows you to generate and predict such events with ease", 1, Table_Resolver(320));
 
-    // Core Perks start at 373
+
+    // Core Perks start at 445
 
     return 0;
 }
