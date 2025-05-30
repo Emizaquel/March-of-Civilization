@@ -201,28 +201,25 @@ const char *prize_fail = "%s{\n\"id\":%" PRId16 ",\n\"name\":\"%s\",\n\"cost\":%
 PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
 {
     uint64_t len = 0;
-    PRIZE_RESOLVER *dep = NULL;
     char *prev_msg = NULL;
 
     PRIZE_RESOLVER *result = (PRIZE_RESOLVER *)malloc(sizeof(PRIZE_RESOLVER));
     result->dependency_success = true;
-    if (prize->cost <= points)
+    if (prize->dependency != NULL)
     {
-        if (prize->dependency != NULL)
+        PRIZE_RESOLVER *dep = NULL;
+        dep = Resolve_Dependency(prize->dependency, points);
+        len += dep->len - 1;
+        points = dep->points;
+        prev_msg = dep->message;
+
+        if (!dep->dependency_success)
         {
-            dep = Resolve_Dependency(prize->dependency, points);
-            len += dep->len - 1;
-            points = dep->points;
-            prev_msg = dep->message;
-
-            if (!dep->dependency_success)
-            {
-                result->dependency_success = false;
-            }
-
-            free(dep);
-            dep = NULL;
+            result->dependency_success = false;
         }
+
+        free(dep);
+        dep = NULL;
     }
 
     // printf("dep status: %d\n", result->dependency_success);
