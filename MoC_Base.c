@@ -108,6 +108,10 @@ void Add_Prize(uint16_t cost, const char *name, const char *desc, uint8_t repeat
     num_prizes++;
 }
 
+EMSCRIPTEN_KEEPALIVE uint64_t Get_Seed_Steps(){
+    return mt_position;
+}
+
 void Add_Prize_Extended(uint16_t cost, const char *name, const char *desc, uint8_t repeatable, PRIZE *dependencies)
 {
     if (num_extend > ext_prizes)

@@ -35,8 +35,6 @@ function format_response(format, data) {
 }
 
 function Generate_Perk_Display() {
-    points = _Get_Current_Points()
-    document.getElementById("steps").innerHTML = "CURRENT STEPS: " + points
     
     chunks = []
     logs.forEach((roll) => {
@@ -65,6 +63,9 @@ function Generate_Perk_Display() {
         document.getElementById("roll-logs").value = chunks.toReversed().join(document.getElementById("options-format-between-rolls").value)
     }
     localStorage.setItem("save", JSON.stringify(Generate_Save_Object()));
+
+    points = _Get_Current_Points()
+    document.getElementById("steps").innerHTML = "CURRENT STEPS: " + points
 }
 
 var waiting = false
@@ -157,7 +158,7 @@ function Generate_Save_Object() {
         "moc_version": moc_version,
         "logs": logs,
         "seed": Number(document.getElementById("options-seed").value),
-        "seed_steps": Number(steps),
+        "seed_steps": String(_Get_Seed_Steps()),
         "rolls": Number(document.getElementById("options-rolls").value),
         "steps":  _Get_Current_Points(),
         "formatting": {
@@ -221,6 +222,7 @@ function Validate_Save_Object(save){
 }
 
 function Parse_Save_String(save){
+    // console.log(save);
     save_state = JSON.parse(save);
     if(Validate_Save_Object(save_state)){
         return
@@ -243,7 +245,12 @@ function Parse_Save_String(save){
         _Increment_Prize_By_Id(perk.id);
     } }) })
 
+    // console.log(save_state)
+    // console.log(seed_steps)
+
     _Set_Rand_Seed(BigInt(save_state.seed), seed_steps, save_state.steps);
+
+    Generate_Perk_Display()
 }
 
 function Load_Save_File() {
