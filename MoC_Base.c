@@ -758,12 +758,12 @@ int main(int argc, char const *argv[])
     Add_Prize(200, "Subtle Instruments", "There is a time for grandstanding, and there is a time for subtlety. From multi-stage poisons to subtle suveilance devices, you know how to create tools that enables covert action of all kinds.", 1, Table_Resolver(181));
     Add_Prize(100, "Engineer", "You know the limits of the physical world, and are able to leverage them in such a way as to handle the forces and stresses needed to complete a job. Indeed, your only limitations are the resources you have available to you.", 1, NULL);
     Add_Prize(100, "Chemist", "Be it electrolytes or solvents, adheisives or sealants, it takes a great deal of skill to work with the chemical properties of substances of all kinds. You are bestowed with a deep understanding of how to produce and leverage complex chemical compounds and coctails for all sorts of applications.", 1, NULL);
-    Add_Prize(100, "Materials Science", "You know how to engineer substances with distinct physical properties ", 1, Table_Resolver(314));
+    Add_Prize(100, "Materials Science", "You know how to engineer substances with distinct physical properties, allowing you to create materials that serve the purpose you intend effectively.", 1, Table_Resolver(314));
     Add_Prize(100, "Hyper Capacitors", "You know how to make systems capable of storing up large amounts of energy and releasing it at practically any rate demanded of them.", 1, Table_Resolver(315));
     Add_Prize(100, "Power Vault", "You know how to create systems capable of storing vast amounts of energy for long periods of time. These systems scale incredbly well and can handle extended power draw, providing a steady supply of power for almost any purpose.", 1, Table_Resolver(315));
     Add_Prize(250, "Emergency Defense", "Sometimes, you simply don't have a weapon on hand. Whether it is because you were captured or simply thought you were safe, there comes a time to use what you have available to you. Only that isn't a problem. You know how to use practically anything to its full effect in combat.", 1, NULL);
     Add_Prize(400, "Circles and Cycles", "Cyclic motion, a core facet of how the very universe functions. Your understanding of this grants a great deal of insight into the generation and effects of oscillations and vibrations of all kinds", 1, NULL);
-    Add_Prize(300, "Waves", "It is odd, how many different phenomena propagate as waves, from light to sound to gravity itself. You have gained an insight into these phenomena that allows you to generate and predict such events with ease", 1, Table_Resolver(320));
+    Add_Prize(300, "Waves", "It is odd, how many different phenomena propagate as waves, from light to sound to gravity itself. You have gained an insight into these phenomena that allows you to generate and predict such events with ease", 1, Table_Resolver(319));
 
 
     // Core Perks start at 445
