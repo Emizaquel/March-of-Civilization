@@ -22,11 +22,12 @@ typedef struct PRIZE_RESOLVER
 {
     char *message;
     uint64_t len;
-    uint32_t points;
     bool dependency_success;
 } PRIZE_RESOLVER;
 
-static const uint16_t core_prizes = 321;
+uint32_t points;
+
+static const uint16_t core_prizes = 351;
 static const uint16_t ext_prizes = 0;
 
 uint16_t max_prizes = 0;
@@ -140,7 +141,7 @@ void Add_Prize_Extended(uint16_t cost, const char *name, const char *desc, uint8
 
 EMSCRIPTEN_KEEPALIVE void Reset_Recieve_Amounts()
 {
-    response_handle->points = 0;
+    points = 0;
     for (uint16_t i = 0; i < max_prizes; i++)
     {
         // printf("%"PRIu32"\n", i);
@@ -148,11 +149,11 @@ EMSCRIPTEN_KEEPALIVE void Reset_Recieve_Amounts()
     }
 }
 
-EMSCRIPTEN_KEEPALIVE void Set_Rand_Seed(uint64_t seed, uint64_t steps, uint32_t points)
+EMSCRIPTEN_KEEPALIVE void Set_Rand_Seed(uint64_t seed, uint64_t steps, uint32_t set_points)
 {
     mt_current = seed;
     mt_position = 0;
-    response_handle->points = points;
+    points = set_points;
 
     // printf("%"PRIu64"\n", seed);
 
@@ -195,10 +196,9 @@ uint64_t BigInt_8_String_Length(uint8_t val)
     return costlen;
 }
 
-const char *prize_success = "%s{\n\"id\":%" PRId16 ",\n\"name\":\"%s\",\n\"cost\":%" PRIu16 ",\n\"description\":\"%s\",\n\"times_recieved\":%" PRIu8 ",\n\"success\":true,\n\"extended\":%d\n},\n";
-const char *prize_fail = "%s{\n\"id\":%" PRId16 ",\n\"name\":\"%s\",\n\"cost\":%" PRIu16 ",\n\"description\":\"%s\",\n\"times_recieved\":%" PRIu8 ",\n\"success\":false,\n\"extended\":%d\n},\n";
+const char *prize_string = "%s{\n\"id\":%" PRId16 ",\n\"name\":\"%s\",\n\"cost\":%" PRIu16 ",\n\"description\":\"%s\",\n\"times_recieved\":%" PRIu8 ",\n\"success\":%"PRIu8",\n\"extended\":%d\n},\n";
 
-PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
+PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize)
 {
     uint64_t len = 0;
     char *prev_msg = NULL;
@@ -208,9 +208,8 @@ PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
     if (prize->dependency != NULL)
     {
         PRIZE_RESOLVER *dep = NULL;
-        dep = Resolve_Dependency(prize->dependency, points);
+        dep = Resolve_Dependency(prize->dependency);
         len += dep->len - 1;
-        points = dep->points;
         prev_msg = dep->message;
 
         if (!dep->dependency_success)
@@ -224,13 +223,15 @@ PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
 
     // printf("dep status: %d\n", result->dependency_success);
 
+    uint8_t resolution = 0;
+
     if ((prize->cost <= points) && result->dependency_success)
     {
         if (prize->times_received < prize->repeatable)
         {
-            result->len = len + 100 + BigInt_16_String_Length(prize->id) + prize->name_len + BigInt_64_String_Length(prize->cost) + prize->desc_len + BigInt_8_String_Length(prize->times_received);
+            printf("Here\n");
+            result->len = len + 110 + BigInt_16_String_Length(prize->id) + prize->name_len + BigInt_64_String_Length(prize->cost) + prize->desc_len + BigInt_8_String_Length(prize->times_received);
             prize->times_received = prize->times_received + 1;
-            // printf("%"PRIu64" = %"PRIu64" +  86 + %"PRIu64" + %"PRId16" + %"PRId64" + %"PRId16" + %"PRId64" \n", result->len, len, BigInt_16_String_Length(prize->id), prize->name_len, BigInt_64_String_Length(prize->cost), prize->desc_len, BigInt_8_String_Length(prize->times_received));
             if (strlen(prize->desc) != prize->desc_len)
             {
                 printf("%s\n", prize->desc);
@@ -238,23 +239,30 @@ PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
             result->message = (char *)calloc(1, result->len);
             if (prev_msg == NULL)
             {
-                sprintf(result->message, prize_success, "", prize->id, prize->name, prize->cost, prize->desc, prize->times_received, prize->extended);
+                sprintf(result->message, prize_string, "", prize->id, prize->name, prize->cost, prize->desc, prize->times_received, resolution, prize->extended);
             }
             else
             {
-                sprintf(result->message, prize_success, prev_msg, prize->id, prize->name, prize->cost, prize->desc, prize->times_received, prize->extended);
+                sprintf(result->message, prize_string, prev_msg, prize->id, prize->name, prize->cost, prize->desc, prize->times_received, resolution, prize->extended);
             }
-            result->points = points - (uint32_t)prize->cost;
+            points = points - (uint32_t)prize->cost;
 
             free(prev_msg);
 
             return result;
         }
+        resolution = 2;
+    }else{
+        result->dependency_success = false;
+        if(result->dependency_success){
+            resolution = 3;
+        }else{
+            resolution = 1;
+        }
+        
     }
 
-    result->dependency_success = false;
-    result->len = len + 101 + BigInt_16_String_Length(prize->id) + prize->name_len + BigInt_64_String_Length(prize->cost) + prize->desc_len + BigInt_8_String_Length(prize->times_received);
-    // printf("%"PRIu64" = %"PRIu64" +  86 + %"PRIu64" + %"PRId16" + %"PRId64" + %"PRId16" + %"PRId64" \n", result->len, len, BigInt_16_String_Length(prize->id), prize->name_len, BigInt_64_String_Length(prize->cost), prize->desc_len, BigInt_8_String_Length(prize->times_received));
+    result->len = len + 110 + BigInt_16_String_Length(prize->id) + prize->name_len + BigInt_64_String_Length(prize->cost) + prize->desc_len + BigInt_8_String_Length(prize->times_received);
     if (strlen(prize->desc) != prize->desc_len)
     {
         printf("%s\n", prize->desc);
@@ -262,13 +270,12 @@ PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
     result->message = (char *)calloc(1, result->len);
     if (prev_msg == NULL)
     {
-        sprintf(result->message, prize_fail, "", prize->id, prize->name, prize->cost, prize->desc, prize->times_received, prize->extended);
+        sprintf(result->message, prize_string, "", prize->id, prize->name, prize->cost, prize->desc, prize->times_received, resolution, prize->extended);
     }
     else
     {
-        sprintf(result->message, prize_fail, prev_msg, prize->id, prize->name, prize->cost, prize->desc, prize->times_received, prize->extended);
+        sprintf(result->message, prize_string, prev_msg, prize->id, prize->name, prize->cost, prize->desc, prize->times_received, resolution, prize->extended);
     }
-    result->points = points;
 
     // printf("%s\n", result->message);
 
@@ -278,20 +285,19 @@ PRIZE_RESOLVER *Resolve_Dependency(PRIZE *prize, uint32_t points)
 
 EMSCRIPTEN_KEEPALIVE uint64_t Roll_Random_PRIZE()
 {
-    response_handle->points += 100;
-    uint32_t points = response_handle->points;
+    points += 100;
     if (response_handle->message != NULL)
     {
         free(response_handle->message);
         response_handle->message = NULL;
     }
-    uint64_t index = Advance_Mersenne_Sequence() % max_prizes;
-    while (Table_Resolver(index)->times_received >= Table_Resolver(index)->repeatable)
+    PRIZE* start = Table_Resolver(Advance_Mersenne_Sequence() % max_prizes);
+    while (start->times_received >= start->repeatable)
     {
-        index = Advance_Mersenne_Sequence() % max_prizes;
+        start = Table_Resolver(Advance_Mersenne_Sequence() % max_prizes);
     }
     // printf("%"PRIu64"\n", index);
-    PRIZE_RESOLVER *response = Resolve_Dependency(Table_Resolver(index), points);
+    PRIZE_RESOLVER *response = Resolve_Dependency(start);
     uint64_t len = response->len;
     while (response->message[len - 1] == '\0')
     {
@@ -299,47 +305,23 @@ EMSCRIPTEN_KEEPALIVE uint64_t Roll_Random_PRIZE()
     }
     response_handle->len = len;
     response_handle->message = response->message;
-    response_handle->points = response->points;
     free(response);
     return len;
 }
 
 EMSCRIPTEN_KEEPALIVE uint64_t Roll_Prize_By_Id(uint16_t id)
 {
-    PRIZE *prize = Table_Resolver(id);
-    response_handle->points += 100;
-    uint32_t points = response_handle->points;
-    if (response_handle->message != NULL)
+    PRIZE *start = Table_Resolver(id);
+    PRIZE_RESOLVER *response = Resolve_Dependency(start);
+    uint64_t len = response->len;
+    while (response->message[len - 1] == '\0')
     {
-        free(response_handle->message);
-        response_handle->message = NULL;
+        len = len - 1;
     }
-    if (prize->times_received >= prize->repeatable)
-    {
-        response_handle->len = 101 + BigInt_16_String_Length(prize->id) + prize->name_len + BigInt_64_String_Length(prize->cost) + prize->desc_len + BigInt_8_String_Length(prize->times_received);
-        response_handle->message = (char *)calloc(1, response_handle->len);
-        sprintf(response_handle->message, prize_fail, "", prize->id, prize->name, prize->cost, prize->desc, prize->times_received, prize->extended);
-        
-        while (response_handle->message[response_handle->len - 1] == '\0')
-        {
-            response_handle->len = response_handle->len - 1;
-        }
-        return response_handle->len;
-    }
-    else
-    {
-        PRIZE_RESOLVER *response = Resolve_Dependency(prize, points);
-        uint64_t len = response->len;
-        while (response->message[len - 1] == '\0')
-        {
-            len = len - 1;
-        }
-        response_handle->len = len;
-        response_handle->message = response->message;
-        response_handle->points = response->points;
-        free(response);
-        return len;
-    }
+    response_handle->len = len;
+    response_handle->message = response->message;
+    free(response);
+    return len;
 }
 
 EMSCRIPTEN_KEEPALIVE void Increment_Prize_By_Id(uint16_t index)
@@ -411,7 +393,7 @@ EMSCRIPTEN_KEEPALIVE uint64_t Read_Current_Response_String(char *dest)
 
 EMSCRIPTEN_KEEPALIVE uint32_t Get_Current_Points()
 {
-    return response_handle->points;
+    return points;
 }
 
 int main(int argc, char const *argv[])
@@ -441,10 +423,10 @@ int main(int argc, char const *argv[])
     response_handle = (PRIZE_RESOLVER *)malloc(sizeof(PRIZE_RESOLVER));
     response_handle->len = 0;
     response_handle->message = NULL;
-    response_handle->points = 0;
+    points = 0;
 
-    Add_Prize(0, "Spiritual Energy", "The stuff that makes up souls. That undefinable thing that still defines everything. Everything makes it all the time, though you perhaps make more than usual. You are now able to manipulate it to your own ends", 255, NULL);
-    Add_Prize(300, "The Root of Meaning", "There is meaning to this world. Yet, if you ground all of existence into its finest components and searched through it all, you would find none. It is this paradox that you now command, to be able to empower the very meaning that is born of form", 1, Table_Resolver(0));
+    Add_Prize(0, "Spiritual Energy", "The stuff that makes up souls. That undefinable thing that still defines everything. Everything makes it all the time, and you now make more than you used to. While this is enough to manipulate it to your own ends, the excess is not an incredible amount", 255, NULL);
+    Add_Prize(300, "The Root of Meaning", "There is meaning to this world. Yet, if you ground all of existence into its finest components and searched through it all, you would find none. It is this paradox that you now command, to be able to empower the very meaning that is born of form and function", 1, Table_Resolver(0));
     Add_Prize(300, "Divine Insight", "Gods Exist. Or do they? Born of belief yet having always existed, it is difficult to say if people created gods or gods created people. The answer to that dichotomy is the core to divinity - the end result of Meaning enforced upon existence through collective action. And that is a secret you now hold in your heart of hearts", 1, Table_Resolver(0));
     Add_Prize(300, "Sword Intent", "Or anything intent, really, you know how to imbue spiritual energy into items you craft giving them the beginnings of sentience. Though they will never develop any true sapience, they are born with 'instincts' regarding their proper use and will learn alongside their wielders. They can make their desires known to their operators and function better than they physically should, growing as their souls do.", 1, Table_Resolver(0));
     Add_Prize(600, "Spirits", "Not quite souls, but perhaps something along the way. Spiritual constructs with a degree of agency capable of carrying out specific tasks and acting in a specific manner are far simpler to make and can ", 1, Table_Resolver(0));
@@ -465,7 +447,7 @@ int main(int argc, char const *argv[])
     Add_Prize(300, "Divine Regalia", "You know how to create tools that amplify aspects of a divine existence, allowing them to be more easily expressed unto the physical universe. As a side effect, even your mundane creations are of such quality that the gods themselves would fight over them.", 1, Table_Resolver(2));
     Add_Prize(150, "Ghost Traps", "You can create devices that can contain spiritual presences. These traps activate under specific conditions and drag any spiritual presences not bound within a physical anchor into a holding chamber from which they can later be released", 1, Table_Resolver(0));
     Add_Prize(500, "Unhallowed Ground", "You can prepare a space such that it is inimitable to spiritual presences, and are capable of optimising the effect for specific groups or individual examples for greater effect given sufficient knowledge of them. At a base level, this offers resistance to their influence but can scale to utterly barring them from being able to access the space.", 1, Table_Resolver(0));
-    Add_Prize(0, "Psionics", "The true power of Mind over Matter. Though it is not limited to the realm of the material psionic energy is a manifestation of your inner self on the outside world. This grants basic psionic abilities, though nothing exceptional", 255, NULL);
+    Add_Prize(0, "Psionics", "The true power of Mind over Matter. Though it is not limited to the realm of the material psionic energy is a manifestation of your inner self on the outside world. This grants additional psionic abilities, enough to raise the average mind to that of a neophyte psychic", 255, NULL);
     Add_Prize(300, "WE/YOU/I ARE ONE", "Your mind is a part of a greater whole thoughts and beliefs flow in and out. The boundary of your existence if far more permeable than you would have thought and you know how to have your mind reach out, feel and manipulate", 1, Table_Resolver(22));
     Add_Prize(300, "Where Do I End", "You are a part of the universe. A part that thinks. But where do you end? You have a command over your existence that most of it does not have, and with the right Will, you may enforce that command over more than thoughts", 1, Table_Resolver(22));
     Add_Prize(500, "Technokinesis", "What is technology, but the dreams of people made manifest. Technology has a particular relationship with psionic energies, and you now have the aptitude necessary to directly interface with technology of all kinds with your psychic prowess.", 1, Table_Resolver(22));
@@ -557,7 +539,7 @@ int main(int argc, char const *argv[])
     Add_Prize(200, "Eldritch Tongues", "There are many languages that mere mortals cannot properly speak, or on some cases understand. Vocalisations beyond the capabilities of lesser beings. That limitation does not apply to you. Not only can you generate any noise that you wish but you can also decipher any language - spoken, written, signed or otherwise communicated - but you also learn them incredibly quickly. As a side effect you can also learn any mortal language with a few hours of exposure and mimic and voice or accent after a few minutes.", 1, Table_Resolver(104));
     Add_Prize(350, "An extrusion", "The forms that cosmic forces take on in the mortal realm are not their true selves. Such things are too great to exist without destroying existence. Instead, they are extrusions, miniscule fragments of their power, like the end of a pair of tweezers poking at reality. You can now replicate this feat, retracting the majority of your existence into yourself and exposing only what you wish. Should you be strong and mentally powerful enough, you might even be able to summon multiple such extrusions.", 1, Table_Resolver(104));
     Add_Prize(1200, "Laws", "You know how to create spaces with altered physical laws, through  the manipulation of the Aether, you can effectively create spaces where the natural laws are something other than the familiar physics of your universe.", 1, Table_Resolver(290));
-    Add_Prize(400, "Cosmic Wells", "Beneath all of existence, there exist infinities unseen. There are ways to pierce the limited illusion of existence, calling forth power from beyond what mere mortals are able to comprehend. This can be turned to a variety of ends, though the simplest would be in the form of light and heat.", 1, NULL);
+    Add_Prize(400, "Cosmic Wells", "Beneath all of existence, there exist infinities unseen. There are ways to pierce the limited illusion of existence, calling forth power from beyond what mere mortals are able to comprehend. This can be turned to a variety of ends, though the simplest would be in the form of light and heat.", 1, Table_Resolver(104));
     Add_Prize(350, "Servitors", "Sometimes greater forces cannot act on such miniscule levels, and thus have need of tools with a certain… delicacy. You understand how to replicate these processes, creating constructs with strange capabilities, some that may seem fantastical to your average mortal.", 1, NULL);
     Add_Prize(200, "Altered Existence", "Such menial beings cannot withstand the presence of a greater power. And now that you know how to summon those forces, you can raise these pathetic mortals into something more worthwhile. These new creatures can be stronger, faster, more long lived through may be affected in other ways in a much less predictable manner.", 1, Table_Resolver(104));
     Add_Prize(300, "A Calling", "Your name is special… No, not your common name. Your full name. You have gained a title, which forms the basis of an Invocation. To use this is to refer to you, and you are aware, to an extent of when it is used. However, when this title is used in conjunction with other ways to identify you (other titles or even your personal name) this becomes a true Calling. A means of granting you awareness of the situation in which you have been invoked.", 1, Table_Resolver(104));
@@ -651,7 +633,7 @@ int main(int argc, char const *argv[])
     Add_Prize(1000, "As Clay", "You become able to work with any material as though it is a far simpler version of the same. Complex alloys are worked as easily as steel, dangerous fluids become as safe to handle as water and gasses no more difficult to manipulate than simple CO2", 1, NULL);
     Add_Prize(1000, "The Pattern", "Given enough examples of any particular type of object, you can come to know how it works, and if you have the ability to manipulate the substances involved even replicate it. Even without that, you know the capabilities of what you are working with, how to operate it and how to integrate it into your broader technological base", 1, NULL);
     Add_Prize(500, "The Three Rs", "You know how to make the most of your resources. Often times, the best materials aren't necessary for every application they are used in. You can substitute rare and precious materials for more common ones, retaining the same functionality, though perhaps lacking a little in quality or capability.", 1, NULL);
-    Add_Prize(100, "Scrapping", "You are able to quickly and easily reclaim the materials that went into construction of any object, returning them to a form that can be used for future projects", 1, NULL);
+    Add_Prize(100, "Reclamation", "You are able to quickly and easily reclaim the materials that went into construction of any object, returning them to a form that can be used for future projects", 1, NULL);
     Add_Prize(100, "Teardown", "You are able dismantle and reclaim the components that went into the construction of any object, returning them to a state that can be used for future projects", 1, NULL);
     Add_Prize(100, "Salvage", "You are able to rapidly identify key components and how they are integrated into larger systems allowing you to add them to new systems without a loss in functionality", 1, NULL);
     Add_Prize(100, "Resourceful", "You are able to fine tune the composition of various materials used in the construction of various projects, either doubling effectiveness or halving the material cost.", 1, NULL);
@@ -764,9 +746,38 @@ int main(int argc, char const *argv[])
     Add_Prize(250, "Emergency Defense", "Sometimes, you simply don't have a weapon on hand. Whether it is because you were captured or simply thought you were safe, there comes a time to use what you have available to you. Only that isn't a problem. You know how to use practically anything to its full effect in combat.", 1, NULL);
     Add_Prize(400, "Circles and Cycles", "Cyclic motion, a core facet of how the very universe functions. Your understanding of this grants a great deal of insight into the generation and effects of oscillations and vibrations of all kinds", 1, NULL);
     Add_Prize(300, "Waves", "It is odd, how many different phenomena propagate as waves, from light to sound to gravity itself. You have gained an insight into these phenomena that allows you to generate and predict such events with ease", 1, Table_Resolver(319));
+    Add_Prize(500,"Sap of the World Tree","This amber-like substance is a stable, solid form of spiritual energy. Far more dense than Ichor, though perhaps slightly harder to work with, it is nonetheless incredibly valuable to those who know what it is. You know how to make it from and sublimate it back into spiritual energy",1,Table_Resolver(0));
+    Add_Prize(200,"Phantom Limbs","You know how to integrate technology in a way that connects to a host soul and perhaps even combine with it given enough time. To use them is natural, as though they were always part of the user",1,Table_Resolver(0));
+    Add_Prize(200,"Self-Evident","You can grant your creations and aura of sorts, a presence that is undeniable even by the staunchest non-believer. It marks your creations as important and valuable, perhaps if only as a representation of something greater",1,Table_Resolver(1));
+    Add_Prize(200,"Programmed Action","You know how to generate… intent. This allows you to command a body through a mind you have access to, causing it to undertake a sequence of actions precisely as you intend with no input from the host mind.",1,Table_Resolver(22));
+    Add_Prize(200,"Shared Dreaming","There are ways to build on emotional connections, reinforce them through psionic means. For those that have strong enough bonds to provide sufficient foundation, you can link the subconscious minds of two people, allowing them to share dreams. For those who can lucid dream, this becomes an avenue of communication that is unbound by distance",1,Table_Resolver(22));
+    Add_Prize(200,"Gifted Student","You can pick up anything with only a little instruction. In fact, you are practically a sponge. Though this works best with martial techniques, your ability extends to any educational endeavour",255,NULL);
+    Add_Prize(200,"Like a Steel Trap","You have a mind well suited to alchemy. Not only can you hold incredibly complex alchemical processes in your mind with ease, you can also perfectly memorise and visualise complex structures perfectly with but a single glance",1,NULL);
+    Add_Prize(300,"Mystic Triggers","You know how to set up magical effects so that they will trigger when they receive the appropriate stimulus. What that stimulus is? Up to you! The actual techniques place no particular importance on what they might be.",1,Table_Resolver(83));
+    Add_Prize(250,"Elemental Affinity","Magic might be Effect; your will be enforced upon the world. But some things are easier than others. You have found that there is a certain class of effect that is easier to bring about, though this may fall under a traditional 'element' in some schools, in truth the element depends heavily on the individual in question. You gain a new element each time you receive this prize",255,Table_Resolver(84));
+    Add_Prize(250,"Unknowable","You can implement principles in your technology that mortal minds cannot hope to process. Attempts to reverse engineer technology using these principles will drive those who attempt to do so mad",1,Table_Resolver(104));
+    Add_Prize(500,"High Energy Physics","You have gained a deep insight into interesting high-energy phenomenon, and how they interact with the subtle differences between different cosmologies. This allows you to adapt and make the requisite substitutions to allows complex technologies to work across different laws of physics",1,NULL);
+    Add_Prize(200,"Actuators","You know how to turn power into motion. From motors to linear actuators, you have a knack for turning any source of energy into forces that can be applied to the rest of the world",1,NULL);
+    Add_Prize(150,"Plasma logic","You know how to take advantage of subatomic particles to perform logical operations. From vacuum tubes to ion-channels you know how to make use of high-energy physics to perform computation. Though power-hungry, this form of computation excels at rapid analog operations.",1,NULL);
+    Add_Prize(200,"Plasma Manipulation","Working in High-Energy regimes is difficult. Your substrate is quarrelsome and has the power necessary to fight back. Still, you know how to effectively shape and direct plasmas and ion streams of all kinds, enabling you to take advantage of the unique properties of these substances",1,NULL);
+    Add_Prize(200,"Thermodynamics","Heat, both prized and dreaded. A necessity in some situations, a bane in others. You have a deep understanding of this phenomenon and how you can effectively manipulate it, concentrating it, dispersing it or simply transporting it from one place to another",1,NULL);
+    Add_Prize(200,"Biointegration","You know how to work with biological systems, creating technology that will easily interface with it. From simple replacement bones to complex cybernetic augmentations that grant entirely new senses - you are more limited by the rest of the system than any integration issues",1,NULL);
+    Add_Prize(200,"Modular","It is difficult to create the perfect set of capabilities for every situation, the sheer variety of necessary functionalities hindering the overall efficacy of any solution. As such, you need to be able to tailor your options to the scenario at hand. You have a knack for designing systems in such a way that they will be able to act in concert without any loss in overall capability due to their modular nature",1,NULL);
+    Add_Prize(200,"Multi-mode","The overall structure of any particular object can affect it's functionality, improving and limiting its ability to operate in different environments and situations. However, while this cannot be overcome, it can be… bypassed. You know how to create systems that will reshape objects, allowing them to take on several different forms, better suited to different purposes without hindering their capabilities in other situations",1,NULL);
+    Add_Prize(350,"Logistics","Though they may not be truly physical, the greatest challenges will always be logistical. Simply moving large amounts of stuff from one place to another requires understanding the resources available to you and how to best deploy them. You have a particular knack for this, not only in using extant systems, but how new factors will affect these systems and where the greatest roadblocks are",1,NULL);
+    Add_Prize(200,"The Little Things","Sometimes simply paying attention to the everyday wonders is all it takes to uncover a hidden world. You are quite observant, and have a good head for causality. With a little focus you know what the major contributors to any specific outcome are, and have a good idea how they work",1,NULL);
+    Add_Prize(200,"The Latest and Greatest","You always learn from your mistakes, even if they might seem minor. Whenever you make something, it is better than any previous example given the same time and resources. Whether that means being made faster, or being better at its job depends on your personal goals",1,NULL);
+    Add_Prize(200,"Mega-Machines","There's only so much power you can pack into a certain amount of space, but at the same time, working on such large scales can get incredibly difficult. You now have a head for such things able to scale up the size - and thus effects - of your creations as far as you wish",1,NULL);
+    Add_Prize(200,"Mini-Machines","There's something to be said about subtlety. Brute force isn't always the solution to every problem, and often times you simply don't want to make a mess. This allows you to scale down your creations, replicating the same functionality at smaller scales",1,NULL);
+    Add_Prize(350,"Lucky Break","Research often depends on that one chance encounter. Sometimes it's a mistake, sometimes it is simply catching sight of a rare phenomenon. But that seems to happen more often than you. Odd, unlikely events just seem to happen when you are watching.",1,NULL);
+    Add_Prize(400,"Spatial Bounce-back Propagators","You know how to create systems that can transmit packets of space at a faster-than-light speed and 'bounce back' after reaching a specific range. This allows signals and various events to operate at a range, allowing you to 'propagate' the effect of sensors at FTL speeds",1,NULL);
+    Add_Prize(200,"FTL Deep Space Telemetry","You know how to create devices that take advantage of hyper-planer properties to gather data about the structure of space-time faster than the speed of light. Detecting curvature that would produce an acceleration greater than 0.01Gs is possible out to ten lightyears",1,NULL);
+    Add_Prize(300,"Interstellar Transceiver","These devices transmit a signal through farspace and can capture similar ones, allowing omnidirectional communication at trillions of times the speed of light. You have designs capable of handling the power necessary to broadcast over ranges that begin at interstellar and reaching up to the local group, the propagation rate multiplying over the speed of light a thousand times at each level",1,NULL);
+    Add_Prize(25,"Precision Clocks","These clocks take advantage of precise quantum phenomenon that allow them to measure the local progress of time on a Planck scale. You can create these systems, allowing you to track how long has passed since their creation to whatever extent is physically possible.",1,NULL);
+    Add_Prize(150,"Inertial Unifiers","You know how to create devices that can project a field which transmits force throughout its volume in such a way that results in uniform acceleration. You have designs that scale from a few kilonewtons to the forces needed to propel spaceships at incredible speeds",1,NULL);
+    Add_Prize(250,"Farspace Transit Window Generator","This series of devices allows objects to transition in and out of Farspace, allowing them to travel across realspace at faster-than-light speeds. You have the designs for a range of such devices, from small units suitable for courier drones to massive systems intended for use in colony-ships",1,NULL);
 
-
-    // Core Perks start at 445
+    // Core Perks start at 428
 
     return 0;
 }

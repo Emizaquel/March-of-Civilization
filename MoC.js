@@ -9,7 +9,7 @@ steps = BigInt(0)
 moc_version = {
     "extension": "core",
     "version": 0,
-    "subversion":1
+    "subversion":2
 }
 
 function format_response(format, data) {
@@ -42,9 +42,9 @@ function Generate_Perk_Display() {
 
         roll.forEach((perk) => {
             if (perk.success) {
-                chunk.push(format_response(format_response(document.getElementById("options-format-success").value, perk)))
-            } else {
                 chunk.push(format_response(format_response(document.getElementById("options-format-fail").value, perk)))
+            } else {
+                chunk.push(format_response(format_response(document.getElementById("options-format-success").value, perk)))
             }
         })
 
@@ -119,17 +119,22 @@ async function Roll_Random_Perk() {
     points = _Get_Current_Points();
 
     resp_data.forEach((perk) => {
-        if (perk.success) {
-            perk["reason"] = "Success"
-        } else {
-            if(dep_flag){
-                perk["reason"] = "Dependency Failed"
-            }else if (points < perk["cost"]) {
+        switch (perk.success) {
+            case 0:
+                perk["reason"] = "Success"
+                break;
+            case 1:
                 perk["reason"] = "Insufficient Steps"
-                dep_flag = true
-            } else {
+                break;
+            case 2:
                 perk["reason"] = "Max Repeats"
-            }
+                break;
+            case 3:
+                perk["reason"] = "Dependency Failed"
+                break;
+            default:
+                perk["reason"] = "Something Went Wrong"
+                break;
         }
     })
 
