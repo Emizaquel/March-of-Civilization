@@ -176,11 +176,7 @@ function Generate_Save_Object() {
         }
     }
 }
-moc_version = {
-    "extension": "core",
-    "version": 0,
-    "subversion":1
-}
+
 function Validate_Save_Object(save){
     for (const prop of ["moc_version", "logs", "seed", "seed_steps", "rolls", "steps", "formatting"]) {
         if(save.hasOwnProperty(prop)){
@@ -226,13 +222,13 @@ function Validate_Save_Object(save){
     return false
 }
 
-function Parse_Save_String(save){
+async function Parse_Save_String(save){
     // console.log(save);
     save_state = JSON.parse(save);
     if(Validate_Save_Object(save_state)){
         return
     }
-    _Reset_Recieve_Amounts()
+    await _Reset_Recieve_Amounts()
     logs = save_state.logs
     document.getElementById("steps").innerHTML = "CURRENT STEPS: " + save_state.steps
     document.getElementById("options-seed").value = String(BigInt(save_state.seed));
@@ -274,8 +270,6 @@ function Load_Save_File() {
     }
 }
 
-
-
 function Load_Seed() {
     _Reset_Recieve_Amounts()
     new_seed = Number(document.getElementById("options-seed").value);
@@ -296,18 +290,20 @@ function Load_Seed() {
 function Init_Page(){
     _Reset_Recieve_Amounts()
     save_string = localStorage.getItem("save");
-    if(save_string == null){
-        logs=[]
-        new_seed = Math.floor(Math.random() * 9223372036854775807)
-        steps = BigInt(0)
-        document.getElementById("options-seed").value = String(BigInt(new_seed));
-        document.getElementById("options-rolls").value = 0;
-        _Set_Rand_Seed(BigInt(new_seed), BigInt(0), 0);
-        document.getElementById("latest-roll").value = ""
-        document.getElementById("roll-logs").value = ""
-    }else{
-        Parse_Save_String(save_string)
-    }
+    setTimeout(()=>{
+        if(save_string == null){
+            logs=[]
+            new_seed = Math.floor(Math.random() * 9223372036854775807)
+            steps = BigInt(0)
+            document.getElementById("options-seed").value = String(BigInt(new_seed));
+            document.getElementById("options-rolls").value = 0;
+            _Set_Rand_Seed(BigInt(new_seed), BigInt(0), 0);
+            document.getElementById("latest-roll").value = ""
+            document.getElementById("roll-logs").value = ""
+        }else{
+            Parse_Save_String(save_string)
+        }
+    },100)
 }
 
 function Setup_Env() {
