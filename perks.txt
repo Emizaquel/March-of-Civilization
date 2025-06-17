@@ -454,7 +454,7 @@ There are limits to power, ends to your strength, but sometimes you need to push
 
 
 Final Breath
-In one final gasp, in an exertion where you have nothing to loose, you can draw upon the last dregs of your strength with utter abandon, increasing your capabilities by orders of magnitude for a short period, though this does significantly damage your portal form. Even the greatest means of resurrection will have challenges undoing the harm done to yourself.
+In one final gasp, in an exertion where you have nothing to loose, you can draw upon the last dregs of your strength with utter abandon, increasing your capabilities by orders of magnitude for a short period, though this does significantly damage your mortal form. It will take quite some time for you to recover and even the most powerful restoratives and procedures applied will be of minimal help.
 500
 1
 Ki
@@ -491,7 +491,7 @@ Skill in battle is not just about what you know, but how you put it into practic
 Gifted Student
 You can pick up anything with only a little instruction. In fact, you are practically a sponge. Though this works best with martial techniques, your ability extends to any educational endeavour
 200
-MAX
+1
 
 
 
@@ -960,7 +960,7 @@ Eldritch Mind
 Sterner Stuff
 Sometimes it's simply too dangerous to go alone. Take this. You now are durable enough to survive the passive dangers of any natural environment
 200
-max
+1
 
 
 
@@ -1000,8 +1000,8 @@ max
 
 
 The Cycle
-Souls are real, you know that, and through observation of their passage you have become aware of other places they go to, drawn through a mystical network of bonds and connections. You have uncovered how to connect to these afterlives, though surviving there is another matter
-500
+Souls are real, you know that, and through observation of their passage you have become aware of other places they go to, drawn through a mystical network of bonds and connections. You have uncovered how to connect to one of these afterlives, though surviving there is another matter. You gain access first to the realm in which you are likely to end up in, and then to those that people you know will inhabit by level of familiarity
+300
 max
 
 
@@ -1009,7 +1009,7 @@ max
 The Bindings
 If all these realms are clustered together, what holds them as such? There is a non-place, a pseudo-existence without an inherent nature. Here even concepts like time are not guaranteed, everything simply EXISTS. You know not only about this place, but how to access it, and how to interact with it
 500
-max
+1
 
 
 
@@ -1546,15 +1546,15 @@ You know how to work with biological systems, creating technology that will easi
 
 
 Legacy
-All of these strange, mystical forces flow within you, growing in power and strength. While normally, it would be for your children to carry forth your legacy unto this world, you may now trigger a similar awakening of one of your powers in others through the means of a ritual.
-0
+The March can grant you access to many strange and unique abilities. While normally it would be for your children to carry forth your legacy unto this world, you may now trigger a similar awakening of any one of your powers in others through the means of a ritual granting them a basic level of access to this ability.
+400
 1
 
 
 
 Fundamentals
-Congrats! You have all the prerequisites for every other power in the March! As a bonus, you now are now able to pick up the basics of any field in about an hour of focused study
-0
+You pick up things quickly, for the basics at least. Regardless of the field, you pick up a working understanding of it with only an hour's study and experimentation - enough to get a sense of how it will interact with your broader understanding of the world.
+250
 1
 
 
@@ -1896,7 +1896,7 @@ Your works have a beauty that resonates through the ages. The things you make, t
 
 
 Song of the Ages
-You can sing! In fact you can sing amazingly well. Your voice and skill are such that this alone would make your performances almost hypnotic, inspiring emotions and 
+You can sing! In fact, you can sing amazingly well. Your voice and innate talent are such that this alone would make your performances almost hypnotic, capable of leaving lasting impressions that could affect a person in all the ways that powerful, emotional art can.
 200
 1
 
