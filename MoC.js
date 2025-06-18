@@ -222,6 +222,16 @@ function Validate_Save_Object(save){
     return false
 }
 
+async function set_seed(save_state) {
+    _Set_Rand_Seed(BigInt(save_state.seed), seed_steps, save_state.steps);
+    Generate_Perk_Display()
+    setTimeout(()=>{
+        if(save_state.steps != _Get_Current_Points()){
+            set_seed(save_state)
+        }
+    }, 1000)
+}
+
 async function Parse_Save_String(save){
     // console.log(save);
     save_state = JSON.parse(save);
@@ -248,10 +258,7 @@ async function Parse_Save_String(save){
 
     // console.log(save_state)
     // console.log(seed_steps)
-
-    _Set_Rand_Seed(BigInt(save_state.seed), seed_steps, save_state.steps);
-
-    Generate_Perk_Display()
+    set_seed(save_state)
 }
 
 function Load_Save_File() {
