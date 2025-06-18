@@ -454,7 +454,7 @@ There are limits to power, ends to your strength, but sometimes you need to push
 
 
 Final Breath
-In one final gasp, in an exertion where you have nothing to loose, you can draw upon the last dregs of your strength with utter abandon, increasing your capabilities by orders of magnitude for a short period, though this does significantly damage your mortal form. It will take quite some time for you to recover and even the most powerful restoratives and procedures applied will be of minimal help.
+In one final gasp, in an exertion where you have nothing to lose, you can draw upon the last dregs of your strength with utter abandon, increasing your capabilities by orders of magnitude for a short period, though this does significantly damage your mortal form. It will take quite some time for you to recover, and even the most powerful restoratives and non-transformative procedures applied will not significantly improve your recovery.
 500
 1
 Ki
@@ -923,7 +923,7 @@ Eldritch Mind
 
 
 Watchers from Beyond
-You gain a limited line of communication to a group of observers from… elsewhere. Though their perspectives are alien to you they are incredibly intellegent and learned, allowing them to comment on your plans and even peer-review your research and designs. They may also occasionally send you small trinkets of snippets of prophecy.
+You gain a limited line of communication to a group of observers from… elsewhere. Though their perspectives are alien to you they are incredibly intellegent and learned, allowing them to comment on your plans and even peer-review your research and designs. They may also occasionally send you small trinkets of snippets of prophecy. EAch time you gain this prize, you gain access to another group of Watchers.
 200
 MAX
 
@@ -2400,7 +2400,7 @@ You know how to form a magical and spiritual link with a creature, granting it a
 
 
 Inner World
-You have the designs for an artificial demiplane, a limited volume of space that acts as though it was it's own universe. The exact design is somewhat random, but is themed based on various workspaces and environments.
+You have the designs for an artificial demiplane, a limited volume of space that acts as though it was it's own universe. The exact design is somewhat random, but each time you gain this prize you gain the designs for a new one themed to match a different workspace or environment that you would find interesting in the moment.
 500
 MAX
 

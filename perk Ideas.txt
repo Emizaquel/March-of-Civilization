@@ -1,0 +1,24 @@
+Psionic; Subtle signals; You can pick up what is being put down - to an extent beyond what is merely physically possible. This not only allows you to understand the subtle nuances of communication, but also absorb them better making you a better student.
+Stuff; Universal Simulation Module; You know how to create a extremely computationally intensive software package that can simulate the local universe with respect to the actions of the people inserted into it.
+Matrial; Precision Body Control; Repeat Up to 4 Times; You are abel to control your body incredibly preciesly first on the level of individual voluntary muscle groups, then to the level of nomally subconcious aspects such as metabolism, then to normally involuntary processes such as your heartbeat and hormones and finally on a cellular level.
+General; Logic; You know how to describe problems in a rigorous manner. Though this may seem a simple thing, this allows you to break down complex procedures as a simple set of logical processes which are easily achieved through computation of all kinds.
+Magic; Shapeshifting; You know how to create spells and enchantments that allow the target to take on another form, first simply others of their own kin, then any others of their own kind (animate remains animate and inanimate remains inanimate), then finally anything at all; (three stage)
+Alchemy; Mystic Alchemy; You know how to take your akills into a realm that is often beyond the reach of most alchemists. To effect the world beyond the physical and reach for what lies beyond the material world.
+Spiritual; Spiritual Entities; You know how to create independent spiritual entities, self contained souls with enough power to act upon the physical world. These are fully independent entities with agency; dependency: souls (5)
+Spiritual; Sspiritual Guardians; You know how to create autonomous subsections of a soul, granting it a protector and guardian that works constantly and independently of the soul itself.
+Physics; Splicing; You have a deep understanding of how genetics translate into phenotypic expression. It takes you only a little experimentation to isolate what specific gentics are resposible for various biological structures and you have a knack for integrating those same structures into others - even into mature specimen.
+
+THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
+O   Spiritual
+O   Psionics
+O   Martial
+O   Alchemy
+O   Magic
+X   Eldritch
+X   Planar
+O   Physics
+O   General
+X   Powers
+O   Stuff
+
+NOTE: Bug for the points being loaded from save still hasn't been fixed.
