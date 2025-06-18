@@ -1,12 +1,26 @@
 Psionic; Subtle signals; You can pick up what is being put down - to an extent beyond what is merely physically possible. This not only allows you to understand the subtle nuances of communication, but also absorb them better making you a better student.
 Stuff; Universal Simulation Module; You know how to create a extremely computationally intensive software package that can simulate the local universe with respect to the actions of the people inserted into it.
-Matrial; Precision Body Control; Repeat Up to 4 Times; You are abel to control your body incredibly preciesly first on the level of individual voluntary muscle groups, then to the level of nomally subconcious aspects such as metabolism, then to normally involuntary processes such as your heartbeat and hormones and finally on a cellular level.
+Martial; Precision Body Control; Repeat Up to 4 Times; You are able to control your body incredibly preciesly first on the level of individual voluntary muscle groups, then to the level of nomally subconcious aspects such as metabolism, then to normally involuntary processes such as your heartbeat and hormones and finally on a cellular level.
 General; Logic; You know how to describe problems in a rigorous manner. Though this may seem a simple thing, this allows you to break down complex procedures as a simple set of logical processes which are easily achieved through computation of all kinds.
 Magic; Shapeshifting; You know how to create spells and enchantments that allow the target to take on another form, first simply others of their own kin, then any others of their own kind (animate remains animate and inanimate remains inanimate), then finally anything at all; (three stage)
 Alchemy; Mystic Alchemy; You know how to take your akills into a realm that is often beyond the reach of most alchemists. To effect the world beyond the physical and reach for what lies beyond the material world.
 Spiritual; Spiritual Entities; You know how to create independent spiritual entities, self contained souls with enough power to act upon the physical world. These are fully independent entities with agency; dependency: souls (5)
 Spiritual; Sspiritual Guardians; You know how to create autonomous subsections of a soul, granting it a protector and guardian that works constantly and independently of the soul itself.
 Physics; Splicing; You have a deep understanding of how genetics translate into phenotypic expression. It takes you only a little experimentation to isolate what specific gentics are resposible for various biological structures and you have a knack for integrating those same structures into others - even into mature specimen.
+Eldritch; Kaiju; There are creatures, monstrous creatures that defy any extant concept of biological limitation. You understand these creations, allowing you to creatures of immense size and strength
+Power; Unending Endurance; Regardless of how long you have been working, and how much you have been exerting yourself, so long as you are in good health you can continue to work. This removes your need for food and sleep.
+Hammerspace; Planar; You know how to creates pocket realms that are integrated into the natural functions of living beings, allowing them to store items in a convenient and weightless manner.
+Eldritch; Impossible Proportions; You know how to alter the internal geometry of beings and objects in such a way that allows them to take on forms far large than they seem to be able to at first.
+Magic; Spooky Action; You have a good sense of how to generate forces at a distance, from telekineisis to dealing damage directly, you can easily design spells and artefacts to achieve these feats
+Magic; Mysitc Places; Anchoring magical effects to places is no mean feat - indeed most such places are born of immense magical exposure over a great deal of time. Still, you know how to tie your workings into the ambient supplies of magic making them self-sustaining
+Stuff; Pulsar Series Laser Weapons; From side-arms and concealable hold-outs to static emplacement and void-navy class weaponry, this series of laser weapons are decent examples of all scales of weaponry.
+Stuff; Accrection Series Plasma Weapons; This collection of plasma weapons contain everythign from melee hold outs to orbital defence weapons. Though not the apex of this class of weapon, they do represent a collection of decent designs.
+Stuff; Sol-Series Fusion Plants; These collection of General Hydrogen Fusion Plants provide plenty of options from personal portable units to plants that can power colony craft and can produce a respectable amount of power from any form of hydrogen.
+General; Splitting; You know how to work your way into weaknesses, applying devasting force from within. You can create all sorts of tools to take advantage of this effect.
+General; Slicing; You know how to take advantage of the force you can produce over time concentrating and building up damage until you overcome your opponents defences. you know how to create all sorts of tools that take advantage of this effect.
+General; Piercing; You know how to concetrate force, and even the strongest armour can only do so much if there is so little of it. You know how to take advantage of this effecti to produce all sorts of tools.
+General; Crushing; You know how to build on overwhelming force, to destroy your foes though simply dealing more damage than they can handle. You know how to make tools of all sorts that enable you to vastly augment the forces you can bring to bear.
+Martial; In Melee; You know how to create weapons intended for close-quarters combat. From daggers to spears, all forms of melee weaponry come easy to you and you can even design tools to best suit any user you care to name.
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
 O   Spiritual
@@ -14,11 +28,11 @@ O   Psionics
 O   Martial
 O   Alchemy
 O   Magic
-X   Eldritch
-X   Planar
+O   Eldritch
+O   Planar
 O   Physics
 O   General
-X   Powers
+O   Powers
 O   Stuff
 
 NOTE: Bug for the points being loaded from save still hasn't been fixed.
