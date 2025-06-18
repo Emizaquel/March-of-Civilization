@@ -2459,3 +2459,38 @@ Farspace Transit Window Generator
 This series of devices allows objects to transition in and out of Farspace, allowing them to travel across realspace at faster-than-light speeds. You have the designs for a range of such devices, from small units suitable for courier drones to massive systems intended for use in colony-ships
 250
 1
+
+Fission Works
+Gas-Core Fission Reactors, Ultra-light, manportable Nuclear Power Units. Fission Warheads, and all the varied development of refined fissionables into products of high technology are in your grasp.
+100
+1
+
+Macro-Mechatronics
+You are inflicted with a dream, a dream of a love-letter to the Human form, scaled up or down or kept roughly the right size, and then cladded in armor and moved by mechanisms fueled by engineered power sources. Designs of leg, and arm drive trains come to you, as is the dizzingly complex systems or software required to let it keep it's balance, and most importantly: to move. This is the skill to make robots shaped like human beings, but other "exotic" forms are not too hard to puzzle out, so long as they got something like legs and arms.
+200
+1
+
+Soul of the Engine
+You know how to design and make the gamut of techniques of garnering energy from combustion: engines, fuel cells, turbines and all. If it burns, you can think of a few ways to make it into motion.
+100
+1
+
+Power To The People
+There are a great many ways to provide municipal power to a town, a city, a country, or even a world. The Civil Engineering required to tap into Geothermal springs, or truckloads of coal, or a fusion reactor or any large-scale municpal power system into the megawatts fed to the needs of the people come to you easily.
+100
+1
+
+Shield Generation
+You know how to design shield projectors, capable of utilizing either esoteric high-energy physics, or magic in the goal of creating of specific energy fields. Energy fields capable of protecting from harm or to isolate environments are the most typical use, and more edge-case systems are possible as well.
+200
+1
+
+Accelerate the Projectile
+Bolts, Arrows, Bullets, Flechettes and more are all under your perview. You have a grasp on engineering everything required to make a device capable of launching a projectile using explosive-combustion or muscle-power in its many forms. Using more exotic acceleration methods come to you more easily, as well.
+100
+1
+
+Talk and See with Radios and Lasers
+You have the knowledge of using Electromagnetic frequencies, most often Radio and Light waves, to communicate, and sense. This most often manifests in radio wave and laser communication, and RADAR/LADAR systems. Necisisarily, this comes with the knowledge to protect and counter against such equipment, like using Electromagnetic Countermeasures or Electromagnetic Pulse Generating weapons.
+100
+1
