@@ -2461,12 +2461,12 @@ This series of devices allows objects to transition in and out of Farspace, allo
 1
 
 Fission Works
-Gas-Core Fission Reactors, Ultra-light, manportable Nuclear Power Units. Fission Warheads, and all the varied development of refined fissionables into products of high technology are in your grasp.
+Designs and ready-to-use paradigms on making the wide gamut of fission-based reactors and radioisotope thermoelectric generators are known to you: ranging from muncipal solid-core designs to gas-core fission and ultra-light manportable nuclear power units.
 100
 1
 
-Macro-Mechatronics
-You are inflicted with a dream, a dream of a love-letter to the Human form, scaled up or down or kept roughly the right size, and then cladded in armor and moved by mechanisms fueled by engineered power sources. Designs of leg, and arm drive trains come to you, as is the dizzingly complex systems or software required to let it keep it's balance, and most importantly: to move. This is the skill to make robots shaped like human beings, but other "exotic" forms are not too hard to puzzle out, so long as they got something like legs and arms.
+Mechatronics In Motion
+You are inflicted with a dream, a dream of a love-letter to the Human form, arms and legs made mobile through designed artifice, then cladded in armor, and moved by mechanisms fueled by engineered power sources. Designs of leg, and arm drive trains come to you, as is the dizzingly complex systems or software required to let it keep it's balance, and most importantly: to move. This is the skill to make arms and legs that work like a human reflected into your chosen mechanical art, but other "exotic" forms are not too hard to puzzle out, so long as they got something like legs and arms.
 200
 1
 
@@ -2476,13 +2476,8 @@ You know how to design and make the gamut of techniques of garnering energy from
 1
 
 Power To The People
-There are a great many ways to provide municipal power to a town, a city, a country, or even a world. The Civil Engineering required to tap into Geothermal springs, or truckloads of coal, or a fusion reactor or any large-scale municpal power system into the megawatts fed to the needs of the people come to you easily.
+There are a great many ways to provide municipal power to a town, a city, a country, or even a world. The Civil Engineering required to tap into Geothermal springs, or truckloads of coal, or a fusion reactor or any large-scale municipal power system into the electricity fed to the needs of the people come to you easily.
 100
-1
-
-Shield Generation
-You know how to design shield projectors, capable of utilizing either esoteric high-energy physics, or magic in the goal of creating of specific energy fields. Energy fields capable of protecting from harm or to isolate environments are the most typical use, and more edge-case systems are possible as well.
-200
 1
 
 Accelerate the Projectile
@@ -2491,6 +2486,31 @@ Bolts, Arrows, Bullets, Flechettes and more are all under your perview. You have
 1
 
 Talk and See with Radios and Lasers
-You have the knowledge of using Electromagnetic frequencies, most often Radio and Light waves, to communicate, and sense. This most often manifests in radio wave and laser communication, and RADAR/LADAR systems. Necisisarily, this comes with the knowledge to protect and counter against such equipment, like using Electromagnetic Countermeasures or Electromagnetic Pulse Generating weapons.
+You have the knowledge of using Electromagnetic frequencies, most often Radio and Light waves, to communicate, and sense. This most often manifests in radio wave and laser communication, and RADAR/LADAR systems. Necessarily, this comes with the knowledge to protect and counter against such equipment, like using Electromagnetic Countermeasures or Electromagnetic Pulse Generating weapons.
 100
+1
+
+Make Your Artifical Gravity
+The applied engineering of scientific study of Gravitics made manifest: A series of designs towards supplying artifical gravity deck-plates, mass-tractor beams, kilometers wide inertial syncronization fields, and crude examples of gravitic weapons that show effective performance comparable to magnetic railgun weapons due to their imprecise manipulation of the gravitational fields that would otherwise be implemented into pinnacle weapons. You can make a devestating maul with this.
+175
+1
+
+Song Series Weaponized Accoustics
+The sonic weapons of a enlightened era, including examples of precise narrow-beam sonic pulse weapons capable of nonlethally disabling a targeted individual through lighter armor by temporarily shutting down their nervous system. Comes in a wide variety of packages most of them man portable, as well as more primitive examples that are only effective against targets that can hear with more traditional effects-- afflicting nausea and hearing loss.
+100
+1
+
+Ink to Paper
+The gamut of designs to put printed materials into the hands of the people are available to you, running from primitive printing presses on parchment to typewriters and ball-point pens to cutting edge paper-preparing chemical processes, and full color gloss printers. the many, varied steps of turning raw materials into the written word (or picture) are available to you.
+100
+1
+
+The Coastguard Supply
+A  coastguard requires a great many vehicles, equipment and systems to run, ones that you do not have to make designs for now. You have been given all the tested and used designs on functional ships, boats, buildings, helicopters and the varied equipment that the day-to-day operations of a coastguard that may be from a real-life or fictional source.
+100
+1
+
+Antimatter
+Antimatter is volatile, and the ultimate storage mechanism for harnessable energy in hard-science environments. You know how to produce, store, and harness antimatter in all its various quantities. the smallest amounts are most economically usable for radiation medicine, but higher orders of magnetitude have obvious manufacturing, scientific, and miltiary applications.
+200
 1
