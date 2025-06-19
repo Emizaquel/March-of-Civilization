@@ -2515,7 +2515,7 @@ A coastguard requires a great many vehicles, equipment and systems to run, ones 
 1
 
 Antimatter
-Antimatter is volatile, and the ultimate storage mechanism for harnessable energy in hard-science environments. You know how to produce, store, and harness antimatter in all its various quantities. the smallest amounts are most economically usable for radiation medicine, but higher orders of magnetitude have obvious manufacturing, scientific, and miltiary applications.
+Antimatter is volatile, and the ultimate storage mechanism for harnessable energy in hard-science environments. You know the science behind how to produce, store, and harness antimatter in all its various quantities. the smallest amounts are most economically usable for radiation medicine, but higher orders of magnetitude have obvious manufacturing, scientific, and miltiary applications.
 200
 1
 
@@ -2524,6 +2524,7 @@ Subtle signals
 You can pick up what is being put down - to an extent beyond what is merely physically possible. This not only allows you to understand the subtle nuances of communication, but also absorb and assimilate the psionic component making you a better student.
 150
 1
+Psionics (22)
 
 Universal Simulation Module
 You know how to create a extremely computationally intensive software package that can simulate the local universe with respect to the actions of the people inserted into it. Your understanding of this system allows you to identify various components, allowing you to extract internal functionality for any other purpose.
@@ -2547,10 +2548,13 @@ Shapeshifting
 You know how to create spells and enchantments that allow the target to take on another form, first simply others of their own kin, then any others of their own kind (animate remains animate and inanimate remains inanimate), then finally anything at all
 250
 3
+Wishes and Dreams (84)
 
 
 Mystic Alchemy
-You know how to take your akills into a realm that is often beyond the reach of most alchemists. To effect the world beyond the physical and reach for what lies beyond the material world.
+You know how to take your akills into a realm that is often beyond the reach of most alchemists. To effect the world beyond the physical and reach for what lies beyond the material world. This allows you to apply alchemical principles to various supernatural forces, starting with Ki, then magic, then spiritual energy and finally the conceptual underpinnings of reality itself.
+300
+4
 
 
 Spiritual Entities
@@ -2575,8 +2579,9 @@ You have a deep understanding of how genetics translate into phenotypic expressi
 
 Kaiju
 There are creatures, monstrous creatures that defy any extant concept of biological limitation. You understand these creations, allowing you to creatures of immense size and strength.
-500
+350
 1
+Eldritch Mind (104)
 
 
 Unending Endurance
@@ -2618,15 +2623,27 @@ From side-arms and concealable hold-outs to static emplacement and void-navy cla
 
 
 Accrection Series Plasma Weapons
-This collection of plasma weapons contain everythign from melee hold outs to orbital defence weapons. Though not the apex of this class of weapon, they do represent a collection of decent designs.
+This collection of plasma weapons contain everythign from melee hold outs to orbital defence weapons. Though not the apex of this class of weapon, they do represent a collection of decent designs that could fill practically every need for an interstellar war-effort
 150
 1
 
 
 Sol-Series Fusion Plants
-These collection of General Hydrogen Fusion Plants provide plenty of options from personal portable units to plants that can power colony craft and can produce a respectable amount of power from any form of hydrogen.
+These collection of General Hydrogen Fusion Plants provide plenty of options from personal portable units to plants that can power colony craft and can produce a respectable amount of power from any form of hydrogen. Indeed, you also have a number of options for open-chamber designs that can double as thrusters.
 150
 1
+
+Sunshine in a Can
+You know how to create a large variety of fusion explosives for uses that range from civilian to strategic. These can scale from man-portable anti-materiel grenades to black-navy straegic weapons capable of destroying orbital installations. In addition to the plans, you also have the knowledge neccessary to put them into practice.
+150
+1
+
+
+Big Red Button
+You have access to the plans and understanding necessary to make a wide variety of fission-based weaponry, capable of acting as tactical munitions to strategic options - on a planet and even beyond it. Indeed, this collection even includes systems that could be used for civilian purposes, though only if the timeline accounts for the fallout.
+150
+1
+
 
 
 Splitting
@@ -2642,7 +2659,7 @@ You know how to take advantage of the force you can produce over time concentrat
 
 
 Piercing
-You know how to concetrate force, and even the strongest armour can only do so much if there is so little of it. You know how to take advantage of this effecti to produce all sorts of tools.
+You know how to concetrate force, and even the strongest armour can only do so much if there is so little of it. You know how to take advantage of this effect to produce all sorts of tools.
 25
 1
 
@@ -2653,7 +2670,7 @@ You know how to build on overwhelming force, to destroy your foes though simply 
 1
 
 
-In Melee
+Strike True
 You know how to create weapons intended for close-quarters combat. From daggers to spears, all forms of melee weaponry come easy to you and you can even design tools to best suit any user you care to name.
 100
 1
