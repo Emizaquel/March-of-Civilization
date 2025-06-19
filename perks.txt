@@ -2461,9 +2461,6 @@ This series of devices allows objects to transition in and out of Farspace, allo
 1
 
 
---- Adding from here ---
-
-
 Fission Works
 You have the designs, knowledge and training to make all of Fission Work's wide gamut of fission-based nuclear reactors and radioisotope thermoelectric generators: ranging from muncipal solid-core designs to gas-core fission and ultra-light manportable nuclear power units.
 150
