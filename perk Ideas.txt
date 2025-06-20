@@ -1,4 +1,5 @@
-
+General; Climatology; Weather, including magical phenomena, some weather manipulation
+Stuff; Energy Shields; A plasma barrier capable of reacting to ene 
 
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
@@ -9,7 +10,7 @@ x   Alchemy
 x   Magic
 x   Eldritch
 x   Planar
-x   Physics
+O   Physics
 x   General
 x   Powers
-x   Stuff
+O   Stuff

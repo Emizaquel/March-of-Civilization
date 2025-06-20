@@ -64,7 +64,7 @@
 
 These writing tools center around a technological 'power set' for a character, in which they are bestowed with knowledge, skill and supporting powers randomly from a pool of abilities. The March serves as both a tool for automating the process of generating 'rolls' for such a writing project, but also as a similar framework without the IP complications of the original Forge.
 
-The base version of the March is available under CC-BY <a href="base/MoC.html">here</a>, and can be used for any writing project, including commercial works. All 317 perks in this version of the March are original creations by yours truly and do not contain any material that I do not hold the copyright to.
+The base version of the March is available under CC-BY <a href="base/MoC.html">here</a>, and can be used for any writing project, including commercial works. All 388 perks in this version of the March are original creations by yours truly (with a contribution from Blood_Librarian on SpaceBattles) and does not contain any material that I do not hold the copyright to.
 
 The extended version of the March is not yet available, but will introduce perks that directly reference media and specific fandoms.
 </div>
@@ -75,13 +75,13 @@ If the perk has reached its repeatability limit, a new perk is rolled.
 
 Once a perk that can be granted is found, the cost is compared against the current number of steps. If the steps are insufficient, the roll fails.
 
-If there are enough steps, the dependencies are resolved recursively, that is the dependencies themselves are also analyzed for dependencies of their own. If a dependency fails due to reaching it's repeat limit, this does not effect the resolution it its own dependencies or dependents, though cost restriction remains.
+The March was designed with a series of 'dependencies'. These are perks that will be 'rolled' if a perk dependent on them is rolled. These are related perks or grant necessary abilities to use the perks in question.
+
+If a perk has any dependencies, these are resolved first, with their own dependencies resolved recursively. If there are not enough steps for a dependency, the dependent perk also fails. However, if the perk has simply met it's repeatability limit, then the depenedent perks still operate normally.
 
 Once all dependencies are resolved, the perk is once again evaluated for cost and should there be enough, the perk then is added to the successful perks for a roll.
 
 Some versions of the Forge that inspired this tool allow for perks to be held for later once enough points are accumulated or refused should they not be desired. The lack of such features is deliberate.
-
-The March was designed with a series of 'dependencies'. These are perks that will be 'rolled' if a perk dependent on them is rolled. These are related perks or grant necessary abilities to use the perks in question.
 </div>
 <div class="MoC-Section">How To Use</div>
 <div class="main-body">The version control is not yet set up, so please await such functionality, but the base March is functional. When loading, a random seed will be assigned to you. press the roll button in order to progress the March one roll.
