@@ -1,5 +1,8 @@
 General; Climatology; Weather, including magical phenomena, some weather manipulation
 Stuff; Energy Shields; A plasma barrier capable of reacting to ene 
+Physics; Anatomy
+Stuff; Anitpathogen; A collection of drugs that act as broad-spectrum anti-biotic and anti-viral treatments. Perfect for use against all but the strongerst drug resistant strains.
+Stuff; BattleGlue; A easy to apply topical disinfectant and pathogen barrier that can seal up any injury preventing infection and accelerating the healing of superficial injuries
 
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
@@ -11,6 +14,6 @@ x   Magic
 x   Eldritch
 x   Planar
 O   Physics
-x   General
+O   General
 x   Powers
 O   Stuff
