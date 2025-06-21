@@ -3,12 +3,16 @@ Stuff; Energy Shields; A plasma barrier capable of reacting to ene
 Physics; Anatomy
 Stuff; Anitpathogen; A collection of drugs that act as broad-spectrum anti-biotic and anti-viral treatments. Perfect for use against all but the strongerst drug resistant strains.
 Stuff; BattleGlue; A easy to apply topical disinfectant and pathogen barrier that can seal up any injury preventing infection and accelerating the healing of superficial injuries
+Spiritual; Ideal State Enforcement; Your soul remembers your ideal formm the perfect you. And there are ways to project that image back onto reality. Through your arts you know how to reconstruct parts of the body lost to the physcial universe.
+Enduring; Physics; You know how to design and modify systems in such a way as to protect them from the ravages of time - allowing them to operate as they should for tens of times longer than they otherwise would be capable of.
+Fighting Fit; Martial; While Ki already slows aging and fights back against the injuries time inflicts, there are ways to improve this effect, allowing you to turn back the clock by a little bit.
+
 
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
-x   Spiritual
+O   Spiritual
 x   Psionics
-x   Martial
+O   Martial
 x   Alchemy
 x   Magic
 x   Eldritch
