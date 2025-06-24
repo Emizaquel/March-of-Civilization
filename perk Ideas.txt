@@ -6,18 +6,30 @@ Stuff; BattleGlue; A easy to apply topical disinfectant and pathogen barrier tha
 Spiritual; Ideal State Enforcement; Your soul remembers your ideal formm the perfect you. And there are ways to project that image back onto reality. Through your arts you know how to reconstruct parts of the body lost to the physcial universe.
 Enduring; Physics; You know how to design and modify systems in such a way as to protect them from the ravages of time - allowing them to operate as they should for tens of times longer than they otherwise would be capable of.
 Fighting Fit; Martial; While Ki already slows aging and fights back against the injuries time inflicts, there are ways to improve this effect, allowing you to turn back the clock by a little bit.
+Physics; MEMS; Micro-electromechanical devices
+Hot; Alchemy; You know how to transmit the property of alchemical heat to any substance, empowering active alechemical properties such as causticity, heat generation, and it's ability to break apart and purify
+Cold; Alchemy; You know how to transmit the property of alchemical frigitdity to any substance, allowing it to resist and passivate alchemical properties and to bind other distinct substances together
+Wet; Alchemy; You know how to transmit the property of alchemical humidity to any substance allowing it to be more indistinct, fluidic, flexible and malleable as well as
+Dry; Alchemy; You know how to transmit the property of alchemical aridity to any substance, allowing it to be more discrete (in the physical sense), solid, rigid and stiff
+Earth; Alchemy; resist alteration/heaviness/impermeability
+Air; Alchemy; vaporise/formless/bouyant
+Water; Alchemy; melt/dissolve/shapeless
+Fire; Alchemy; caustic/heat generation/lightness
+Curses; Magic; The ability to create spells that resist removal, usually by engineering a deliberate weakness that empowers the general strength
+Visualization; Magic; Culmination of belief, the ability to see the desired effect, supporting skill, complex effects
+Alternate Forms; Powers; A sort of limited shapeshifting, gain the ability to take on an alternate form capable of supporting your soul conciousness, a robot, animal or even an entirely seperate species
 
 
-
+note: save alchemcial processes for next update, there's like 16
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
 O   Spiritual
 x   Psionics
 O   Martial
-x   Alchemy
-x   Magic
+O   Alchemy
+O   Magic
 x   Eldritch
 x   Planar
 O   Physics
 O   General
-x   Powers
+O   Powers
 O   Stuff
