@@ -252,7 +252,7 @@ async function Parse_Save_String(save){
     document.getElementById("options-format-reverse-check-rolls").checked = save_state.formatting.rolls_check
     Generate_Perk_Display()
 
-    logs.forEach((roll) => { roll.forEach((perk) => { if (perk.success) {
+    logs.forEach((roll) => { roll.forEach((perk) => { if (!perk.success) {
         _Increment_Prize_By_Id(perk.id);
     } }) })
 
