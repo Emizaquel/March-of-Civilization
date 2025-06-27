@@ -18,12 +18,15 @@ Fire; Alchemy; caustic/heat generation/lightness
 Curses; Magic; The ability to create spells that resist removal, usually by engineering a deliberate weakness that empowers the general strength
 Visualization; Magic; Culmination of belief, the ability to see the desired effect, supporting skill, complex effects
 Alternate Forms; Powers; A sort of limited shapeshifting, gain the ability to take on an alternate form capable of supporting your soul conciousness, a robot, animal or even an entirely seperate species
+True Worth; Powers; Sometimes progress isn't about creating something new, but instead about using what you have more effectively. You see further than the surface and are able to see exactly what you can use something for.
+Beyond Speech; psychic; You can pick up on the subtle psionic traces that cling to speech or other active forms of transmitted communication - as well as amplify your own. This allows yout to speak with and be understood by any sapient being.
+Beyond Script; psychic; You can detect the psionic residue that even seemingly blank people leave as they record information, allowing you to understand the meaning of any information stored in a permamnent or semi-permanent form.
 
 
 note: save alchemcial processes for next update, there's like 16
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
 O   Spiritual
-x   Psionics
+O   Psionics
 O   Martial
 O   Alchemy
 O   Magic
