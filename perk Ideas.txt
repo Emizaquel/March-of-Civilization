@@ -21,7 +21,14 @@ Alternate Forms; Powers; A sort of limited shapeshifting, gain the ability to ta
 True Worth; Powers; Sometimes progress isn't about creating something new, but instead about using what you have more effectively. You see further than the surface and are able to see exactly what you can use something for.
 Beyond Speech; psychic; You can pick up on the subtle psionic traces that cling to speech or other active forms of transmitted communication - as well as amplify your own. This allows yout to speak with and be understood by any sapient being.
 Beyond Script; psychic; You can detect the psionic residue that even seemingly blank people leave as they record information, allowing you to understand the meaning of any information stored in a permamnent or semi-permanent form.
+Hard Robotics; General; Ah, that dance of the physical and digital. You have an understanding of the mechanics and logic surrounding servos, pulleys, levers and other devices that allow for the movement of various rigid armatures.
+Soft Robotics; General; Ah, that dance of the physical and digital. You have an understanding of the mechanics and logic surrounding bladders, hooks, belts and other devices that allows for the controlled deformation of flexible armatures.
+Bioengineering; General; You underrstand how to translate the intricate dance of genetics into complex biological structures, creating novel tissues, organs and even entirely new creatures. You not only understand how to design such things, but also the conditions and processes that would have to take place in order to bring them into reality.
+Sacrifice; Eldritch; To open one's mind, one must eschew prior preconceptions. One of the best ways to do so is to overcome the taboos that have ruled your life thus far. By breaking various taboos in a ritualistic manner, you can more effectively make use of knowledge beyond the norm
+Branch Prediction; Planar; You understand the delicate nature of temporal branching, and how timelines shift and split. Thus, should you end up in the past, you know how to travel along the timelines you are interested in to get back to the correct one, and how to safely make limited changes.
 
+
+Update liquid light to include storage
 
 note: save alchemcial processes for next update, there's like 16
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
@@ -30,7 +37,7 @@ O   Psionics
 O   Martial
 O   Alchemy
 O   Magic
-x   Eldritch
+O   Eldritch
 x   Planar
 O   Physics
 O   General
