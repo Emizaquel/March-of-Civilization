@@ -2671,3 +2671,185 @@ Strike True
 You know how to create weapons intended for close-quarters combat. From daggers to spears, all forms of melee weaponry come easy to you and you can even design tools to best suit any user you care to name.
 100
 1
+
+
+Climatology
+You have a deep understanding of the interactions between immense volumes of matter and energy, allowing you to predict the evolution of complex systems on the scale of planets. This is primarily geared towards the prediction and manipulation of weather systems, but can take into account the effects of anything of a scale that wouldn't simply be drowned out.
+200
+1
+
+
+Anatomy
+You have a deep understanding of the mechanics of biological bodies, granting you a sense of how all the parts of the body function and interact. You fully understand your own body and can easily extend that to any other similar life-form but it only takes a little research for your to expand that to other bodies.
+200
+1
+
+
+Antipathogen
+A collection of drugs that act as broad-spectrum anti-biotic and anti-viral treatments. Perfect for use against all but the strongest drug-resistant strains.
+150
+1
+
+
+Battle Glue
+A easy to apply topical disinfectant and pathogen barrier that can seal up any injury preventing infection and accelerating the healing of non-gaping wounds.
+150
+1
+
+
+Ideal State Enforcement
+Your soul remembers your ideal form the perfect you. And there are ways to project that image back onto reality. Through your arts you know how to reconstruct parts of the body lost to the physical universe. (needs Root of Meaning)
+500
+1
+
+
+Enduring
+You know how to design and modify systems in such a way as to protect them from the ravages of time - allowing them to operate as they should for tens of times longer than they otherwise would be capable of.
+150
+1
+
+
+Fighting Fit
+While Ki already slows aging and fights back against the injuries time inflicts, there are ways to improve this effect, allowing you to effectively turn back the clock by a little bit. (needs Put Your Back Into It)
+150
+1
+
+
+MEMS
+Sometimes it is simpler to take advantage of physical interactions, even with highly advanced computation permitting you various ways of sensing the world. You know how to scale down various devices and integrate them into computational systems.
+200
+1
+
+
+Hot
+You know how to transmit the property of alchemical heat to any substance, empowering active alchemical properties such as causticity, heat generation, and its ability to break apart and purify
+150
+1
+
+
+Cold
+You know how to transmit the property of alchemical frigidity to any substance, allowing it to resist and passivate alchemical properties and to bind other distinct substances together
+150
+1
+
+
+Wet
+You know how to transmit the property of alchemical humidity to any substance allowing it to be more indistinct, fluidic, flexible and malleable as well as
+150
+1
+
+
+Dry
+You know how to transmit the property of alchemical aridity to any substance, allowing it to be more discrete (in the physical sense), solid, rigid and stiff
+150
+1
+
+
+Earth
+You have grokked the element of Earth, one of the fundamental aspects of the universe. The element of Earth is not the simple dirt around you, but rather the qualities that are more easily seen in it. The stability, weight and impermeability that it displays so well.
+250
+1
+
+
+Air
+You have grokked the element of Air, one of the fundamental aspects of the universe. The element of Air is not the simple atmosphere, but what differentiates it from what is clearly other. The ability to become a formless ephemeral substance that escaped understanding for so long.
+250
+1
+
+
+Water
+The element of water is not merely the substance that fills the oceans, it is that which takes in all things and is free of such base considerations as simple shape and structure for it is fluid in a way that nothing else is.
+250
+1
+
+
+Fire
+Fire is a strange element but you know it nonetheless. It is the element of effect and change, that ability to alter others, to cause heat and to remove weight from that which it alters.
+250
+1
+
+
+Curses
+The ability to create spells that resist removal, usually by engineering a deliberate weakness that empowers the general strength
+500
+1
+
+
+Visualization
+To believe in something, you do not merely need to be able to want it, but to see it as a truth of the world. That faith and understanding that allows the immaterial to be as real to you as the ground you walk on. Not only does this improve your ability to cast magic, it also improves your general capability to conceptualize phenomena of all kinds.
+200
+1
+
+
+Alternate Forms
+A sort of limited shapeshifting, gain the ability to take on an alternate form capable of supporting your soul and consciousness, a robot, animal or even an entirely separate species. repeat max
+500
+255
+
+
+True Worth
+Sometimes progress isn't about creating something new, but instead about using what you have more effectively. You see further than the surface and are able to see exactly what you can use something for.
+300
+1
+
+
+Beyond Speech
+You can pick up on the subtle psionic traces that cling to speech, sign language or other active forms of transmitted communication - as well as amplify your own. This allows you to speak with and be understood by any sapient being.
+250
+1
+
+
+Beyond Script
+You can detect the psionic residue that even seemingly blank people leave as they record information, allowing you to understand the meaning of any information stored in a permanent or semi-permanent form.
+250
+1
+
+
+Hard Robotics
+Ah, that dance of the physical and digital. You have an understanding of the mechanics and logic surrounding servos, pulleys, levers and other devices that allow for the movement of various rigid armatures.
+200
+1
+
+
+Soft Robotics
+Ah, that dance of the physical and digital. You have an understanding of the mechanics and logic surrounding bladders, hooks, belts and other devices that allows for the controlled deformation of flexible armatures.
+200
+1
+
+
+Bioengineering
+You understand how to translate the intricate dance of genetics into complex biological structures, creating novel tissues, organs and even entirely new creatures. You not only understand how to design such things, but also the conditions and processes that would have to take place in order to bring them into reality.
+200
+1
+
+
+Sacrifice
+To open one's mind, one must eschew prior preconceptions. One of the best ways to do so is to overcome the taboos that have ruled your life thus far. By breaking various taboos in a ritualistic manner, you can more effectively make use of knowledge beyond the norm
+150
+1
+
+
+Branch Prediction
+You understand the delicate nature of temporal branching, and how timelines shift and split. Thus, should you end up in the past, you know how to travel along the timelines you are interested in to get back to the correct one, and how to safely make limited changes.
+25
+1
+
+
+Inverse Kzinti Lesson
+Conservation of Momentum, it's the very fundamentals of physics, perhaps one of the first lessons anyone learns. You have a powerful sense of reaction forces and the ability to turn any mass launcher into an effective thruster.
+25
+1
+
+
+Eldritch Aspect
+Your soul resonates with some aspect of the universe, something utterly fundamental to the way that the universe works. No trite element or other descriptive aspect, but those things that cannot be extracted or contained.
+1000
+1
+
+
+Portal Barrier
+If you don't want to get hit by something, why get hit at all. Through careful manipulation of the fabric of space-time you can create barriers that will redirect even energy weapons in whatever direction you choose - perhaps back in the direction they came from.
+350
+1
+
+
