@@ -1,45 +1,20 @@
-General; Climatology; Weather, including magical phenomena, some weather manipulation
-Stuff; Energy Shields; A plasma barrier capable of reacting to ene 
-Physics; Anatomy
-Stuff; Anitpathogen; A collection of drugs that act as broad-spectrum anti-biotic and anti-viral treatments. Perfect for use against all but the strongerst drug resistant strains.
-Stuff; BattleGlue; A easy to apply topical disinfectant and pathogen barrier that can seal up any injury preventing infection and accelerating the healing of superficial injuries
-Spiritual; Ideal State Enforcement; Your soul remembers your ideal formm the perfect you. And there are ways to project that image back onto reality. Through your arts you know how to reconstruct parts of the body lost to the physcial universe.
-Enduring; Physics; You know how to design and modify systems in such a way as to protect them from the ravages of time - allowing them to operate as they should for tens of times longer than they otherwise would be capable of.
-Fighting Fit; Martial; While Ki already slows aging and fights back against the injuries time inflicts, there are ways to improve this effect, allowing you to turn back the clock by a little bit.
-Physics; MEMS; Micro-electromechanical devices
-Hot; Alchemy; You know how to transmit the property of alchemical heat to any substance, empowering active alechemical properties such as causticity, heat generation, and it's ability to break apart and purify
-Cold; Alchemy; You know how to transmit the property of alchemical frigitdity to any substance, allowing it to resist and passivate alchemical properties and to bind other distinct substances together
-Wet; Alchemy; You know how to transmit the property of alchemical humidity to any substance allowing it to be more indistinct, fluidic, flexible and malleable as well as
-Dry; Alchemy; You know how to transmit the property of alchemical aridity to any substance, allowing it to be more discrete (in the physical sense), solid, rigid and stiff
-Earth; Alchemy; resist alteration/heaviness/impermeability
-Air; Alchemy; vaporise/formless/bouyant
-Water; Alchemy; melt/dissolve/shapeless
-Fire; Alchemy; caustic/heat generation/lightness
-Curses; Magic; The ability to create spells that resist removal, usually by engineering a deliberate weakness that empowers the general strength
-Visualization; Magic; Culmination of belief, the ability to see the desired effect, supporting skill, complex effects
-Alternate Forms; Powers; A sort of limited shapeshifting, gain the ability to take on an alternate form capable of supporting your soul conciousness, a robot, animal or even an entirely seperate species
-True Worth; Powers; Sometimes progress isn't about creating something new, but instead about using what you have more effectively. You see further than the surface and are able to see exactly what you can use something for.
-Beyond Speech; psychic; You can pick up on the subtle psionic traces that cling to speech or other active forms of transmitted communication - as well as amplify your own. This allows yout to speak with and be understood by any sapient being.
-Beyond Script; psychic; You can detect the psionic residue that even seemingly blank people leave as they record information, allowing you to understand the meaning of any information stored in a permamnent or semi-permanent form.
-Hard Robotics; General; Ah, that dance of the physical and digital. You have an understanding of the mechanics and logic surrounding servos, pulleys, levers and other devices that allow for the movement of various rigid armatures.
-Soft Robotics; General; Ah, that dance of the physical and digital. You have an understanding of the mechanics and logic surrounding bladders, hooks, belts and other devices that allows for the controlled deformation of flexible armatures.
-Bioengineering; General; You underrstand how to translate the intricate dance of genetics into complex biological structures, creating novel tissues, organs and even entirely new creatures. You not only understand how to design such things, but also the conditions and processes that would have to take place in order to bring them into reality.
-Sacrifice; Eldritch; To open one's mind, one must eschew prior preconceptions. One of the best ways to do so is to overcome the taboos that have ruled your life thus far. By breaking various taboos in a ritualistic manner, you can more effectively make use of knowledge beyond the norm
-Branch Prediction; Planar; You understand the delicate nature of temporal branching, and how timelines shift and split. Thus, should you end up in the past, you know how to travel along the timelines you are interested in to get back to the correct one, and how to safely make limited changes.
 
 
-Update liquid light to include storage
 
-note: save alchemcial processes for next update, there's like 16
+
+note: save alchemical processes for next update, there's like 16
+note 2: "There's something there" planar perk for next update, detects the possibility of rare events
+Note 3: limited shapeshifting perk
+Note 4: Pressure Points
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
-O   Spiritual
-O   Psionics
-O   Martial
-O   Alchemy
-O   Magic
-O   Eldritch
-x   Planar
-O   Physics
-O   General
-O   Powers
-O   Stuff
+0   Spiritual
+0   Psionics
+0   Martial
+0   Alchemy
+0   Magic
+0   Eldritch
+0   Planar
+0   Physics
+0   General
+0   Powers
+0   Stuff
