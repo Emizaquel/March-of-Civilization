@@ -1,10 +1,9 @@
 Spiritual; Wisdom of the Ages; With a name and enough identifying information to uniquely describe them, you can use the atemporal nature of the soul to call upon the shade of anyone who has died. This state does not harm them nor is it inherently uncomfortable, and indeed, the two of you cannot interact in any way bar harmless communication. Convincing them to part with their secrets is up to you to do.
-
-
+Powers; Guy In The Chair; You don't need to be on the scene to help. So long as you have a real-time ability to influence the situation, you can bring your full might towards helping out.
+Planar; There's something there; You have a sense for the unlikely, the potential timelines where the uncommon occur. You are able to influence your vicinity such that uncommon outcomes are more likley to happen to you.
 
 
 note: save alchemical processes for next update, there's like 16
-note 2: "There's something there" planar perk for next update, detects the possibility of rare events
 Note 3: limited shapeshifting perk
 Note 4: Pressure Points
 Note 5: Upate a few perks to be free, Signature Style perhaps?
@@ -15,8 +14,8 @@ THE RULE: A new version only happens after at least 30 new perks, also one from 
 0   Alchemy
 0   Magic
 0   Eldritch
-0   Planar
+1   Planar
 0   Physics
 0   General
-0   Powers
+1   Powers
 0   Stuff
