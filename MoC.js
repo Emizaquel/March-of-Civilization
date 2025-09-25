@@ -9,7 +9,7 @@ steps = BigInt(0)
 moc_version = {
     "extension": "core",
     "version": 0,
-    "subversion":3
+    "subversion":4
 }
 
 function format_response(format, data) {
