@@ -2,21 +2,49 @@ Spiritual; Wisdom of the Ages; With a name and enough identifying information to
 Powers; Guy In The Chair; You don't need to be on the scene to help. So long as you have a real-time ability to influence the situation, you can bring your full might towards helping out.
 Planar; There's something there; You have a sense for the unlikely, the potential timelines where the uncommon occur. You are able to influence your vicinity such that uncommon outcomes are more likley to happen to you.
 General; True Genius; You have a natural aptitude for seeing connections and patterns, beyond the norms of your kind. What's more, your observations tend to be accurate more often than not - allowing you to 
+Martial; Blood Pills; You know how to create pills from your own blood and Ki that can store vast amounts of your vital energy. Each pill contains close to a 120% of your Ki reserves at the time of creating the pill and combined with the medicinal components of the pills, they can even provide a mild regenerative effect allowing you go from exhausted to fighting fit in moments, as though you had a good meal and a full night's rest.
+Alchemical; Calcination; You understand how to alchemically seperate solids into their component calxes, displaying unique qualities of the source materials. Each material can be split into dry True Calxes and wet Salts.
+Alchemical; Distillation; You know how to alchemically distill liquids seperating them into purer forms with Hot and Cold propeties.
+Alchemical; Sublimation; You know how to extract the airy spirits from solids through the alchemical process of Sublimation, capturing materials that are paradoxically hot and dry without manifesting the properties of flame.
+Alchemical; Descension; You know how to extract the earthly elements from liquid reagents, precipitating the dry and cold properties of a fluid into a pure state.
+Alchemical; Solution; You have learned to imbue the properties of non-fluid materials into fluids, allowing you to create liquids with the properties of a variety of different substances.
+Alchemical; Coagulation; You know how to combine the earthly properties of different liquids to extract a solid substance, seperating them into component parts.
+Alchemical; Fixation; You know how to force solids to take on the properties of liquids and gasses, imbuing them with additional useful traits.
+Alchemical; Ceration; You know how to soften materials through various alchemical processes, granting them properties not unlike metal or wax, introducing Wet properties unto the substance.
+Power; Shapeshifting; You now have a supernatural ability to manipulate your body, which grows stronger each time you roll this perk. At first you might only manipulate your tissues, reshaping them into altered forms. Then you power extends to genetic expression allowing you to change what properties your tissues express. Your penultimate upgrade is your ability to manipulate your very DNA, altering the foundations of your physical form.Finally, your power extends even to the materials around you, enabling you to integrate even inorganic materials into your body, reshaping them as you see fit.
+Power; Infomorph; Your mind and soul now have a stronger connection. This ensures that any upload of your mind is indeed you for all intents and purposes - magical or otherwise. Your mind can also heal from imperfect transfers given time, drawing upon the information stored in your soul.
+Martial; Pressure Points; You gain the ability to identify precise locations on the body of your own species as well as any body that you have had the opportunity to carefully examine, growing stronger with each time you toll this perk. First you learn how to manipulate muscles, forcing them to activate, relax or even enter a chaotic series of spasms. Next you learn how to manipulate the senses, dulling or even amplifying them temporarily. Finally, you learn how to manipulate even involuntary processes. This can be used medicinally or simply to strike someone down with a precise poke.
+Physics; Uncertainty; There is an underlying structure to the seeming chaos at the bottom of reality, and with the right knowledge it becomes possible to manipulate such a thing. You now understand the nature of uncertainty that dwells in the smallest corners of physics allowing you such feats as teleportation and pair production.
+Physics; Heat; What by many is thought to be a wild and chaotic result of entropy has rules of its own. And while they may be complex, they can be manipulated. You now have deep and detailled understanding of how heat propogates and is effects substances.
+Physics; Evolution; You understand how all sorts of systems respond to stimuli, especially those systems that can adapt. This goes beyond mere biological evolution, you are able to work out how any sufficiently complex conglmeration will change over time
+Physics; Structural Psychology; You have a deep understanding of how physical structures translate to operational function, something that applies especially well to logical systems. Though it might take you some time and experiments, you can even extrapolate the generalities of the thought processes and instincts of a lifeform with enough information about their nervous system or whatever analogue they may have, as well as the effect that stimulus and even alteration to those cognitive structures would have.
+Physics; Experimental Psychology; You have a good sense on the externalised aspects of the mind, and with some study and experimentation, can fairly reliably predict the actions a conciousness will take in response to specific stimuli. 
+Physics; Ergonomics;
+Physics; Cognitive Analysis; usability/psychoanalysis
+Physics; Logistic Theory
+Psionics - Habitual; you gain the ability to instil habits into your mind and those of others, though that is much easier with their co-operation. This allows you to instil certain behaviours that they will feel natural doing and even find skipping somewhat annoying.
+Magic - Libromancy; EDIT three repeats?; You have gained an understanding of a set of skills focused on the manipulaiton of recorded information. Beginners know how to scry for specific information in large volumes of text, easily record and absorb such information as well as perform complex rituals to uncover the meaning of words in languages they do not speak. Adepts become capable of generating accounts of events, individuals and items that they have heard of uncovering facts that may have even been considered lost to time.
+Eldritch - Haunting Whispers; You can open your ears to the whispers of what lays beyond. Though be warned, even if it may not be useful to you, what you learn here is not for the faint of heart. Even if you mind might be able to handle it, your body may not, and spilling these secrets to others can have mixed results. (dependency on Eldritch Mind. Free maybe. bit of a gacha.)
+Stuff - 
+Planar -
+
+
+
 
 note: save alchemical processes for next update, there's like 16
-Note 3: limited shapeshifting perk
-Note 4: Pressure Points
 Note 5: Upate a few perks to be free, Signature Style perhaps?
 Note 6: try and do at lest 5 physics perks this time due to misscategorization
+Note 7: Uploading (perhaps some sort for fiat upload tech)
+
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
 1   Spiritual
 0   Psionics
-0   Martial
-0   Alchemy
+2   Martial
+8   Alchemy
 0   Magic
 0   Eldritch
 1   Planar
-0   Physics
-0   General
-1   Powers
+7   Physics
+1   General
+3   Powers
 0   Stuff
