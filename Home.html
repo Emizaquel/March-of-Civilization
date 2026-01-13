@@ -64,9 +64,11 @@
 
 These writing tools center around a technological 'power set' for a character, in which they are bestowed with knowledge, skill and supporting powers randomly from a pool of abilities. The March serves as both a tool for automating the process of generating 'rolls' for such a writing project, but also as a similar framework without the IP complications of the original Forge.
 
-The base version of the March is available under CC-BY <a href="base/MoC.html">here</a>, and can be used for any writing project, including commercial works. All 388 perks in this version of the March are original creations by yours truly (with a contribution from Blood_Librarian on SpaceBattles) and does not contain any material that I do not hold the copyright to.
+The base version of the March is available under CC-BY <a href="base/MoC.html">here</a>, and can be used for any writing project, including commercial works. All 484 perks in this version of the March are original creations by yours truly (with a contribution from Blood_Librarian on SpaceBattles) and does not contain any material that I do not hold the copyright to.
 
 The extended version of the March is not yet available, but will introduce perks that directly reference media and specific fandoms.
+
+You can find the code for the march on the <a href="github.com/Emizaquel/March-of-Civilization/">GitHub here.</a>
 </div>
 <div class="MoC-Section">How The March Works</div>
 <div class="main-body">Each roll on the March grants a hundred steps and then attempts to grant a random perk.
@@ -84,13 +86,19 @@ Once all dependencies are resolved, the perk is once again evaluated for cost an
 Some versions of the Forge that inspired this tool allow for perks to be held for later once enough points are accumulated or refused should they not be desired. The lack of such features is deliberate.
 </div>
 <div class="MoC-Section">How To Use</div>
-<div class="main-body">The version control is not yet set up, so please await such functionality, but the base March is functional. When loading, a random seed will be assigned to you. press the roll button in order to progress the March one roll.
+<div class="main-body">As of Pre-Release 6, and the migration to a pure HTML/CSS/JavaScript stack, previous versions can be downloaded and run locally! You can find them on the <a href="github.com/Emizaquel/March-of-Civilization/">GitHub here.</a>
+
+<a href="">Pre-Release Six</a>
+
+Just download and unzip the version you are looking for, and open the MoC.html file in your browser of choice.
+
+You can find the code for the march on the <a href="github.com/Emizaquel/March-of-Civilization/">GitHub here.</a>
 
 Feel free to roll whenever you wish. Traditionally, the rolls are made based on the wordcount of the story - a roll ever 1,000 words or so - but you can use whatever system you wish to decide when rolls are made. Some make use of milestone-based progression system, while yet others might roll for a set amount of time passing in the story.
 
 Each roll grants a hundred steps, and will randomly probe the collection of perks until it selects one that has not passed its receive limit. Any dependencies are resolved and then the perk is displayed according to the format specified in the options area.
 
-The formatting is fairly simple; the variables {{name}}, {{cost}}, {{description}}, {{times_recieved}}, {{reason}} will be replaced with the relevant information sourced from the perk. Then, all perks in the roll will be combined by placing the contents of the 'between perks' option between them. Note that if this is empty, no line breaks will be placed between the end of one perk and the start of the next.
+The formatting is fairly simple; the variables {{name}}, {{cost}}, {{description}}, {{times}}, {{reason}} will be replaced with the relevant information sourced from the perk. Then, all perks in the roll will be combined by placing the contents of the 'between perks' option between them. Note that if this is empty, no line breaks will be placed between the end of one perk and the start of the next.
 
 Finally, once all the perks in the roll are combined, the entire log of rolls are joined together with the Between Rolls option between them.
 

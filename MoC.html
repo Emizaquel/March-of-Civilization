@@ -1,268 +1,201 @@
-<!doctype html>
-<html lang="en-us">
-  <head>
-    <link rel="icon" href="/static/img/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>MoC by CC</title>
-    <style>
-      html, body{
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-        --element-margin: 12px;
-        font-size: 32px;
-        font-family: "Open Sans", sans-serif;
-        background-color: rgb(22, 22, 22);
-        color: whitesmoke;
-      }
-      button{
-        color: whitesmoke;
-        background-color: rgb(48, 48, 48);
-      }
-      textarea{
-        color: whitesmoke;
-        background-color: rgb(48, 48, 48);
-      }
-      input{
-        color: whitesmoke;
-        background-color: rgb(48, 48, 48);
-      }
-      .ui{
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-      }
-      .section-header{
-        margin: var(--element-margin);
-        font-size: 1rem;
-        font-family: "Open Sans", sans-serif;
-      }
-      .sub-section-header{
-        margin-left: var(--element-margin);
-        margin-right: var(--element-margin);
-        font-size: 0.7rem;
-        font-family: "Open Sans", sans-serif;
-      }
-      .states{
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 60%;
-        
-      }
-      #latest-roll{
-        margin: var(--element-margin);
-        flex-grow: 2;
-        font-size: 0.75rem;
-        font-family: "Open Sans", sans-serif;
-      }
-      #new-roll{
-        margin: var(--element-margin);
-        font-size: 0.7rem;
-        font-family: "Open Sans", sans-serif;
-      }
-      #roll-logs{
-        margin: var(--element-margin);
-        flex-grow: 1;
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.5rem;
-      }
-      .roll-options{
-        display: flex;
-        align-items: stretch;
-        flex-direction: column;
-        height: 100%;
-        width: 40%;
-        background-color: rgb(56, 56, 56);
-        overflow: scroll;
-      }
-      .options-header{
-        display: block;
-        margin: var(--element-margin);
-        font-family: "Open Sans", sans-serif;
-        font-size: 1.2rem;
-        text-align: center;
-      }
-      .options-form{
-        flex-direction: row;
-        display: flex;
-        align-items: stretch;
-        margin: var(--element-margin);
-      }
-      .options-inputs{
-        display: flex;
-        flex-grow: 3;
-        flex-direction: column;
-        margin-right: var(--element-margin);
-      }
-      .seed-form-element{
-        display: flex;
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.6rem;
-        flex-direction: row;
-      }
-      .seed-label{
-        width: 20%;
-      }
-      .seed-form-spacer{
-        height: 10px;
-      }
-      #options-seed{
-        display: block;
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.6rem;
-        flex-grow: 1;
-      }
-      #options-rolls{
-        display: block;
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.6rem;
-        flex-grow: 1;
-      }
-      #options-generate{
-        display: block;
-        align-items: stretch;
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.7rem;
-      }
-      .format-input{
-        margin: var(--element-margin);
-        flex-grow: 1;
-        min-height: 150px;
-      }
-      .options-format-reverse{
-        display: flex;
-        margin: var(--element-margin);
-        flex-direction: row;
-        align-items: center;
-      }
-      .options-format-checkbox{
-        height: 0.6rem;
-        width: 0.6rem;
-        margin-right: var(--element-margin);
-      }
-      .options-format-reverse-label{
-        display: block;
-        font-size: 0.6rem;
-        font-family: "Open Sans", sans-serif;
-      }
-      #options-reset-button{
-        margin: var(--element-margin);
-        margin-top: 50px;
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.6rem;
-      }
-      #options-download-button{
-        margin: var(--element-margin);
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.6rem;
-      }
-      .options-upload{
-        margin: var(--element-margin);
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      #options-upload-file{
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.6rem;
-        margin-right: var(--element-margin);
-        max-width: 75%;
-      }
-      #options-upload-button{
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.6rem;
-      }
-      #loading{
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-color: black;
-        text-align: center;
-        align-content: center;
-        font-size: 3REM;
-        opacity: 0.7;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="ui">
-      <div class="states">
-        <div class="section-header" id="steps">CURRENT STEPS: 0</div>
-        <div class="section-header">LATEST ROLL</div>
-        <textarea id="latest-roll"></textarea>
-        <button id="new-roll">ROLL</button>
-        <div class="section-header">ALL ROLLS</div>
-        <textarea id="roll-logs"></textarea>
-      </div>
-      <div class="roll-options">
-        <div class="options-header">OPTIONS</div>
-        <div class="section-header">SAVE</div>
-        <button id="options-download-button">DOWNLOAD</button>
-        <div class="options-upload">
-          <input type="file" id="options-upload-file">
-          <button id="options-upload-button">UPLOAD</button>
-        </div>
-        <div class="sub-section-header">Manual Configuration</div>
-        <div class="options-form">
-          <div class="options-inputs">
-            <div class="seed-form-element">
-              <div class="seed-label">SEED:</div>
-              <input type="number" id="options-seed">
+<html style="background-color: black;">
+    <head>
+        <link rel="icon" href="/static/img/favicon.svg">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>MoC by CC</title>
+        <link rel="stylesheet" href="MoC.css">
+        <!-- <script type="text/javascript" src="MoC_Base_new.js"></script> -->
+    </head>
+    <body>
+        <div id="nav-bar">
+            <div target="roller" class="nav-link">
+                <svg class="nav-img" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 26.458 26.458"><rect width="24.03" height="24.03" x="1.214" y="1.214" ry="3.669" style="fill:gray;fill-rule:evenodd;stroke:none;stroke-width:.264999;stroke-dasharray:none;paint-order:stroke markers fill"/><circle cx="13.229" cy="13.229" r="2.248" style="fill:#000;fill-rule:evenodd;stroke:none;stroke-width:.264999;stroke-dasharray:none;paint-order:stroke markers fill"/><g transform="translate(6.481 6.481)"><circle cx="13.229" cy="13.229" r="2.248" style="fill:#000;fill-rule:evenodd;stroke:none;stroke-width:.264999;stroke-dasharray:none;paint-order:stroke markers fill"/><circle cx=".267" cy=".267" r="2.248" style="fill:#000;fill-rule:evenodd;stroke:none;stroke-width:.264999;stroke-dasharray:none;paint-order:stroke markers fill"/></g><g transform="rotate(-90 13.23 6.748)"><circle cx="13.229" cy="13.229" r="2.248" style="fill:#000;fill-rule:evenodd;stroke:none;stroke-width:.264999;stroke-dasharray:none;paint-order:stroke markers fill"/><circle cx=".267" cy=".267" r="2.248" style="fill:#000;fill-rule:evenodd;stroke:none;stroke-width:.264999;stroke-dasharray:none;paint-order:stroke markers fill"/></g></svg>
             </div>
-            <div class="seed-form-spacer"></div>
-            <div class="seed-form-element">
-              <div class="seed-label">ROLLS:</div>
-              <input type="number" id="options-rolls">
+            <div target="catalogue" class="nav-link">
+                <svg class="nav-img" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 26.458 26.458"><rect width="24.03" height="6.571" x="1.214" y="1.214" ry="3.098" style="fill:gray;fill-rule:evenodd;stroke-width:.243521;paint-order:stroke markers fill;fill-opacity:1"/><rect width="24.03" height="6.571" x="1.214" y="9.944" ry="3.098" style="fill:gray;fill-opacity:1;fill-rule:evenodd;stroke-width:.243521;paint-order:stroke markers fill"/><rect width="24.03" height="6.571" x="1.214" y="18.673" ry="3.098" style="fill:gray;fill-rule:evenodd;stroke-width:.243521;paint-order:stroke markers fill;fill-opacity:1"/></svg>
             </div>
-          </div>
-          <button id="options-generate">LOAD</buttons>
+            <div target="options" class="nav-link">
+                <svg class="nav-img" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 26.458 26.458"><path d="M4.318 22.14c1.128 1.129 1.466 1.185 3.537-.76 1.895-1.78 1.94-1.517 2.526-1.274.586.243.803.088.885 2.686.089 2.84.368 3.04 1.963 3.04 1.596 0 1.874-.2 1.964-3.04.08-2.598.298-2.443.885-2.686.586-.243.63-.506 2.525 1.273 2.071 1.946 2.41 1.89 3.538.762 1.128-1.128 1.184-1.467-.762-3.538-1.779-1.894-1.516-1.94-1.273-2.525.243-.587.088-.804 2.686-.885 2.84-.09 3.04-.368 3.04-1.964 0-1.595-.2-1.874-3.04-1.963-2.598-.082-2.443-.3-2.686-.885-.243-.586-.506-.631 1.273-2.526 1.946-2.07 1.89-2.41.762-3.537-1.128-1.129-1.467-1.184-3.538.761-1.894 1.78-1.94 1.516-2.525 1.274-.587-.243-.804-.089-.885-2.686-.09-2.84-.368-3.04-1.964-3.04-1.595 0-1.874.2-1.963 3.04-.082 2.597-.3 2.443-.885 2.686-.586.242-.631.505-2.526-1.274-2.07-1.945-2.41-1.89-3.537-.761-1.129 1.128-1.184 1.466.761 3.537 1.78 1.895 1.516 1.94 1.274 2.526-.243.586-.089.803-2.686.885-2.84.089-3.04.368-3.04 1.963 0 1.596.2 1.874 3.04 1.964 2.597.08 2.443.298 2.686.885.242.586.505.63-1.274 2.525-1.945 2.071-1.89 2.41-.761 3.538zm6.489-6.488a3.426 3.426 0 1 1 4.846-4.845 3.426 3.426 0 0 1-4.846 4.845z" style="fill:#222222;fill-rule:evenodd;stroke:none;stroke-width:.264999;stroke-dasharray:none;paint-order:stroke markers fill" transform="rotate(135 13.23 13.23)"/><g style="fill:#666"><path d="M4.318 22.14c1.128 1.129 1.466 1.185 3.537-.76 1.895-1.78 1.94-1.517 2.526-1.274.586.243.803.088.885 2.686.089 2.84.368 3.04 1.963 3.04 1.596 0 1.874-.2 1.964-3.04.08-2.598.298-2.443.885-2.686.586-.243.63-.506 2.525 1.273 2.071 1.946 2.41 1.89 3.538.762 1.128-1.128 1.184-1.467-.762-3.538-1.779-1.894-1.516-1.94-1.273-2.525.243-.587.088-.804 2.686-.885 2.84-.09 3.04-.368 3.04-1.964 0-1.595-.2-1.874-3.04-1.963-2.598-.082-2.443-.3-2.686-.885-.243-.586-.506-.631 1.273-2.526 1.946-2.07 1.89-2.41.762-3.537-1.128-1.129-1.467-1.184-3.538.761-1.894 1.78-1.94 1.516-2.525 1.274-.587-.243-.804-.089-.885-2.686-.09-2.84-.368-3.04-1.964-3.04-1.595 0-1.874.2-1.963 3.04-.082 2.597-.3 2.443-.885 2.686-.586.242-.631.505-2.526-1.274-2.07-1.945-2.41-1.89-3.537-.761-1.129 1.128-1.184 1.466.761 3.537 1.78 1.895 1.516 1.94 1.274 2.526-.243.586-.089.803-2.686.885-2.84.089-3.04.368-3.04 1.963 0 1.596.2 1.874 3.04 1.964 2.597.08 2.443.298 2.686.885.242.586.505.63-1.274 2.525-1.945 2.071-1.89 2.41-.761 3.538zm6.348-6.348a3.625 3.625 0 0 1 0-5.126 3.625 3.625 0 0 1 5.126 0 3.625 3.625 0 0 1 0 5.126 3.625 3.625 0 0 1-5.126 0z" style="fill:grey;fill-rule:evenodd;stroke:none;stroke-width:.264999;stroke-dasharray:none;paint-order:stroke markers fill" transform="rotate(137 13.23 13.23)"/></g></svg>
+            </div>
         </div>
-        <div class="section-header">FORMAT</div>
-        <div class="sub-section-header">SUCCESS</div>
-        <textarea class="format-input" id="options-format-success" placeholder="Available Variables: {{name}}, {{cost}}, {{description}}, {{times_recieved}}">{{name}} #{{times_recieved}}
-{{cost}}
+        <div id="roller" class="option-screen">
+            <div class="subsection-header">LATEST ROLL</div>
+            <textarea id="latest-roll"></textarea>
+            <div class="section-header">Steps: <span id="steps-display">0</span></div>
+            <button id="roll-button" class="big-button">ROLL</button>
+            <div class="subsection-header">ALL ROLLS</div>
+            <textarea id="roll-history"></textarea>
+            <button class="big-button" id="main-download-button">DOWNLOAD SAVE FILE</button>
+        </div>
+        <div id="catalogue" class="option-screen" style="display: none;">
+            <div id="catalogue-items">
+                <input type="text" id="catalogue-search" placeholder="search">
+                <div id="catalogue-listings">
+                </div>
+                <template id="catalogue-listing-template">
+                    <button value="{{id}}" class="catalogue-listing">{{name}}</button>
+                </template>
+            </div>
+            <div id="catalogue-display">
+                <div id="catalogue-notice">Quick reference perk lookup, please find the searchable spreadsheet on github <a href="https://github.com/Emizaquel/March-of-Civilization">(perks.ods)</a> for more details</div>
+                <div id="catalogue-perk-details">Perk details (name, cost, description, dependencies)</div>
+                <template id="catalogue-perk-detail-template">Name: {{name}}<br>Cost: {{cost}}<br>Group: {{group}}<br>Maximum Repeats: {{repeats}}<br><br>Description:<br>{{desc}}<br><br>Dependencies: {{dependencies}}</template>
+            </div>
+        </div>
+        <div id="options" class="option-screen" style="display: none;">
+            <div class="header">OPTIONS</div>
+            <div class="section-header">SAVES</div>
+            <div class="subsection-header">Download</div>
+            <div class="options-frame">
+                <button id="options-download-button" class="options-button">DOWNLOAD</button>
+            </div>
+            <div class="general-text">Download a local save of the march as a backup or to transfer between computers or browsers!</div>
+            <br><br>
+            <div class="subsection-header">Upload</div>
+            <label class="options-upload-label">
+                <input type="file" id="options-upload-file" accept=".json">
+                <div id="options-upload-name">Click or drag a file here to upload it</div>
+            </label>
+            <div class="options-frame">
+                <button id="options-upload-button" class="options-button" disabled="yes">UPLOAD</button>
+            </div>
+            <div class="general-text">Upload a saved March to continue where you left off!<br>
+                Saves are forwards compatible but are not backwards compatible
+            </div>
+            <br><br>
+            <div class="subsection-header">Manual Override</div>
+            <div class="options-frame">
+              <div class="options-label">SEED:</div>
+              <input type="number" id="options-seed" class="options-override" min="0">
+            </div>
+            <div class="options-frame">
+              <div class="options-label">ROLLS:</div>
+              <input type="number" id="options-rolls" class="options-override" min="0">
+            </div>
+            <div class="general-text">Generate an entire march in one go with a seed<br>
+            <br>
+            Be warned, if your previous march was generated across multiple different versions, this will not perfectly replicate the march from the seed alone. Please remember to download a backup your march if you want to preserve it.</div>
+            <br><br>
+            <div class="options-frame">
+                <button id="options-override-button" class="options-button">GENERATE</button>
+            </div>
+            <br><br>
+            <div class="section-header">ROLLS</div>
+            <div class="subsection-header">Roll Options</div>
+            <div class="options-frame">
+              <div class="options-label">INCREMENT:</div>
+              <input type="number" id="options-increment" class="options-override" value=100>
+            </div>
+            <div class="general-text">The number of steps to be given before the roll is made.</div>
+            <div class="subsection-header">Strategy</div>
+            <div class="options-frame">
+                <label class="options-checkmark-frame"><input type="checkbox" name="" class="options-checkmark" id="group_roll_checkmark"> Enable Roll By Group</label>
+            </div>
+            <div class="general-text">If this is enabled, the march will choose a group with equal probability and then roll until it first lands on a perk from that group. This means that your perks land more commonly in groups that do not have as many perks as others, which is useful for Marches in more supernatural settings.</div>
+            <br><br>
+            <div class="subsection-header" id="group-enabled-subsection">Enabled Groups</div>
+            <div class="options-frame" id="group-selector-frame"></div>
+            <template id="group-selector-template">
+            <label class="options-checkmark-frame"><input type="checkbox" value="{{index}}" class="enabled_group_checkmark">{{group}}</label>
+            </template>
+            <div class="general-text">Select which groups are enabled for the March to pick between. At least one group must be selected at all times.</div>
+            <br><br>
+            <div class="section-header">FORMAT</div>
+            <div class="subsection-header">Perks</div>
+            <div class="general-text">Format the way that perks will be rendered during a roll</div>
+            <br><br>
+            <label class="options-checkmark-frame"><input type="checkbox" value="{{index}}" id="perk-reverse-checkmark" class="options-checkmark">Reverse Perk Order</label>
+            <br><br>
+            <div class="general-text">When this is enabled, the perk you rolled will be listed first, with dependencies appearing below them</div>
+            <br><br>
+            <div class="subsection-header">Available Variables</div>
+            <div class="general-text">These variables will be replaced with the relevant perk information.<br>This only applies in Success Perk Format and Failure Perk Format, not Between Perk Format<br></div>
+            <table>
+                <tr>
+                    <th>{{name}}</th>
+                    <td>name of the perk</td>
+                </tr>
+                <tr>
+                    <th>{{description}}</th>
+                    <td>Perk description</td>
+                </tr>
+                <tr>
+                    <th>{{group}}</th>
+                    <td>Group the perk belogs to</td>
+                </tr>
+                <tr>
+                    <th>{{cost}}</th>
+                    <td>Cost of the perk</td>
+                </tr>
+                <tr>
+                    <th>{{times}}</th>
+                    <td>the number of times you have received this perk so far</td>
+                </tr>
+                <tr>
+                    <th>{{reason}}</th>
+                    <td>reason for failure, success otherwise</td>
+                </tr>
+            </table><br><br>
+            <div class="general-text">Success Perk Format</div>
+            <textarea id="success-perk-format" rows="5" class="options-textarea">{{name}} #{{times}}
+{{group}}
+{{cost}} Steps
 
 {{description}}</textarea>
-        <div class="sub-section-header">FAIL</div>
-        <textarea class="format-input" id="options-format-fail" placeholder="Available Variables: {{name}}, {{cost}}, {{description}}, {{times_recieved}}, {{reason}}">Unable to buy: {{name}} ({{reason}})</textarea>
-        <div class="sub-section-header">BETWEEN PERKS</div>
-        <div class="options-format-reverse">
-          <input type="checkbox" class="options-format-checkbox" id="options-format-reverse-check-perks">
-          <div class="options-format-reverse-label">Reverse Group Direction (Shallowest Perk First)</div>
-        </div>
-        <textarea class="format-input" id="options-format-between-perks" placeholder="Make sure to highlight, whitespaces are hard to read! If you can see this, there will be nothing between each perk">
+            <div class="general-text">Fail Perk Format</div>
+            <textarea id="fail-perk-format" rows="5" class="options-textarea">Unable to acquire: {{name}} ({{state}})</textarea>
+            <div class="general-text">Between Perk Format</div>
+            <textarea id="between-perk-format" rows="5" class="options-textarea">
 
-
+-------
 </textarea>
-        <div class="sub-section-header">BETWEEN ROLLS</div>
-        <div class="options-format-reverse">
-          <input type="checkbox" class="options-format-checkbox" id="options-format-reverse-check-rolls">
-          <div class="options-format-reverse-label">Reverse Log Direction (Most Recent Roll First)</div>
-        </div>
-        <textarea class="format-input" id="options-format-between-rolls" placeholder="Make sure to highlight, whitespaces are hard to read! If you can see this, there will be nothing between each perk">
+            <br><br>
+            <div class="subsection-header">Rolls</div>
+            <div class="general-text">Format the way that rolls will be rendered</div>
+            <br><br>
+            <label class="options-checkmark-frame"><input type="checkbox" value="{{index}}" id="roll-reverse-checkmark" class="options-checkmark">Reverse Roll Order</label>
+            <br><br>
+            <div class="general-text">When this is enabled, the rolls will be combined in reverse order, with the most recent at the top</div>
+            <br><br>
+            <div class="subsection-header">Available Variables</div>
+            <div class="general-text">These variables will be replaced with the relevant roll information<br>This is only available for roll format, not between rolls<br>
+            </div>
+            <table>
+                <tr>
+                    <th>{{number}}</th>
+                    <td>The roll number</td>
+                </tr>
+                <tr>
+                    <th>{{content}}</th>
+                    <td>All the perks that were rolled together</td>
+                </tr>
+            </table><br><br>
+            <div class="general-text">Roll Format</div>
+            <textarea id="roll-format" rows="5" class="options-textarea">Roll #{{number}}
+-------
+{{content}}</textarea>
+            <div class="general-text">Between Roll Format</div>
+            <textarea id="between-roll-format" rows="5" class="options-textarea">
 
----------------------
-
+------- between rolls -------
 </textarea>
-        <div style="margin: 10px;font-size: 0.5rem;margin-top: 50px;text-align: center;">The perks available in this version of the March of Civilization are all original works, and are available for any purpose under the Creative Commons CC-BY license.</div>
-        <a href="https://creativecommons.org/licenses/by/4.0/" style="justify-self: center;width:200px;justify-content:center;display:flex;margin: auto;"><img decoding="async" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" width="118" height="41" ></a>
+            <br><br>
+            <div class="section-header">RESET</div>
+            <div class="general-text">Press below to start a new March with a random seed. This will clear the march so download a backup if you want to come back to this march at some point.</div>
+            <div class="options-frame" style="align-self: center;">
+                <button id="options-reset-button" class="options-button" >RESET</button>
+            </div>
 
-        <button id="options-reset-button">RESET</button>
-      </div>
-    </div>
-    <div id="loading">LOADING</div>
-
-    <script async type="text/javascript" src="MoC_Base.js"></script>
-    <script async type="text/javascript" src="MoC.js"></script>
-  </body>
+            
+            <br><br>
+            <div class="section-header">LISENCE</div>
+            <div class="general-text">The march is freely available under the CC BY 4.0 lisence, permitting it and the contents thereof to be used in any work personal or commercial assuming that attribution has been made to the source of the March.</div>
+            <a href="https://creativecommons.org/licenses/by/4.0/" style="justify-self: center;width:200px;justify-content:center;display:flex;margin: auto;"><img decoding="async" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" width="118" height="41" ></a>
+        </div>
+    </body>
+    <script type="text/javascript" src="MoC.js"></script>
 </html>

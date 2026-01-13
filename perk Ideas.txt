@@ -1,25 +1,66 @@
-General; Refined; 200; Elegant design perk
-General; Intricate; 200; Design perk focusing on a lot of small details
-General; Bare; 200; Design perk focused on showing the internal mechanics
+General; Refined; 200; You know how to create things with a sense of timeless presence, with a certain immortality to their allure. You can even do so without in any way impacting the other functions of your creations.
+General; Intricate; 200; You know how to make every little detail of your creations catch the eye, with not only intricate decorations but alluring glimpses of what lies beneath. Despite that, your creations are no less durable or functional than they otherwise would be.
+General; Bare; 200; Covers? Panelling? Why would anyone want to hide the mechanical beauty of your work? You know how to create your systems in such a way that they need no protection and can operate without any covering and even gaps in what would be protective armour that will nonetheless have no impact on your durability.
+General; Cryptography; 300; You know how to use mathematical operations to transform data for a varitey of purposes, be it simple ciphers or algorithms that can stand up to teams armed with quantum computers
+General; Void Warfare; The distances you need to deal with in the void are immense, so much so that even light slows to a crawl. Combined with the inherent three-dimensionality of a microgravity battlefield, it takes a great deal of skill to thrive here - skill that you now have.
 Physics; Beyond Zero; 400; There lies something beneath. Something less than nothing. You have understood enough to create the inverted reflection of existence itself and create negative energy constructs.
-General; Cryptography; 300; You know how to use mathematical operations to transform data for a varitey of purposes, be it simple ciphers to algorithms that can stand up to teams armed with quantum computers
-???; Void Warfare; The distances you need to deal with in the void are immense, so much so that even light slows to a crawl. Combined with the inherent three-dimensionality of a microgravity battlefield, it takes a great deal of skill to thrive here - skill that you now have.
-Magic; Arcane Automation; There is a certain trick to the mass manufacture of magical artefacts and it now lies within your grasp. You know how to create grand magical foundries capable of turning out identical enchanted items.
+Stuff; Olympic Travel Torches; You you now have the designs for a series of incredibly powerful and efficient fusion motors capable of fusing even dirty protium. You have designs for everything from tiny finger-sized micro-thrusters to immense hyper-efficient engines capable of accelerating city-sized colony ships.
+stuff; Turret tower; You have designs for a system of articulation, sensors and aiming software that can be quickly adapted to practically any weapons system you care to name, allowing you to turn it into an autonomous turret.
+stuff; Ward Pylon; You have designs for a potent magical artefact that can be used to anchor and power static magical effects, especially those of a persistent and defensive nature making them especially useful for wards.; Needs the dependency fix for the roller. Also change Dependecy count to count base perks instead of all perks (line 135)
+Spiritual; Astral Projection; It is wrong to say that a spirit can drift far away from the body that sustains it. Such material concerns are no issue for a Soul. Still, you know how to use spiritual senses to perceive distant locations and even more abstract information.
+Spiritual; Everything You Touch; Everything a soul interacts with remembers that association, carrying traces of the soul and what was done ad infinitum. You know how to use your own soul to pick up on these traces
+Spiritual; Shikigami; You know how to bind souls and spirits to your sevice, creating forms that can even influence the physical world. These are even capable of communicating with you, able to share what they have experienced.
+Martial; Always Armed; You know how to use anything as a weapon. With a few moments of thought, you can figure out basic strategies to use anything effectively and with time refine it into a true fighting style that takes advantage of the key traits of anything in combat.
+Martial; Battle Intent; You know how to sense the subtle fluctuations in Ki that allow you to get a sense of your opponent's next actions, akin to reading muscles and posture.
+Martial; Body Reading; You understand how shifts in posture and muscle tension can predict the future actions of your opponents, allowing you to prepare your own response.
+Alchemy; Humours; You know how to manipulate alchemical imbalances in the body to cause and address damage and illness within living bodies through the application of alchemical processes
+Alchemy; Analysis; You know how to analyse the structure of an object through alchemical means, uncovering not only the internal configuration of matter, but also the composition thereof without leaving any physical traces.
+Psionics; Hidden Meaning; You know how to encode information into messages and images in such a way as only certain people can perceive them. This might be a particular person you choose or people with certain opinions and other mental characteristics
+Psionics; Mind Sense; You know how to pick up on psionic energy using your own mental prowess. This allows you to sense not only minds but even the psionic energy bound in constructs or psionic technology.
+Psionics; Weight of Meaning; You can detect the traces of psionic energy left behind by people as they focus on something, revealing hidden objects and with some practice even subtle things like the keys used to input a passcode.
+Eldritch; Enforcers; repeats 3 times; You know how to summon beings that seem to embody the laws of reality, ensuring what should be. These beings are especially potent against beings that go against the natural order of things such as time travellers, precognitives, beings with different dimensional properties and are able to counter their abilities. The second time you roll this perk, you gain the ability to avoid having the creatures you summon target you. The final time allows you to set a specific target for the creatures to prioritise.
+Eldritch; What Is; You know how to rewind the progression of an object or place in time, temporarily reverting it into a previous state, and even conjuring phantoms of things that were present but no longer are.
+Eldritch; What Could Be; You know how to transform an object into a state it could take, with a sense of what that might be. You can choose to manifest more common futures or perhaps more unlikely events.
+Planar; Space Warp; You are able to understand the way complex spatial geometries effect and are effected by the world around them. Everything from the complex geometry of wormholes to the simple gravitational wells caused by all matter comes easily to you.
+Planar; Higher Perspective; You know how to lense sensors other detectors through higher dimensional spaces, allowing you to bypass barriers limited to merely three dimensions.
+Planar; A Bigger Picture; You know how to map the surrounding extradimensional space, allowing you to pick up the presence of other planes and whatever else exists in your extraplanar neighbourhood.
+Powers; Ruin Radar; You know the unexpected and unintended ways people will abuse a technology should you make it widely acessible, as well as the effects this will have on civilization at large.
+Magic; Arcane Automation; There is a certain trick to the mass manufacture of magical artefacts and it now lies within your grasp. You know how to create grand magical foundries capable of turning out identical enchanted items en mass.
+Magic; Arcane Analysis; You understand how to pick apart magical constructs diving meaning from their makeup and coming to understand how they work.
+Magic; Mysterious Presence; You know how to detect the presence of magic in your vicinity, even in a passive state. Not only can you do this deliberately to detect subtle or even otherwise hidden magic, you are practiced enough that you passively analyse your surroundings, and know how to train this further until you can pick apart spells as they are being used against you.
+Magic; Restoration magic; Repeat 3 times; You know how to use magic to undo the damage done to objects, returning them back to a pristine state.Roll this again and you know how to turn this into an enchantment that will cause items to repair themselves over time. The final time you receive this perk allows you to extend this effect to even animate things.
 
 
-Update Hammerspace (typo) "You know how to create pocket realms that are integrated into the natural functions of living beings, allowing them to store items in a convenient and weightless manner."
+Update Comeback Kid (typo); double inevitable; It might take a while, but you will surpass every challenger that comes your way. If anyone defeats you in a contest, your potential will grow beyond their skills and your growth will be accelerated. Of course, it might take a while to overcome truly titanic foes but it is nonetheless inevitable that you will as long as you train hard and survive long enough
+Update Mystic Warrior; More about optimising casting for in combat and physcial augmentation.; Most mages find themselves out of their element in the chaos of close quarters combat. Not you though, not only do you find it easy to use magic to augment your physcial capabilities, but you also understand how to modify and adapt other spells for quick casting and close range use.
+Update Temporal Substitution Translocation Array; clarify 'mindless clone'; Through a complex combination of various technologies, you can switch an individual that died with a simulacrum of their body through time and space. In doing so, the device thus effectively 'resurrects' those who have died, whisking themselves at their very last moments. The simulacrum takes advantage of the restorative temporal forces to become able of passing practically any test or examination.
+Update Hammerspace (typo); You know how to create pocket realms that are integrated into the natural functions of living beings, allowing them to store items in a convenient and weightless manner.
+Update Conservation of Ninjutsu, now focuses on the skill of taking advantage of imperfect co-ordination; Co-ordination, even between allies is an incredibly difficult skill, and it only grows more difficult as the number of enemies grows. At a certain point even telepathy and other such tricks are not enough to overcome those challenges. You know how to pick out these gaps and flaws and use them to give you the upper hand, redirecting attacks and saving your own strength and stamina to easily handle large groups.
+Update Beserker state, talk about how to induce it; You know the mind and how to take advantage of the reserves of strength it can bring forth. With some thought you can devise tailored exercises that will allow you or those you train to enter altered emotional states that allows you to fight far beyond your usual limits of strength and endurance.
+Update Legendary Smith, it's a technique for Ki foring; You know how to infuse Ki into every part of the weapon creation process, Yourself, your tools and your materials, creating works that are orders of magnitude more powerful than they should be.
+Update Attuned Tools, it's about optimising tools for specific people (including non-humans); It normally takes years for someone to truly come to know a weapon, allowing them to use it as an extension of themselves. You can look at someone an know how to adjust your creations in such a way that their new weilders will feel more like they have regained a lost limb as opposed to picking up a new weapon.
+Update Honour Vow; it's about being able to create those oaths; You know how to... concentrate your existence. To focus your presence. You know how to use Ki to invest a significant part of yourself towards accomplishing a goal or understaking. This technique is not one to make lightly, while working towards your goal with augment you more and more as you approach it, breaking your vow will also become more and more hazardous as you do.
+Vital Spirit; The process of casting from hitpoints; There are limits to power, ends to your strength, but sometimes you need to push past it, regardless of the cost. There are limitations built into any mortal form. And there are ways to push past them. You know how to cast from reserves usually considered vital - though the healing process might not be worth the advantage it gives you in this fight.
+Final Breath; about unlocking that power; You understand the deepest realms of martial strength, that essential core of any fighter. You know what drawing upon this will do, even the most powerful forms of ressurection will struggle with calling you back from this. But sometimes what you are fighting for is worth more than you are.
+Precision Body Control; You know how to use meditation exercises and careful training to develop incredible control over your body - first on the level of individual voluntary muscle groups, then to the level of nomally subconcious aspects such as metabolism, then to normally involuntary processes such as your heartbeat and hormones and finally on a cellular level.
+C-C-C-Counter; Update to reference being able to react efficiently through ki-augmented reflexes. Imbuing skills into your subconcious and senses?; You know how to hone your reflexes and train your skills into your subconcious mind, taking advantage of your ki-augmented senses. This cuts your reaction time to practivally nothing, allowing you to react to practically any suprise attack.
+Pact; A sufficiently powerful soul may grant a portion of it's power to another, bestowing them with a measure of their strength. In doing so however, the recipient is bound to the terms of the transfer. You know how to create such pacts, both as the recipient and the bestower.
+Demesne; An space claimed by a sufficiently powerful soul can, with time, be suffused with their strength, empowering allies and weakening foes. The strength of this depends of the age of the claim and the power of the soul in question. You understand how this process works, and even how to replicate it should you have the strength.
+Mystic Alchemy; Add other dependencies
 
 note: save alchemical processes for next update, there's like 16
+For next update:
+Blood Pills; Move to stuff (also add functionality to March for dependency that's disabled? this should disable perks outside a category with that dependency? Other things that could fall under this are Altar, Icon, Offering, Ghost Traps, Elixir of Life, Panacea, Philosopher's Stone, Grimoire, TRIP, Sap of the World Tree,Spiritual Entities)
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
-0   Spiritual
-0   Psionics
-0   Martial
-0   Alchemy
-0   Magic
-0   Eldritch
-0   Planar
-0   Physics
-0   General
-0   Powers
-0   Stuff
+1   Spiritual
+1   Psionics
+3   Martial
+1   Alchemy
+1   Magic
+1   Eldritch
+1   Planar
+1   Physics
+4   General
+1   Powers
+3   Stuff
