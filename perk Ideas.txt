@@ -1,4 +1,4 @@
-
+Physical Chemistry; General; You know how take into account both physical and chemical properties in order to have the results of the reaction form specific structures you desire
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
 0   Spiritual
@@ -9,6 +9,6 @@ THE RULE: A new version only happens after at least 30 new perks, also one from 
 0   Eldritch
 0   Planar
 0   Physics
-0   General
+1   General
 0   Powers
 0   Stuff
