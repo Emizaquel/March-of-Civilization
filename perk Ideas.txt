@@ -1,4 +1,6 @@
 Physical Chemistry; General; You know how take into account both physical and chemical properties in order to have the results of the reaction form specific structures you desire
+Redline; General; You can use every sense at your disposal to understand the state of any device you are operate it and push it to the utmost of it's capabilities and perhaps even beyond if you are willing to make some repairs later
+
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
 0   Spiritual
@@ -9,6 +11,6 @@ THE RULE: A new version only happens after at least 30 new perks, also one from 
 0   Eldritch
 0   Planar
 0   Physics
-1   General
+2   General
 0   Powers
 0   Stuff
