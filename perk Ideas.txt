@@ -1,5 +1,6 @@
 Physical Chemistry; General; You know how take into account both physical and chemical properties in order to have the results of the reaction form specific structures you desire
 Redline; General; You can use every sense at your disposal to understand the state of any device you are operate it and push it to the utmost of it's capabilities and perhaps even beyond if you are willing to make some repairs later
+False Vaccum Specialist; Physics; You understand the nature of false vaccum states, and are able to understand the interactions between the various quantum fields that make up the univers and how to settle them into local minima with interesting laws of physics.
 
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
