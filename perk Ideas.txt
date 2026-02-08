@@ -1,6 +1,20 @@
 Physical Chemistry; General; You know how take into account both physical and chemical properties in order to have the results of the reaction form specific structures you desire
 Redline; General; You can use every sense at your disposal to understand the state of any device you are operate it and push it to the utmost of it's capabilities and perhaps even beyond if you are willing to make some repairs later
 False Vaccum Specialist; Physics; You understand the nature of false vaccum states, and are able to understand the interactions between the various quantum fields that make up the univers and how to settle them into local minima with interesting laws of physics.
+Second Order; General; You know how to create things that create things, looking not at what you have in your hands, but what will come of what you have made.
+Abyssal Architecture; ???; Build underwater
+Cavernous Construction; ???; Build underground
+Transplanar Tap; Planar; You know how to create devices that can draw power from planes with effectively infinite amounts of energy, limited only by the scale of the device.
+Black Horizon Plant; Stuff; Designs for a black hole coversion plant capable of converting any mass into usable energy at incredibly high efficiencies.
+Gravity Shields; Stuff; A field generator that levels the space time geometry within a certain radius allowing a craft to survive high levels of gravity including close proximity to a black hole.
+High Impulse Thrusters; stuff; Highly efficient thrusters that can output an incredible amount of thust for their weight. You also know how to make the exotic matter fuel, can achieve something like 0.01c/s acceleration assuming the thusters make up at least 10 percent the mass of the ship. (refine)
+Stellar Extraction and Transmutation Station; Stuff; Extract matter from a star and fuse it to create heavier elements
+Weapons in general (particle beam/projectile (good for cheap designs free/50/100/200 - personal/vehicle/installation/captial))
+Healing aura of some kind? (ki based maybe? or magic?)
+Ground Penetrating Scaneners; stuff
+Quantum Computing; Physics; Talk about mapped over possible outcomes
+Automatic Alchemy Arrays; Alchemy; you know how to create devices that perform alchmical transmutations automatically. you can create arrays that can reshape matter with ease and replicate any other alchemical operation you know of.
+Landing is for Peasants; Stuff; You know how to make a 'short' (in interstellar terms) range point-to-anywhere and anywhere-to-point teleporter capable of transporting a landing party and their baggage.
 
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
