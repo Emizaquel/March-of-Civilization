@@ -54,7 +54,7 @@ class perk {
                 }
                 return false
             }
-            return true
+            return (this.times_recieved < this.max_repeats)
         }
         return false
     }
@@ -701,7 +701,10 @@ function roll_pool(){
     var valid_perks = perks.filter((e)=>{
         return e.check_viable()
     })
-    return valid_perks[seeded_generator.rand_range(valid_perks.length)].roll();
+    console.log(valid_perks)
+    var per = valid_perks[seeded_generator.rand_range(valid_perks.length)];
+    console.log(per)
+    return per.roll()
 }
 
 function roll_category(){
