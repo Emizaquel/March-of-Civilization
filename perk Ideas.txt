@@ -2,30 +2,38 @@ Physical Chemistry; General; You know how take into account both physical and ch
 Redline; General; You can use every sense at your disposal to understand the state of any device you are operate it and push it to the utmost of it's capabilities and perhaps even beyond if you are willing to make some repairs later
 False Vaccum Specialist; Physics; You understand the nature of false vaccum states, and are able to understand the interactions between the various quantum fields that make up the univers and how to settle them into local minima with interesting laws of physics.
 Second Order; General; You know how to create things that create things, looking not at what you have in your hands, but what will come of what you have made.
-Abyssal Architecture; ???; Build underwater
-Cavernous Construction; ???; Build underground
+Abyssal Architecture; General Build underwater
+Cavernous Construction; General Build underground
 Transplanar Tap; Planar; You know how to create devices that can draw power from planes with effectively infinite amounts of energy, limited only by the scale of the device.
 Black Horizon Plant; Stuff; Designs for a black hole coversion plant capable of converting any mass into usable energy at incredibly high efficiencies.
 Gravity Shields; Stuff; A field generator that levels the space time geometry within a certain radius allowing a craft to survive high levels of gravity including close proximity to a black hole.
 High Impulse Thrusters; stuff; Highly efficient thrusters that can output an incredible amount of thust for their weight. You also know how to make the exotic matter fuel, can achieve something like 0.01c/s acceleration assuming the thusters make up at least 10 percent the mass of the ship. (refine)
 Stellar Extraction and Transmutation Station; Stuff; Extract matter from a star and fuse it to create heavier elements
-Weapons in general (particle beam/projectile (good for cheap designs free/50/100/200 - personal/vehicle/installation/captial))
-Healing aura of some kind? (ki based maybe? or magic?)
-Ground Penetrating Scaneners; stuff
+Particle beam Weapon; Stuff
+Guns; stuff
+Survival weapons; stuff; bows, axes - anything you can make with unrefined natural resources
+Castle Forged; Stuff; Swords, maces, shields yada yada, needs refined metal (also seige enegines)
+Ki healing; Ki; (basically accelerated regen - allows for improvment)
+Magical healing; Magic; damage removal - returns to previous state
+Psychic surgery; Psionics; Allows for treatment of traumas, phobias and other mental issues
+Spiritual healing; Spiritual; You know how to effect the soul in such a way that clears damage and promotes healing, allowing for people to grow on a fundemental level.
+Causal Pruning; Eldritch; you know how to cut away at the causality that makes up an individual, permanently returning them to a previous state. The remnants can have strange properties though.
+Ground Penetrating Scanners; stuff
 Quantum Computing; Physics; Talk about mapped over possible outcomes
 Automatic Alchemy Arrays; Alchemy; you know how to create devices that perform alchmical transmutations automatically. you can create arrays that can reshape matter with ease and replicate any other alchemical operation you know of.
 Landing is for Peasants; Stuff; You know how to make a 'short' (in interstellar terms) range point-to-anywhere and anywhere-to-point teleporter capable of transporting a landing party and their baggage.
-
+Politics; General; Policy
+Grand Strategy; General; International Realations
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
-0   Spiritual
-0   Psionics
-0   Martial
-0   Alchemy
-0   Magic
+1   Spiritual
+1   Psionics
+1   Martial
+1   Alchemy
+1   Magic
 0   Eldritch
-0   Planar
-0   Physics
+1   Planar
+1   Physics
 2   General
 0   Powers
-0   Stuff
+1   Stuff
