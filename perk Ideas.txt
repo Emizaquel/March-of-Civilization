@@ -13,7 +13,7 @@ Particle beam Weapon; Stuff
 Guns; stuff
 Survival weapons; stuff; bows, axes - anything you can make with unrefined natural resources
 Castle Forged; Stuff; Swords, maces, shields yada yada, needs refined metal (also seige enegines)
-Ki healing; Ki; (basically accelerated regen - allows for improvment)
+Ki healing; Martial; (basically accelerated regen - allows for improvment)
 Magical healing; Magic; damage removal - returns to previous state
 Psychic surgery; Psionics; Allows for treatment of traumas, phobias and other mental issues
 Spiritual healing; Spiritual; You know how to effect the soul in such a way that clears damage and promotes healing, allowing for people to grow on a fundemental level.
@@ -24,16 +24,13 @@ Automatic Alchemy Arrays; Alchemy; you know how to create devices that perform a
 Landing is for Peasants; Stuff; You know how to make a 'short' (in interstellar terms) range point-to-anywhere and anywhere-to-point teleporter capable of transporting a landing party and their baggage.
 Politics; General; Policy
 Grand Strategy; General; International Realations
+Backup Body; Power; You can form a connection between your essence and a compatible vessel. Should you ever suffer enoug damage to destroy your original body or break the link it has to your soul, you will immediately transfer into the other vessel.
+Arcane Intelligence; Magic; You know how to encode complex dicision trees and sensory capabilities into magical constructs, allowing the near perfect replication of a desired set of behaviours. Without a soul, these intelligences do not change but can perfectly replicate even the mental construct you program into them.
 
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
-1   Spiritual
-1   Psionics
-1   Martial
-1   Alchemy
-1   Magic
-0   Eldritch
-1   Planar
-1   Physics
-2   General
-0   Powers
-1   Stuff
+1   Spiritual       1   Planar
+1   Psionics        2   Physics
+1   Martial         7   General
+1   Alchemy         1   Powers
+1   Magic           11  Stuff
+1   Eldritch
