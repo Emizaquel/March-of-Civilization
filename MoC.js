@@ -1216,6 +1216,7 @@ function setup_march(){
     screens = document.querySelectorAll('.option-screen')
     perk_listings = document.querySelectorAll('.catalogue-listing')
 
+
     document.querySelectorAll('.nav-link').forEach((button)=>{
         button.addEventListener('click', show_screen)
     })
@@ -1245,6 +1246,45 @@ function setup_march(){
             reset_march()
         }
     }
+
+    save_drop = document.getElementById("options-upload-file").parentElement
+    save_drop.addEventListener("drop", (e)=>{
+        e.preventDefault()
+        console.log(e)
+        if(e.dataTransfer.files.length > 1){
+            return
+        }
+        if(e.dataTransfer.files[0].type === "application/json"){
+            document.getElementById("options-upload-file").files = e.dataTransfer.files
+            document.getElementById("options-upload-file").dispatchEvent(new Event('change'));
+        }
+        console.log(document.getElementById("options-upload-file").files )
+    })
+    save_drop.addEventListener("dragover", (e) => {
+        const fileItems = [...e.dataTransfer.items].filter(
+            (item) => item.kind === "file",
+        );
+        if (fileItems.length > 0) {
+            e.preventDefault();
+        }
+    });
+    window.addEventListener("dragover", (e) => {
+        const fileItems = [...e.dataTransfer.items].filter(
+            (item) => item.kind === "file",
+        );
+        if (fileItems.length > 0) {
+            e.preventDefault();
+        }
+    });
+
+    window.addEventListener("drop", (e) => {
+        const fileItems = [...e.dataTransfer.items].filter(
+            (item) => item.kind === "file",
+        );
+        if (fileItems.length > 0) {
+            e.preventDefault();
+        }
+    });
     validate_groups()
 }
 
