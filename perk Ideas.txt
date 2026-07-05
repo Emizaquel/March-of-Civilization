@@ -1,4 +1,4 @@
-Jacked In; Powers; You gain a personal, untracable and unblockable connection to the major local public data networks - Basically anything equivalent to the internet.
+Jacked In; Powers; You gain a personal, untracable and unblockable connection to the major local public data networks - Basically anything equivalent to the internet. Any device you are using, supposing that it is intended to have some form of networking capability, will be able to connect to these, and will effectively gain a translation layer to access equivalent services.
 Elemental Spells; Magic; 
 Eldritch Form; Eldritch; Temporarily take on the form of an eldritch creatures (bigger/more powerful form = more complex/difficult ritual)
 Extradimensional Inventory perks; Power; repeatable 
@@ -17,15 +17,26 @@ Personal Style; Martial; (Cheap/Free Max repeats) You are now a master of a form
 Subconcious Signs; Psionic; You know how to emanate subconsious impressions that everyone in your vicinity will pick up on. Useful for things like making yourself forgettable or otherwise allowing people to make assumptions about you.
 Dimensional Friction; Planar; Planes do not truly remain static in relation to each other, and there are phenomena during which planes... interact. These often chaotic events are the interplanar equivalents of earthquakes and while difficult to manage, are incredibly potent, creating effects that be matched by few others within a universe. You deeply understand the physics of these effects and are able to make of them, chanelling or leveraging their immense power or even replicating them on a fantastically smaller scale.
 Power; Pocket Space; You have access to a truly private carrying space, starting at the scale of a small pouch (roughly a cube 10 cm a side) with the length of the height, width or depth doubling in sequence each time you roll this perk.
-
+Spiritual; Demonic Energy; You know how to manipulate energies generally considered to be non-harmonius and dangerous to work with. These energies are... almost self interested - associated with thils like greed, lust, wrath and other primal unbridled aspects of the soul. While often turned to evil ends you understand the more nuanced impacts these can have in the broader field of spiritual manipulation.
+Spiritual; Holy Energy; You know how to manipulate energies generally considered to be harmonius and beneficial to work with. These energies tend to be more inclined to support other things - associated with healing, purifcation, support and other desirable facets of spiritual power. While often turned to benevolent ends you understand the nuanced nature of these energies and can use them in a variety of ways, even in combat.
+Reading the Flow; Psionic; Oddly, one of the more reliable ways of predicting the future. You know how to sense the psychic undercurrent of large groups of people and predict how large scale patterns in this energy will evolve with time.
+Inedia; Psionic; You know how to sustain yourself through pure psionic energy alone. While you cannot keep this up forever, your skills are sufficient to allow an average psionicist to persist for over a month without food, water or even oxygen while keeping up moderate levels of activity, assuming the environment is not actively hostile.
+Manifestation; Psionic; You can materialise thoughtforms into reality, creating what appear to be physical objects. While temporary, this allows you to project idealised instances of objects that you can conceptualise, granting them interesting capabilities.
+Realization; Psionic; Requires Manifestation, You know how to let objects you manifest to take on the flaws of reality in a controlled manner, allowing you - with time - to allow them to settle into a state of being that can exist without your support.
+Astral Apparel; Spiritual You know how to create 'clothes' for the spiritual form, allowing you to present an alternate appearance in the spiritual plane, which can be picked up by those who are capable of detecting such things.
+Astral Armour; Spiritual; You are capable of creating defensive elements for the spiritual form, creating articles that can provide protection against spiritual attacks and hostile spiritual evironments such as cursed or unhallowed areas.
+Astral Accessories; Spiritual; You are capable of creating items that grant the soul new capabilities or enhance existing ones, akin to tools for the spiritual self. These can replicate spiritual abilities you understand.
+Spirit Sight; Spiritual; You gain the ability to sense and perceive spiritual energies, detecting the presence of souls and actively utilised spiritual energy.
+Spiritual Structure; Spiritual; You have a broad understanding of the fundemental aspects of spiritual structure, allowing you to quickly analyse and understand the spiritual components responsible for various innate abilities. (requires Spirit Sight)
+Subtle Insight; Spiritual; You gain the ability to sense and perceive even hidden spiritual energies, capable of piercing past attempts to make use of soul-based stealth techniques. (requires Spirit Sight)
 
 
 Consider - Break up alternate forms. Could be be split up more.
 
 fix fundamentals (Update description)
 THE RULE: A new version only happens after at least 30 new perks, also one from each category at least
-2   Spiritual       1   Planar
-1   Psionics        1   Physics
+4   Spiritual       1   Planar
+5   Psionics        1   Physics
 2   Martial         2   General
 1   Alchemy         3   Powers
 2   Magic           2   Stuff
