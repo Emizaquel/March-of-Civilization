@@ -1,6 +1,6 @@
 moc_version = {
     "version": 0,
-    "subversion":7
+    "subversion":8
 }
 
 steps = 0n
