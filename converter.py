@@ -27,14 +27,18 @@ for row in table:
     names.append(row["Name"])
 
 for row in rows:
-    if(row['Repeatable'].lower() == "max"):
-        row['Repeatable'] = "0"
-    dependencies = row['Dependency'].split(";")
-    while("None" in dependencies):
-        dependencies.remove("None")
-    dependencies = ",".join([str(names.index(dependency)) for dependency in dependencies])
-    destination.write(f"new perk(\"{row['Name']}\", \"{row['Description']}\", {row['Cost']}n, {row['Repeatable']}n, [{dependencies}], {groups.index(row['Group'])})\n")
-    # new perk("test 4", "test perk 4", 200n, 0n, [1], 1)
-
+    try:
+        if(row['Repeatable'].lower() == "max"):
+            row['Repeatable'] = "0"
+        dependencies = row['Dependency'].split(";")
+        while("None" in dependencies):
+            dependencies.remove("None")
+        dependencies = ",".join([str(names.index(dependency)) for dependency in dependencies])
+        destination.write(f"new perk(\"{row['Name']}\", \"{row['Description']}\", {row['Cost']}n, {row['Repeatable']}n, [{dependencies}], {groups.index(row['Group'])})\n")
+        # new perk("test 4", "test perk 4", 200n, 0n, [1], 1)
+    except Exception as e:
+        print(row)
+        print (e)
+        break
 source.close()
 destination.close()
